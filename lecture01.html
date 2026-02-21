@@ -1,0 +1,3004 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SET422 - Lecture 01: Software Project Management</title>
+  <meta name="description"
+    content="SET422 Software Project Management Lecture 01 by Dr. Fatma Sakr — Complete explanation with Egyptian Arabic.">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    :root {
+      --bg: #020617;
+      --surface: #0f172a;
+      --card: rgba(15, 23, 42, 0.7);
+      --primary: #6366f1;
+      --accent: #a78bfa;
+      --green: #22c55e;
+      --amber: #f59e0b;
+      --red: #ef4444;
+      --teal: #14b8a6;
+      --sky: #38bdf8;
+      --pink: #f472b6;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --dim: #475569;
+      --glass-border: rgba(255, 255, 255, 0.06);
+      --font-en: 'Inter', system-ui, sans-serif;
+      --font-ar: 'Cairo', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    [data-theme="light"] {
+      --bg: #f1f5f9;
+      --surface: #ffffff;
+      --card: rgba(255, 255, 255, 0.85);
+      --text: #1e293b;
+      --muted: #475569;
+      --dim: #94a3b8;
+      --glass-border: rgba(0, 0, 0, 0.08);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 5rem
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-en);
+      line-height: 1.7;
+      overflow-x: hidden
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      background: radial-gradient(ellipse at 15% 50%, rgba(99, 102, 241, 0.06)0%, transparent 35%),
+        radial-gradient(ellipse at 85% 20%, rgba(167, 139, 250, 0.05)0%, transparent 30%)
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 7px
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg)
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--dim);
+      border-radius: 4px
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary)
+    }
+
+    /* Glass */
+    .glass {
+      background: var(--card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 1rem
+    }
+
+    .glass-card {
+      background: linear-gradient(145deg, rgba(25, 35, 55, 0.8), rgba(10, 15, 25, 0.9));
+      border: 1px solid rgba(99, 102, 241, 0.1);
+      border-radius: 1rem;
+      position: relative;
+      overflow: hidden
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--primary), var(--accent), transparent);
+      opacity: .6
+    }
+
+    [data-theme="light"] .glass-card {
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(241, 245, 249, 0.9));
+      border-color: rgba(99, 102, 241, 0.15)
+    }
+
+    /* Nav */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(2, 6, 23, 0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      height: 4rem;
+      display: flex;
+      align-items: center;
+      padding: 0 1.5rem
+    }
+
+    [data-theme="light"] .nav {
+      background: rgba(241, 245, 249, 0.92)
+    }
+
+    .nav-inner {
+      max-width: 72rem;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: .75rem
+    }
+
+    .nav-badge {
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: .5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      font-weight: 900;
+      font-size: .7rem
+    }
+
+    .nav-title {
+      font-weight: 800;
+      font-size: 1.1rem
+    }
+
+    .nav-title span {
+      color: var(--primary)
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: .35rem;
+      flex-wrap: wrap
+    }
+
+    .nav-links a,
+    .nav-links button {
+      background: transparent;
+      border: 1px solid var(--glass-border);
+      color: var(--muted);
+      padding: .35rem .7rem;
+      border-radius: .4rem;
+      cursor: pointer;
+      font-size: .72rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: .2s var(--ease);
+      font-family: var(--font-en)
+    }
+
+    .nav-links a:hover,
+    .nav-links button:hover {
+      border-color: var(--primary);
+      color: var(--primary)
+    }
+
+    .nav-links .active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary)
+    }
+
+    /* Progress */
+    .progress-bar {
+      position: fixed;
+      top: 4rem;
+      left: 0;
+      right: 0;
+      height: 3px;
+      z-index: 99;
+      background: rgba(255, 255, 255, .03)
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      width: 0%;
+      transition: width .3s
+    }
+
+    /* Container */
+    .container {
+      max-width: 64rem;
+      margin: 0 auto;
+      padding: 5rem 1rem 3rem
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 3rem 1rem 2rem
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .3rem 1rem;
+      border-radius: 2rem;
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      font-size: .7rem;
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 1.5rem
+    }
+
+    .hero-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--primary);
+      animation: pulse 2s infinite
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: .4
+      }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 900;
+      line-height: 1.05;
+      margin-bottom: .75rem
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, var(--primary), var(--accent), var(--pink));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent
+    }
+
+    .hero .sub {
+      color: var(--muted);
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: .75rem;
+      justify-content: center;
+      flex-wrap: wrap
+    }
+
+    .btn-primary {
+      padding: .65rem 1.75rem;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: .5rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: .85rem;
+      transition: .2s;
+      text-decoration: none
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px)
+    }
+
+    .btn-ghost {
+      padding: .65rem 1.75rem;
+      background: rgba(255, 255, 255, .05);
+      color: var(--text);
+      border: 1px solid var(--glass-border);
+      border-radius: .5rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: .85rem;
+      transition: .2s;
+      text-decoration: none
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, .1)
+    }
+
+    /* Section */
+    .section {
+      margin: 2rem 0
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      margin-bottom: 1.5rem
+    }
+
+    .section-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: .75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      position: relative
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 40px;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 2px
+    }
+
+    /* Slide */
+    .slide {
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      animation: fadeUp .5s var(--ease)
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    .slide:target {
+      border-color: var(--primary) !important;
+      box-shadow: 0 0 30px rgba(99, 102, 241, .12)
+    }
+
+    .slide-head {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: .75rem;
+      border-bottom: 1px solid var(--glass-border);
+      flex-wrap: wrap
+    }
+
+    .slide-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      font-size: .65rem;
+      font-weight: 900;
+      min-width: 1.75rem;
+      height: 1.75rem;
+      border-radius: 50%;
+      flex-shrink: 0
+    }
+
+    .slide-head h2 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      flex: 1;
+      min-width: 200px
+    }
+
+    /* English content */
+    .en-box {
+      background: rgba(99, 102, 241, .04);
+      border-left: 3px solid var(--primary);
+      padding: 1rem 1.25rem;
+      border-radius: 0 .5rem .5rem 0;
+      margin: .75rem 0;
+      font-size: .88rem;
+      line-height: 1.9;
+      white-space: pre-line
+    }
+
+    .en-box .tag {
+      display: inline-block;
+      font-size: .6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--primary);
+      margin-bottom: .4rem
+    }
+
+    /* Arabic box */
+    .ar-box {
+      position: relative;
+      background: rgba(245, 158, 11, .04);
+      border-right: 3px solid var(--amber);
+      border-radius: .5rem 0 0 .5rem;
+      padding: 1.5rem;
+      padding-right: 1.5rem;
+      direction: rtl;
+      text-align: right;
+      font-family: var(--font-ar);
+      margin: .75rem 0;
+      font-size: .92rem;
+      line-height: 2.1;
+      color: var(--text)
+    }
+
+    .ar-icon {
+      position: absolute;
+      top: -12px;
+      right: -12px;
+      background: var(--bg);
+      border: 2px solid var(--amber);
+      color: var(--amber);
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 1rem;
+      z-index: 2
+    }
+
+    [data-theme="light"] .ar-icon {
+      background: var(--surface)
+    }
+
+    .ar-box strong {
+      color: var(--amber)
+    }
+
+    [data-theme="light"] .ar-box strong {
+      color: #b45309
+    }
+
+    .ar-box .tag {
+      display: block;
+      font-size: .6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--amber);
+      margin-bottom: .5rem
+    }
+
+    /* Takeaways & Mistakes */
+    .tips {
+      direction: rtl;
+      text-align: right;
+      font-family: var(--font-ar);
+      padding: 1rem 1.25rem;
+      border-radius: .5rem;
+      margin: .6rem 0;
+      font-size: .82rem;
+      line-height: 2
+    }
+
+    .tips.green {
+      background: rgba(34, 197, 94, .05);
+      border-right: 3px solid var(--green);
+      color: var(--green)
+    }
+
+    .tips.red {
+      background: rgba(239, 68, 68, .05);
+      border-right: 3px solid var(--red);
+      color: var(--red)
+    }
+
+    .tips ul {
+      list-style: none;
+      padding: 0;
+      margin: 0
+    }
+
+    .tips.green li::before {
+      content: '✅ '
+    }
+
+    .tips.red li::before {
+      content: '⚠️ '
+    }
+
+    .tips .tag {
+      display: block;
+      font-size: .6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: .3rem
+    }
+
+    /* Diagram */
+    .diagram {
+      margin: 1.25rem 0;
+      text-align: center;
+      background: rgba(0, 0, 0, .2);
+      border-radius: .75rem;
+      padding: 1.5rem;
+      border: 1px solid var(--glass-border)
+    }
+
+    [data-theme="light"] .diagram {
+      background: rgba(0, 0, 0, .03)
+    }
+
+    .diagram svg {
+      max-width: 100%;
+      height: auto
+    }
+
+    /* Grids */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem
+    }
+
+    .info-card {
+      background: rgba(0, 0, 0, .2);
+      padding: 1.25rem;
+      border-radius: .75rem;
+      border: 1px solid var(--glass-border)
+    }
+
+    [data-theme="light"] .info-card {
+      background: rgba(0, 0, 0, .03)
+    }
+
+    .info-card h4 {
+      font-weight: 700;
+      margin-bottom: .5rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem
+    }
+
+    /* Q&A Section */
+    .qa-section {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--glass-border)
+    }
+
+    .q-card {
+      background: var(--card);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--glass-border);
+      border-radius: .75rem;
+      margin-bottom: .75rem;
+      overflow: hidden;
+      transition: border-color .2s
+    }
+
+    .q-card:hover {
+      border-color: rgba(99, 102, 241, .3)
+    }
+
+    .q-header {
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      gap: .5rem
+    }
+
+    .q-header:hover {
+      background: rgba(255, 255, 255, .02)
+    }
+
+    .q-header .q-title {
+      font-weight: 600;
+      font-size: .88rem;
+      flex: 1
+    }
+
+    .q-header .q-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--primary);
+      color: #fff;
+      font-size: .6rem;
+      font-weight: 800;
+      min-width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+      flex-shrink: 0
+    }
+
+    .q-header .q-arrow {
+      color: var(--muted);
+      transition: transform .3s;
+      font-size: .8rem
+    }
+
+    .q-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s var(--ease)
+    }
+
+    .q-content {
+      padding: 1.25rem;
+      border-top: 1px solid var(--glass-border)
+    }
+
+    .q-content .ans-en {
+      background: rgba(99, 102, 241, .05);
+      border-left: 3px solid var(--primary);
+      padding: .75rem 1rem;
+      border-radius: 0 .5rem .5rem 0;
+      margin-bottom: .75rem;
+      font-size: .85rem;
+      line-height: 1.8
+    }
+
+    .q-content .ans-ar {
+      direction: rtl;
+      text-align: right;
+      font-family: var(--font-ar);
+      background: rgba(245, 158, 11, .04);
+      border-right: 3px solid var(--amber);
+      padding: .75rem 1rem;
+      border-radius: .5rem 0 0 .5rem;
+      font-size: .85rem;
+      line-height: 2;
+      color: var(--text)
+    }
+
+    /* Search */
+    .search-wrap {
+      position: relative;
+      margin: 1rem 0
+    }
+
+    .search-wrap input {
+      width: 100%;
+      padding: .65rem 1rem .65rem 2.5rem;
+      border-radius: .6rem;
+      background: var(--surface);
+      border: 1px solid var(--glass-border);
+      color: var(--text);
+      font-size: .85rem;
+      outline: none;
+      transition: .2s;
+      font-family: var(--font-en)
+    }
+
+    .search-wrap input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, .15)
+    }
+
+    .search-wrap i {
+      position: absolute;
+      left: .85rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: .85rem
+    }
+
+    mark {
+      background: rgba(245, 158, 11, .3);
+      color: inherit;
+      border-radius: 2px;
+      padding: 0 2px
+    }
+
+    /* TOC */
+    .toc-panel {
+      margin: 1rem 0
+    }
+
+    .toc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: .4rem;
+      margin-top: .75rem
+    }
+
+    .toc-item {
+      padding: .5rem .75rem;
+      border-radius: .4rem;
+      background: rgba(255, 255, 255, .02);
+      border: 1px solid var(--glass-border);
+      font-size: .75rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: .2s;
+      display: flex;
+      align-items: center;
+      gap: .4rem
+    }
+
+    .toc-item:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: rgba(99, 102, 241, .05)
+    }
+
+    .toc-item .num {
+      color: var(--primary);
+      font-weight: 700;
+      font-size: .65rem
+    }
+
+    /* Print */
+    @media print {
+
+      .nav,
+      .progress-bar,
+      .search-wrap,
+      .no-print,
+      button {
+        display: none !important
+      }
+
+      body {
+        background: #fff !important;
+        color: #000 !important
+      }
+
+      .glass-card,
+      .slide,
+      .q-card {
+        background: #fff !important;
+        border: 1px solid #ddd !important;
+        box-shadow: none !important
+      }
+
+      .ar-box,
+      .tips {
+        color: #333 !important
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      * {
+        animation: none !important;
+        transition-duration: .01ms !important
+      }
+    }
+
+    @media(max-width:640px) {
+      .container {
+        padding: 4.5rem .5rem 2rem
+      }
+
+      .slide {
+        padding: 1.25rem
+      }
+
+      .nav-links {
+        display: none
+      }
+
+      .toc-grid {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Nav -->
+  <nav class="nav no-print" role="navigation">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <div class="nav-badge">PM</div>
+        <div class="nav-title">Lecture <span>01</span></div>
+      </div>
+      <div class="nav-links">
+        <a href="#content">Content</a>
+        <a href="#qa">Q&A</a>
+        <button id="tocBtn" title="Table of Contents"><i class="fas fa-list"></i></button>
+        <button id="themeBtn" title="Toggle Theme"><i class="fas fa-moon" id="themeIcon"></i></button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <div class="container">
+
+    <!-- Hero -->
+    <header class="hero">
+      <div class="hero-badge"><span class="dot"></span> SET422 — Software Project Management</div>
+      <h1>Software Project<br><span class="gradient-text">Management</span></h1>
+      <p class="sub">DR. FATMA SAKR — Lecture 01 — Full Explanation</p>
+      <div class="hero-btns">
+        <a href="#content" class="btn-primary"><i class="fas fa-book-open"></i> ابدأ المذاكرة</a>
+        <a href="#qa" class="btn-ghost"><i class="fas fa-question-circle"></i> Q&A Section</a>
+      </div>
+    </header>
+
+    <!-- Search -->
+    <div class="search-wrap no-print">
+      <i class="fas fa-search"></i>
+      <input type="search" id="searchInput" placeholder="Search... (English or عربي)" aria-label="Search">
+    </div>
+
+    <!-- TOC -->
+    <details class="toc-panel no-print" id="tocPanel">
+      <summary
+        style="cursor:pointer;font-weight:700;font-size:.85rem;color:var(--muted);display:flex;align-items:center;gap:.5rem;padding:.5rem 0">
+        <i class="fas fa-map"></i> Slide Map — Table of Contents
+      </summary>
+      <div class="toc-grid" id="tocGrid"></div>
+    </details>
+
+    <!-- ===== CONTENT ===== -->
+    <div id="content">
+
+      <!-- S1 -->
+      <div class="slide glass-card" id="s1">
+        <div class="slide-head"><span class="slide-num">1</span>
+          <h2>SET422 — Software Project Management</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          SET422-Software Project Management
+          DR. FATMA SAKR</div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          يا جماعة أهلاً بيكم في مادة SET422 — إدارة مشاريع البرمجيات. المادة دي مش بتعلمك تكتب كود — لأ، بتعلمك إزاي
+          تدير مشروع كامل. يعني إزاي تخطط، تنظم شغل الفريق، تتحكم في الوقت والميزانية، وتسلم المشروع بشكل احترافي.
+          الدكتورة فاطمة صقر هي اللي بتدرس المادة.
+        </div>
+      </div>
+
+      <!-- S2 -->
+      <div class="slide glass-card" id="s2">
+        <div class="slide-head"><span class="slide-num">2</span>
+          <h2>Examinations and Scores</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          EXAMINATIONS AND SCORES
+          The score for the course is distributed as:
+
+          Examination Timing Grade
+          Midterm Exam 7th week 20
+          Quizzes 6th, 12th weeks 10
+          Semester's Work -- 30
+          Final Exam 15th week 40</div>
+        <div style="overflow-x:auto;margin:.75rem 0">
+          <table style="width:100%;border-collapse:collapse;font-size:.82rem">
+            <thead>
+              <tr style="border-bottom:2px solid var(--glass-border)">
+                <th
+                  style="padding:.6rem;text-align:left;color:var(--muted);text-transform:uppercase;font-size:.7rem;letter-spacing:.05em">
+                  Examination</th>
+                <th style="padding:.6rem;text-align:left;color:var(--muted);text-transform:uppercase;font-size:.7rem">
+                  Timing</th>
+                <th style="padding:.6rem;text-align:center;color:var(--muted);text-transform:uppercase;font-size:.7rem">
+                  Grade</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid var(--glass-border)">
+                <td style="padding:.6rem">Midterm Exam</td>
+                <td style="padding:.6rem">7th week</td>
+                <td style="padding:.6rem;text-align:center;font-weight:700;color:var(--primary)">20</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--glass-border)">
+                <td style="padding:.6rem">Quizzes</td>
+                <td style="padding:.6rem">6th, 12th weeks</td>
+                <td style="padding:.6rem;text-align:center;font-weight:700;color:var(--accent)">10</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--glass-border)">
+                <td style="padding:.6rem">Semester's Work</td>
+                <td style="padding:.6rem">—</td>
+                <td style="padding:.6rem;text-align:center;font-weight:700;color:var(--amber)">30</td>
+              </tr>
+              <tr>
+                <td style="padding:.6rem;font-weight:700">Final Exam</td>
+                <td style="padding:.6rem">15th week</td>
+                <td style="padding:.6rem;text-align:center;font-weight:900;color:var(--green)">40</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          الدرجات بتتوزع كده: الميدتيرم 20 درجة بييجي في الأسبوع السابع، الكويزات 10 درجات (أسبوع 6 و12)، أعمال السنة 30
+          درجة ودي ممكن تكون assignments أو حضور أو مشاريع، والفاينال 40 درجة في الأسبوع الـ15. خلي بالك إن أعمال السنة
+          لوحدها أكتر من الميدتيرم — فلازم تهتم بيها من أول يوم.
+        </div>
+        <div class="tips red"><span class="tag">⚠️ خد بالك</span>
+          <ul>
+            <li>متهملش أعمال السنة — دي 30 درجة سهلة لو اهتميت</li>
+            <li>الكويزات ليها مواعيد محددة فلازم تكون حاضر</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- S3 -->
+      <div class="slide glass-card" id="s3">
+        <div class="slide-head"><span class="slide-num">3</span>
+          <h2>Motivations</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          Motivations
+          • Many courses in computer science focus on the technical aspects and on the notations to develop good
+          software (e.g., how to do testing, how to write requirements, how to model systems; UML; Java)
+          • However, to build good software, a well-defined and managed process is required, which organizes the
+          activities in an efficient and controlled way
+          • If you want to deliver on time and within budget a product which has the quality properties agreed upon (be
+          it a software or any other product), you need:
+          • A process to define a schedule, a budget, and agree on the (quality) characteristics of a product
+          • A list of techniques to define, agree, plan, execute, and monitor: goals, quality, time, and costs</div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          إحنا في الكلية بنتعلم حاجات تقنية كتير — Java، UML، Testing — وده كويس. بس تخيل إنك بتعرف تكتب كود ممتاز وفي
+          الآخر المشروع اتأخر 3 شهور أو الميزانية خلصت في النص! الكلام التقني لوحده مش كفاية. لازم يكون عندك عملية منظمة
+          بتحدد فيها: الشغل ده هياخد كام وقت؟ هيكلف كام فلوس؟ الجودة المطلوبة إيه؟ ومين بيعمل إيه؟
+
+          ببساطة: الكود مهم، بس من غير إدارة — المشروع بيبوظ.
+        </div>
+        <div class="diagram">
+          <svg viewBox="0 0 520 140" style="max-width:500px">
+            <rect x="10" y="25" width="190" height="90" rx="12" fill="rgba(99,102,241,0.08)" stroke="#6366f1"
+              stroke-width="2" />
+            <text x="105" y="60" text-anchor="middle" fill="#6366f1" font-weight="bold" font-size="14"
+              font-family="Inter">Technical Skills</text>
+            <text x="105" y="82" text-anchor="middle" fill="#94a3b8" font-size="11" font-family="Inter">Java · UML ·
+              Testing</text>
+            <text x="250" y="75" text-anchor="middle" fill="#f59e0b" font-weight="900" font-size="22">+</text>
+            <rect x="310" y="25" width="200" height="90" rx="12" fill="rgba(34,197,94,0.08)" stroke="#22c55e"
+              stroke-width="2" />
+            <text x="410" y="60" text-anchor="middle" fill="#22c55e" font-weight="bold" font-size="14"
+              font-family="Inter">Project Management</text>
+            <text x="410" y="82" text-anchor="middle" fill="#94a3b8" font-size="11" font-family="Inter">Time · Cost ·
+              Quality</text>
+            <text x="260" y="135" text-anchor="middle" fill="#e2e8f0" font-weight="bold" font-size="13"
+              font-family="Inter">= Successful Project ✅</text>
+          </svg>
+        </div>
+        <div class="tips green"><span class="tag">🎯 النقاط المهمة</span>
+          <ul>
+            <li>المهارات التقنية + الإدارة = مشروع ناجح</li>
+            <li>لازم يكون فيه عملية منظمة للتخطيط والمتابعة</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- S4 -->
+      <div class="slide glass-card" id="s4">
+        <div class="slide-head"><span class="slide-num">4</span>
+          <h2>Course Outline (Part 1)</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          Course Outline
+          The aim of this course is to
+          • Understand more about software project management.
+          • Produce better software project plans.
+          • Reduce software project risks.
+          • Capture the complexity of software projects.
+          • Stay on top of software projects while they are underway and through completion.</div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          إيه اللي هنتعلمه في الكورس ده (الجزء الأول)؟ خمس حاجات:
+          1. <strong>تفهم إدارة المشاريع كويس</strong> — الأساسيات والمبادئ
+          2. <strong>تعمل خطط أحسن</strong> — مش خطة عشوائية، لأ خطة مدروسة واقعية
+          3. <strong>تقلل المخاطر</strong> — كل مشروع فيه مشاكل محتملة ولازم تستعد ليها
+          4. <strong>تفهم التعقيد</strong> — المشاريع الكبيرة معقدة ولازم تعرف تتعامل مع التعقيد ده
+          5. <strong>تفضل مسيطر</strong> — من أول ما المشروع يبدأ لحد ما يخلص
+        </div>
+      </div>
+
+      <!-- S5 -->
+      <div class="slide glass-card" id="s5">
+        <div class="slide-head"><span class="slide-num">5</span>
+          <h2>Course Outline (Part 2)</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          Course Outline
+          The aim of this course is to
+          • Successful development and implementation of all project's procedures
+          • Present a more organized and professional management style.
+          • Have more success completing your projects on time, and to budget.
+          • discover the tools and techniques that will help you optimize the systems development</div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          تكملة أهداف الكورس:
+          • <strong>تطبيق إجراءات المشروع بنجاح</strong> — مش بس كلام نظري، لأ هتطبق عملي
+          • <strong>أسلوب إدارة منظم واحترافي</strong> — هتتعلم تبقى organized في شغلك
+          • <strong>تخلص المشاريع في الوقت وفي الميزانية</strong> — وده الهدف الأساسي لأي PM
+          • <strong>أدوات وتقنيات</strong> — هتعرف tools بتساعدك تحسن الشغل وتسرعه
+        </div>
+      </div>
+
+      <!-- S6 -->
+      <div class="slide glass-card" id="s6">
+        <div class="slide-head"><span class="slide-num">6</span>
+          <h2>Skills and Some Goals of the Course</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          Skills and some goals of the course
+          • Managing a (software development) project, thus, requires specific competences, skills, and techniques
+          • Some of the questions you will be able to answer at the end of this course include:
+          ✓ How do I estimate how long it will take to complete a task?
+          ✓ How much am I going to charge for a project?
+          ✓ How do I keep the team motivated and ensure projects are fulfilling and an occasion to learn, grow, and
+          advance in one's career?
+          ✓ How do I deal with project risks?
+          ✓ How do I assess whether the project is on time, on budget, on schedule?
+          ✓ How do I control the quality of the final output?</div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          بعد الكورس هتقدر تجاوب على أسئلة زي:
+          • <strong>التقدير الزمني</strong> — المهمة دي هتاخد كام يوم؟ (Estimation)
+          • <strong>التسعير</strong> — المشروع هيكلف كام؟ (Cost Management)
+          • <strong>تحفيز الفريق</strong> — إزاي تخلي الناس متحمسة وبتتعلم (HR Management)
+          • <strong>التعامل مع المخاطر</strong> — لو حصل مشكلة أعمل إيه (Risk Management)
+          • <strong>متابعة المشروع</strong> — هل ماشيين صح ولا لأ (Monitoring & Control)
+          • <strong>ضبط الجودة</strong> — الناتج النهائي كويس كفاية ولا لأ (Quality)
+
+          كل سؤال من دول هو مجال كامل في إدارة المشاريع.
+        </div>
+      </div>
+
+      <!-- S7 -->
+      <div class="slide glass-card" id="s7">
+        <div class="slide-head"><span class="slide-num">7</span>
+          <h2>What is a Project?</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          What is a project
+          • project is a temporary endeavor undertaken to create a unique product, service, or result (PMBOK® Guide,
+          fourth Edition, 2008, p. 5)
+          • Operations is work done to sustain the business</div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          يعني إيه "مشروع"؟ حسب كتاب PMBOK (وده الكتاب المرجعي في المجال):
+          المشروع هو <strong>مجهود مؤقت</strong> (ليه بداية ونهاية) عشان يطلع <strong>حاجة فريدة</strong> — سواء منتج أو
+          خدمة أو نتيجة.
+
+          الفرق بين المشروع والعمليات (Operations): المشروع مؤقت ومميز (زي ما تبني تطبيق جديد)، لكن العمليات مستمرة
+          ومتكررة (زي ما تصون السيرفرات كل يوم). لما التطبيق يتنشر وتبدأ تعمله صيانة — ده بقى operations مش project.
+        </div>
+        <div class="diagram">
+          <svg viewBox="0 0 480 100" style="max-width:460px">
+            <rect x="10" y="10" width="195" height="80" rx="12" fill="rgba(99,102,241,0.08)" stroke="#6366f1"
+              stroke-width="2" />
+            <text x="107" y="40" text-anchor="middle" fill="#6366f1" font-weight="bold" font-size="14"
+              font-family="Inter">📋 Project</text>
+            <text x="107" y="60" text-anchor="middle" fill="#94a3b8" font-size="11" font-family="Inter">Temporary +
+              Unique</text>
+            <text x="107" y="76" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="Inter">Start & End
+              date</text>
+            <text x="240" y="55" text-anchor="middle" fill="#f59e0b" font-weight="bold" font-size="16">VS</text>
+            <rect x="275" y="10" width="195" height="80" rx="12" fill="rgba(167,139,250,0.08)" stroke="#a78bfa"
+              stroke-width="2" />
+            <text x="372" y="40" text-anchor="middle" fill="#a78bfa" font-weight="bold" font-size="14"
+              font-family="Inter">⚙️ Operations</text>
+            <text x="372" y="60" text-anchor="middle" fill="#94a3b8" font-size="11" font-family="Inter">Ongoing +
+              Repetitive</text>
+            <text x="372" y="76" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="Inter">Runs
+              continuously</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- S8 -->
+      <div class="slide glass-card" id="s8">
+        <div class="slide-head"><span class="slide-num">8</span>
+          <h2>Characteristics of a Project</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          Characteristics of a Project
+          • Temporary
+          • Definitive begin and end (either because the goals are met or the project is closed - goals cannot or will
+          not be met)
+          • Projects' results are not necessarily temporary (see project and product lifecycle)
+          • Unique products, service, or result
+          • A product which is quantifiable (e.g. a component, …)
+          • A capability to perform a service, such as a business function
+          • A result, such as knowledge (collected in documents, presentations, …)
+          • Progressive elaboration
+          • Resource-constrained (like everything else in life)</div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          خصائص أي مشروع — 4 حاجات:
+          1️⃣ <strong>مؤقت (Temporary)</strong> — ليه بداية ونهاية. ممكن ينتهي لأن الأهداف اتحققت أو لأن المشروع اتلغى.
+          بس خلي بالك: نتيجة المشروع مش لازم تكون مؤقتة — يعني التطبيق اللي بنيته هيفضل شغال بعد ما المشروع يخلص.
+          2️⃣ <strong>فريد (Unique)</strong> — بينتج حاجة مختلفة: منتج ملموس أو خدمة أو نتيجة زي بحث أو دراسة.
+          3️⃣ <strong>تدريجي (Progressive Elaboration)</strong> — التفاصيل بتتوضح أكتر كل ما المشروع يتقدم. في الأول
+          بتكون فكرة عامة وبعدين بتتحدد أكتر.
+          4️⃣ <strong>محدود الموارد (Resource-constrained)</strong> — كل مشروع عنده حدود: فلوس، وقت، ناس. مفيش حاجة
+          ببلاش.
+        </div>
+        <div class="tips green"><span class="tag">🎯 النقاط المهمة</span>
+          <ul>
+            <li>المشروع مؤقت لكن نتيجته ممكن تدوم</li>
+            <li>Progressive elaboration = التفاصيل بتتوضح مع الوقت</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- S9 -->
+      <div class="slide glass-card" id="s9">
+        <div class="slide-head"><span class="slide-num">9</span>
+          <h2>What Do Projects Consist Of?</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          What do projects consist of?
+          • list of the most important elements
+          ✓ Goal,
+          ✓ Success criteria,
+          ✓ Requirements,
+          ✓ Team,
+          ✓ Scope of work,
+          ✓ Budget,
+          ✓ Resources,
+          ✓ Schedule.</div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          أي مشروع لازم يكون فيه 8 عناصر أساسية:
+          • <strong>الهدف (Goal)</strong> — عايزين نحقق إيه بالظبط
+          • <strong>معايير النجاح (Success Criteria)</strong> — إزاي نعرف إن المشروع نجح
+          • <strong>المتطلبات (Requirements)</strong> — إيه اللي محتاجينه
+          • <strong>الفريق (Team)</strong> — مين هيشتغل
+          • <strong>نطاق العمل (Scope)</strong> — حدود المشروع — إيه جوا وإيه برا
+          • <strong>الميزانية (Budget)</strong> — كام فلوس
+          • <strong>الموارد (Resources)</strong> — أدوات وأجهزة
+          • <strong>الجدول الزمني (Schedule)</strong> — مين يعمل إيه وامتى
+
+          أي عنصر ناقص = مشكلة هتظهر بعدين.
+        </div>
+      </div>
+
+      <!-- S10 -->
+      <div class="slide glass-card" id="s10">
+        <div class="slide-head"><span class="slide-num">10</span>
+          <h2>Project Management Context</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          Project Management Context
+          Subprojects
+          • Projects may be divided in subprojects (although the subprojects may be referred to as "projects" and
+          managed as such)
+
+          Program Management
+          • A program is a collection of related projects, processes, and activities managed as a group to accomplish a
+          common objective.
+          • Program management is strategizing and coordinating programs to achieve initiatives and deliver change to an
+          organization</div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          المشروع مش بيكون لوحده — بيكون جزء من سياق أكبر:
+          • <strong>المشاريع الفرعية (Subprojects)</strong> — المشروع الكبير بيتقسم لأجزاء أصغر. كل جزء ممكن يتدار
+          لوحده.
+          • <strong>البرنامج (Program)</strong> — مجموعة مشاريع مرتبطة ببعض بتتدار مع بعض عشان يحققوا هدف واحد. مثلاً
+          شركة عندها "برنامج التحول الرقمي" جواه 5 مشاريع مختلفة كلهم بيخدموا نفس الهدف.
+          • <strong>إدارة البرامج (Program Management)</strong> — التخطيط الاستراتيجي والتنسيق بين البرامج عشان تحقق
+          تغيير حقيقي في المنظمة.
+        </div>
+      </div>
+
+      <!-- S11 -->
+      <div class="slide glass-card" id="s11">
+        <div class="slide-head"><span class="slide-num">11</span>
+          <h2>Portfolios and Portfolio Management</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          Portfolios and Portfolio Management
+          • Collection of unrelated projects or programs and other work grouped together to facilitate management and
+          meet strategic objectives
+          • Put another way, projects fit within larger programs, which themselves fit within portfolios.</div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          الترتيب من الأصغر للأكبر:
+          <strong>مشروع (Project)</strong> ← جوا <strong>برنامج (Program)</strong> ← جوا <strong>محفظة
+            (Portfolio)</strong>
+
+          المحفظة هي مجموعة من المشاريع والبرامج — حتى لو مش مرتبطة ببعض — بتتدار مع بعض عشان تحقق أهداف استراتيجية
+          للمنظمة.
+
+          يعني تخيل شركة عندها: مشروع تطبيق موبايل، ومشروع تجديد الموقع، وبرنامج تطوير الموظفين — كل دول مع بعض بيعملوا
+          الـ Portfolio.
+        </div>
+        <div class="diagram">
+          <svg viewBox="0 0 540 160" style="max-width:520px">
+            <rect x="10" y="40" width="130" height="70" rx="10" fill="rgba(56,189,248,0.08)" stroke="#38bdf8"
+              stroke-width="2" />
+            <text x="75" y="80" text-anchor="middle" fill="#38bdf8" font-weight="bold" font-size="13"
+              font-family="Inter">Project</text>
+            <line x1="140" y1="75" x2="175" y2="75" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)" />
+            <rect x="175" y="30" width="140" height="90" rx="10" fill="rgba(99,102,241,0.08)" stroke="#6366f1"
+              stroke-width="2" />
+            <text x="245" y="70" text-anchor="middle" fill="#6366f1" font-weight="bold" font-size="13"
+              font-family="Inter">Program</text>
+            <text x="245" y="90" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="Inter">Related
+              projects</text>
+            <line x1="315" y1="75" x2="350" y2="75" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)" />
+            <rect x="350" y="20" width="170" height="110" rx="10" fill="rgba(167,139,250,0.08)" stroke="#a78bfa"
+              stroke-width="2" />
+            <text x="435" y="65" text-anchor="middle" fill="#a78bfa" font-weight="bold" font-size="13"
+              font-family="Inter">Portfolio</text>
+            <text x="435" y="85" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="Inter">Strategic
+              alignment</text>
+            <text x="435" y="100" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="Inter">All org's
+              work</text>
+            <defs>
+              <marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                <path d="M0,0 L8,3 L0,6" fill="#94a3b8" />
+              </marker>
+            </defs>
+          </svg>
+        </div>
+      </div>
+
+      <!-- S12 -->
+      <div class="slide glass-card" id="s12">
+        <div class="slide-head"><span class="slide-num">12</span>
+          <h2>Types of "Software" Development Projects</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          Type of "Software" Development Projects
+          In your life as a project manager you might be involved in different types of "software" development projects,
+          among which:
+          • Application Development
+          • Process and Systems Re-Engineering
+          • System Integration
+          • Consulting Services
+          • Installation and Training</div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          كمدير مشروع ممكن تشتغل على خمس أنواع من المشاريع:
+          1️⃣ <strong>تطوير تطبيقات</strong> — بناء تطبيقات ويب أو موبايل أو ديسكتوب
+          2️⃣ <strong>إعادة هندسة النظم</strong> — تغيير طريقة عمل المنظمة لتحسين الأداء
+          3️⃣ <strong>دمج النظم</strong> — ربط أنظمة مختلفة مع بعض عشان تتكلم
+          4️⃣ <strong>خدمات استشارية</strong> — خبرة خارجية لمشكلة معينة
+          5️⃣ <strong>تركيب وتدريب</strong> — تنصيب أنظمة وتعليم الناس تستخدمها
+
+          كل نوع ليه تحدياته الخاصة وطريقة إدارته مختلفة.
+        </div>
+      </div>
+
+      <!-- S13 -->
+      <div class="slide glass-card" id="s13">
+        <div class="slide-head"><span class="slide-num">13</span>
+          <h2>Application Development</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          Application Development
+          Goal: developing an application (desktop, web, mobile, embedded)
+          Types of application development:
+          • One-offs: systems specifically created for a client
+          • Off-the-shelf: to fill the need of a large set of users
+          • Customized off-the-shelf: standardized systems that require a significant amount of customization to be used
+          in an organization.
+          Example: Enterprise Resource Planning (ERP) systems</div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          تطوير التطبيقات نفسه ليه 3 أنواع:
+          • <strong>One-offs</strong> — نظام مصنوع خصيصاً لعميل واحد. زي شركة طلبت تطبيق مخصوص ليها.
+          • <strong>Off-the-shelf</strong> — برنامج جاهز لفئة كبيرة من المستخدمين. زي Microsoft Word أو Photoshop.
+          • <strong>Customized off-the-shelf</strong> — نظام جاهز بس بيحتاج تعديلات كتير عشان يناسب المنظمة. أشهر مثال:
+          أنظمة <strong>ERP</strong>. النظام جاهز لكن كل شركة بتعدله على مقاسها.
+        </div>
+      </div>
+
+      <!-- S14 -->
+      <div class="slide glass-card" id="s14">
+        <div class="slide-head"><span class="slide-num">14</span>
+          <h2>Process and Systems Re-Engineering</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          Process and Systems Re-Engineering
+          Goal: change the way in which the operational work of an organization is carried out to achieve some strategic
+          goal (e.g., improve quality, become more efficient)
+          • Typically large projects which involve an accurate analysis of the existing situation ("as is") w.r.t.
+          procedures, systems, infrastructure
+          • Often, they support the introduction of an ERP system and require system and data integration activities
+        </div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          الهدف هنا تغيير طريقة عمل المنظمة — مش بس تبني نظام جديد، لأ تغير الـ"عمليات" نفسها.
+
+          يعني مثلاً شركة عايزة تحسن كفاءتها: لازم الأول تحلل الوضع الحالي ("as is") — يعني الإجراءات والنظم والبنية
+          التحتية اللي موجودة دلوقتي — وبعدين تصمم الوضع الجديد.
+
+          المشاريع دي عادةً كبيرة ومعقدة، وكتير بتكون مرتبطة بتركيب نظام ERP جديد.
+        </div>
+      </div>
+
+      <!-- S15 -->
+      <div class="slide glass-card" id="s15">
+        <div class="slide-head"><span class="slide-num">15</span>
+          <h2>System Integration Services</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          System Integration Services
+          Goal: automating the information flow among the systems of an organization
+          Types of integration:
+          • Horizontal: integration of systems performing similar operations
+          • Vertical: integration of systems automating different steps of a procedure</div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          الهدف من دمج النظم هو إن المعلومات تتحرك أوتوماتيك بين أنظمة المنظمة المختلفة. نوعين:
+          • <strong>أفقي (Horizontal)</strong> — ربط أنظمة بتعمل عمليات متشابهة. مثلاً ربط نظام المبيعات في فرع القاهرة
+          بنظام المبيعات في فرع الإسكندرية.
+          • <strong>رأسي (Vertical)</strong> — ربط أنظمة بتعمل خطوات مختلفة في نفس الإجراء. مثلاً ربط نظام الطلبات بنظام
+          المخازن بنظام الشحن.
+        </div>
+        <div class="diagram">
+          <svg viewBox="0 0 500 200" style="max-width:460px">
+            <!-- Horizontal -->
+            <text x="120" y="25" text-anchor="middle" fill="#38bdf8" font-weight="bold" font-size="13"
+              font-family="Inter">Horizontal Integration</text>
+            <rect x="10" y="40" width="80" height="45" rx="6" fill="rgba(56,189,248,0.1)" stroke="#38bdf8"
+              stroke-width="1.5" />
+            <text x="50" y="68" text-anchor="middle" fill="#38bdf8" font-size="10" font-family="Inter">Sales A</text>
+            <line x1="90" y1="62" x2="120" y2="62" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4" />
+            <rect x="120" y="40" width="80" height="45" rx="6" fill="rgba(56,189,248,0.1)" stroke="#38bdf8"
+              stroke-width="1.5" />
+            <text x="160" y="68" text-anchor="middle" fill="#38bdf8" font-size="10" font-family="Inter">Sales B</text>
+            <!-- Vertical -->
+            <text x="380" y="25" text-anchor="middle" fill="#a78bfa" font-weight="bold" font-size="13"
+              font-family="Inter">Vertical Integration</text>
+            <rect x="340" y="40" width="80" height="38" rx="6" fill="rgba(167,139,250,0.1)" stroke="#a78bfa"
+              stroke-width="1.5" />
+            <text x="380" y="64" text-anchor="middle" fill="#a78bfa" font-size="10" font-family="Inter">Orders</text>
+            <line x1="380" y1="78" x2="380" y2="95" stroke="#a78bfa" stroke-width="2" marker-end="url(#arrow2)" />
+            <rect x="340" y="95" width="80" height="38" rx="6" fill="rgba(167,139,250,0.1)" stroke="#a78bfa"
+              stroke-width="1.5" />
+            <text x="380" y="119" text-anchor="middle" fill="#a78bfa" font-size="10"
+              font-family="Inter">Inventory</text>
+            <line x1="380" y1="133" x2="380" y2="150" stroke="#a78bfa" stroke-width="2" marker-end="url(#arrow2)" />
+            <rect x="340" y="150" width="80" height="38" rx="6" fill="rgba(167,139,250,0.1)" stroke="#a78bfa"
+              stroke-width="1.5" />
+            <text x="380" y="174" text-anchor="middle" fill="#a78bfa" font-size="10" font-family="Inter">Shipping</text>
+            <defs>
+              <marker id="arrow2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                <path d="M0,0 L8,3 L0,6" fill="#a78bfa" />
+              </marker>
+            </defs>
+          </svg>
+        </div>
+      </div>
+
+      <!-- S16 -->
+      <div class="slide glass-card" id="s16">
+        <div class="slide-head"><span class="slide-num">16</span>
+          <h2>Why System Integration?</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          System Integration Services …
+          Why do we need system integration?
+          System integration can help solve several common business problems:
+          • Poor productivity because of complicated access to data and redundant tasks across siloed infrastructure
+          • Uninformed decision-making and errors
+          • High cost of developing or transitioning to a new system</div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          ليه محتاجين دمج النظم أصلاً؟ عشان المشاكل دي:
+          • <strong>إنتاجية ضعيفة</strong> — لما البيانات متفرقة في أنظمة مش متصلة، الموظفين بيضيعوا وقت كتير وبيعملوا
+          حاجات مكررة
+          • <strong>قرارات غلط</strong> — لما المعلومات مش متاحة أو مش دقيقة بتاخد قرارات غلط
+          • <strong>تكلفة عالية</strong> — بناء نظام جديد من الصفر غالي، فالدمج ممكن يكون حل أرخص
+
+          بشكل عام: الدمج بيوفر وقت وفلوس وبيحسن الجودة.
+        </div>
+      </div>
+
+      <!-- S17 -->
+      <div class="slide glass-card" id="s17">
+        <div class="slide-head"><span class="slide-num">17</span>
+          <h2>Other Types of Projects</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          Other types of Projects
+          Consulting Services
+          • Typically asked to gain a know-how outside a company's core competence
+
+          Installation and Training Services
+          • Services related to the installation or training on specific software systems
+          • Remark: also a revenue model in open source development</div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          نوعين تاني:
+          <strong>خدمات الاستشارة (Consulting)</strong> — لما شركة محتاجة خبرة مش موجودة عندها. يعني المحامي مش هيعرف
+          يعمل data migration لوحده فبيجيب consultant يساعده.
+
+          <strong>التركيب والتدريب (Installation & Training)</strong> — مش بس هتبني النظام، كمان هتركبه عند العميل وتدرب
+          الناس عليه. حاجة مهمة: في شركات الـ Open Source، التدريب والتركيب ده هو مصدر الفلوس الأساسي — البرنامج ببلاش
+          بس الخدمة بفلوس!
+        </div>
+      </div>
+
+      <!-- S18 -->
+      <div class="slide glass-card" id="s18">
+        <div class="slide-head"><span class="slide-num">18</span>
+          <h2>A Project Stakeholder</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          A project stakeholders
+          A project stakeholder is any individual or an organization that is actively involved in a project, or whose
+          interest might be affected (positively or negatively) as a result of project execution or completion.</div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          الـ <strong>Stakeholder</strong> هو أي شخص أو منظمة ليها علاقة بالمشروع — سواء مشاركة فعلاً في الشغل أو بس
+          المشروع ممكن يأثر عليها (إيجابياً أو سلبياً).
+
+          يعني لو بتعمل تطبيق لبنك: الـ developers، مدير المشروع، البنك (العميل)، حتى عملاء البنك (المستخدمين النهائيين)
+          — كلهم stakeholders. لازم تحط في حسابك كل واحد فيهم.
+        </div>
+      </div>
+
+      <!-- S19 -->
+      <div class="slide glass-card" id="s19">
+        <div class="slide-head"><span class="slide-num">19</span>
+          <h2>Types of Stakeholders</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          Types of Stakeholders
+          • The project manager
+          • The project team
+          • The project sponsor
+          • The performing organizations
+          • The partners
+          • The client
+          • The "rest": anyone who might be affected by the project outputs</div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          أنواع أصحاب المصلحة:
+          • <strong>مدير المشروع</strong> — اللي بيدير كل حاجة (أنت يعني!)
+          • <strong>فريق المشروع</strong> — المطورين والمصممين والمختبرين
+          • <strong>الراعي (Sponsor)</strong> — اللي بيمول المشروع — صاحب الفلوس
+          • <strong>المنظمة المنفذة</strong> — الشركة اللي بتعمل الشغل
+          • <strong>الشركاء</strong> — أطراف خارجية بتتعاون معاك
+          • <strong>العميل</strong> — اللي طلب المشروع
+          • <strong>الباقي</strong> — أي حد ممكن يتأثر — زي المستخدمين النهائيين أو حتى المنافسين
+        </div>
+      </div>
+
+      <!-- S20 -->
+      <div class="slide glass-card" id="s20">
+        <div class="slide-head"><span class="slide-num">20</span>
+          <h2>Key Stakeholders</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          Key Stakeholders
+          Internal:
+          • Project team members: the group performing the work
+          • Project management team: the members of the team directly involved in project management
+
+          External:
+          • Influencers: people or groups not directly related to the project who could influence the course of a
+          project
+
+          In between:
+          • Customer/User: person or organization that will use the results of a project. There may be multiple layers
+          of users
+          • Sponsor: person or group providing the financial resources
+          • Performing Organization: the organization mostly involved in the project</div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          الـ Key stakeholders بينقسموا لـ 3:
+          <strong>داخليين (Internal):</strong>
+          • أعضاء فريق المشروع — اللي بيشتغلوا فعلاً
+          • فريق إدارة المشروع — اللي بيديروا ويتابعوا
+
+          <strong>خارجيين (External):</strong>
+          • المؤثرين — ناس مش في المشروع بس ممكن يأثروا عليه. مثلاً الجهات الحكومية أو الإعلام.
+
+          <strong>في النص (In between):</strong>
+          • العميل/المستخدم — اللي هيستخدم النتيجة
+          • الراعي (Sponsor) — اللي بيدفع الفلوس
+          • المنظمة المنفذة — الشركة الأساسية
+        </div>
+      </div>
+
+      <!-- S21 -->
+      <div class="slide glass-card" id="s21">
+        <div class="slide-head"><span class="slide-num">21</span>
+          <h2>The Project Manager (You!)</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          The Project Manager (you)
+          Project Manager: Person responsible of managing the project and stakeholders' expectations
+
+          Some skills:
+          • Communication and negotiation skills
+          • A little predisposition to risk
+          • Goal orientation
+          • Leadership
+          • A bit of thinking outside the schemes
+          • Professional correctness
+          • A lot of common sense</div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          إنت كمدير مشروع — مسؤول عن إدارة المشروع و<strong>توقعات كل الأطراف</strong>. ودي المهارات اللي محتاجها:
+          • <strong>التواصل والتفاوض</strong> — لازم تعرف تتكلم مع كل الناس
+          • <strong>تقبل المخاطرة</strong> — مفيش حاجة مضمونة 100%
+          • <strong>التركيز على الهدف</strong> — متتوهش وسط التفاصيل
+          • <strong>القيادة</strong> — تعرف توجه الفريق
+          • <strong>التفكير الإبداعي</strong> — أحياناً الحل العادي مش كفاية
+          • <strong>الاحترافية</strong> — تتعامل بشكل صحيح ومهني
+          • <strong>العقل والمنطق</strong> — أهم حاجة صراحةً!
+
+          يعني مش بس تقني — لازم تكون بني آدم كويس في التعامل.
+        </div>
+      </div>
+
+      <!-- S22 Program Manager Diagram -->
+      <div class="slide glass-card" id="s22">
+        <div class="slide-head"><span class="slide-num">22</span>
+          <h2>What Does a Program Manager Do?</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          What does a program manager do?
+          Center: Program manager
+          Surrounding Activities:
+          • Support decisions
+          • Evaluate the portfolio
+          • Manage risks
+          • Run the program
+          • Engage with stakeholders
+          • Refine the operating model</div>
+        <div class="diagram">
+          <svg viewBox="0 0 560 440" style="max-width:540px">
+            <!-- Center Person -->
+            <circle cx="280" cy="220" r="48" fill="rgba(99,102,241,0.15)" stroke="#6366f1" stroke-width="2.5" />
+            <circle cx="280" cy="200" r="16" fill="#6366f1" />
+            <path d="M258,230 Q258,250 280,250 Q302,250 302,230" fill="#6366f1" opacity="0.8" />
+            <text x="280" y="275" text-anchor="middle" fill="#6366f1" font-weight="800" font-size="14"
+              font-family="Inter">Program</text>
+            <text x="280" y="292" text-anchor="middle" fill="#6366f1" font-weight="800" font-size="14"
+              font-family="Inter">Manager</text>
+            <!-- Support decisions (top-left) -->
+            <line x1="245" y1="185" x2="155" y2="95" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="4" />
+            <circle cx="120" cy="70" r="38" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-width="2" />
+            <text x="120" y="66" text-anchor="middle" fill="#38bdf8" font-size="18">👍</text>
+            <text x="120" y="125" text-anchor="middle" fill="#e2e8f0" font-weight="600" font-size="11"
+              font-family="Inter">Support</text>
+            <text x="120" y="139" text-anchor="middle" fill="#e2e8f0" font-weight="600" font-size="11"
+              font-family="Inter">decisions</text>
+            <!-- Evaluate portfolio (top-right) -->
+            <line x1="315" y1="185" x2="405" y2="95" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="4" />
+            <circle cx="440" cy="70" r="38" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-width="2" />
+            <text x="440" y="66" text-anchor="middle" fill="#38bdf8" font-size="18">💼</text>
+            <text x="440" y="125" text-anchor="middle" fill="#e2e8f0" font-weight="600" font-size="11"
+              font-family="Inter">Evaluate</text>
+            <text x="440" y="139" text-anchor="middle" fill="#e2e8f0" font-weight="600" font-size="11"
+              font-family="Inter">the portfolio</text>
+            <!-- Refine operating model (left) -->
+            <line x1="235" y1="220" x2="138" y2="220" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="4" />
+            <circle cx="100" cy="220" r="38" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-width="2" />
+            <text x="100" y="216" text-anchor="middle" fill="#38bdf8" font-size="18">🔧</text>
+            <text x="100" y="275" text-anchor="middle" fill="#e2e8f0" font-weight="600" font-size="11"
+              font-family="Inter">Refine the</text>
+            <text x="100" y="289" text-anchor="middle" fill="#e2e8f0" font-weight="600" font-size="11"
+              font-family="Inter">operating model</text>
+            <!-- Manage risks (right) -->
+            <line x1="325" y1="220" x2="422" y2="220" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="4" />
+            <circle cx="460" cy="220" r="38" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-width="2" />
+            <text x="460" y="216" text-anchor="middle" fill="#38bdf8" font-size="18">💣</text>
+            <text x="460" y="275" text-anchor="middle" fill="#e2e8f0" font-weight="600" font-size="11"
+              font-family="Inter">Manage</text>
+            <text x="460" y="289" text-anchor="middle" fill="#e2e8f0" font-weight="600" font-size="11"
+              font-family="Inter">risks</text>
+            <!-- Engage stakeholders (bottom-left) -->
+            <line x1="245" y1="255" x2="155" y2="345" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="4" />
+            <circle cx="120" cy="370" r="38" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-width="2" />
+            <text x="120" y="366" text-anchor="middle" fill="#38bdf8" font-size="18">👥</text>
+            <text x="120" y="425" text-anchor="middle" fill="#e2e8f0" font-weight="600" font-size="11"
+              font-family="Inter">Engage with</text>
+            <text x="120" y="439" text-anchor="middle" fill="#e2e8f0" font-weight="600" font-size="11"
+              font-family="Inter">stakeholders</text>
+            <!-- Run the program (bottom-right) -->
+            <line x1="315" y1="255" x2="405" y2="345" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="4" />
+            <circle cx="440" cy="370" r="38" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-width="2" />
+            <text x="440" y="366" text-anchor="middle" fill="#38bdf8" font-size="18">🔄</text>
+            <text x="440" y="425" text-anchor="middle" fill="#e2e8f0" font-weight="600" font-size="11"
+              font-family="Inter">Run the</text>
+            <text x="440" y="439" text-anchor="middle" fill="#e2e8f0" font-weight="600" font-size="11"
+              font-family="Inter">program</text>
+          </svg>
+        </div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          مدير البرنامج عنده 6 مسؤوليات رئيسية:
+          • <strong>دعم القرارات</strong> — يساعد الإدارة تاخد قرارات صح
+          • <strong>تقييم المحفظة</strong> — يراجع هل المشاريع ماشية صح ولا لأ
+          • <strong>إدارة المخاطر</strong> — يحدد المشاكل المحتملة ويجهز حلول
+          • <strong>تشغيل البرنامج</strong> — يتابع الشغل اليومي ويتأكد إن كل مشروع ماشي
+          • <strong>التواصل مع الأطراف المعنية</strong> — يفضل على تواصل مع كل الناس
+          • <strong>تحسين نموذج العمل</strong> — يطور طريقة إدارة الشغل باستمرار
+        </div>
+      </div>
+
+      <!-- S23 SMP Concerns -->
+      <div class="slide glass-card" id="s23">
+        <div class="slide-head"><span class="slide-num">23</span>
+          <h2>Some Concerns of Software PM</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          Some Concerns of SMP
+          • Feasibility Assessment
+          • Goals (Scope) Management
+          • Time Management
+          • Cost Management
+          • Change Control and Configuration Management
+          • Quality Management
+          • Risk Management
+          • Human Resource Management</div>
+        <div class="grid-2" style="margin:.75rem 0">
+          <div class="info-card">
+            <h4><span style="color:var(--primary)">📋</span> Feasibility Assessment</h4>
+            <p style="font-size:.8rem;color:var(--muted)">Is the project doable?</p>
+          </div>
+          <div class="info-card">
+            <h4><span style="color:var(--accent)">🎯</span> Scope Management</h4>
+            <p style="font-size:.8rem;color:var(--muted)">Define what's in/out</p>
+          </div>
+          <div class="info-card">
+            <h4><span style="color:var(--amber)">⏰</span> Time Management</h4>
+            <p style="font-size:.8rem;color:var(--muted)">Schedule & deadlines</p>
+          </div>
+          <div class="info-card">
+            <h4><span style="color:var(--green)">💰</span> Cost Management</h4>
+            <p style="font-size:.8rem;color:var(--muted)">Budget control</p>
+          </div>
+          <div class="info-card">
+            <h4><span style="color:var(--teal)">🔄</span> Change & Config Mgt</h4>
+            <p style="font-size:.8rem;color:var(--muted)">Handle changes properly</p>
+          </div>
+          <div class="info-card">
+            <h4><span style="color:var(--sky)">✅</span> Quality Management</h4>
+            <p style="font-size:.8rem;color:var(--muted)">Meet quality standards</p>
+          </div>
+          <div class="info-card">
+            <h4><span style="color:var(--red)">⚠️</span> Risk Management</h4>
+            <p style="font-size:.8rem;color:var(--muted)">Identify & mitigate risks</p>
+          </div>
+          <div class="info-card">
+            <h4><span style="color:var(--pink)">👥</span> HR Management</h4>
+            <p style="font-size:.8rem;color:var(--muted)">Team & skills</p>
+          </div>
+        </div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          دي المجالات الـ8 اللي بيهتم بيها مدير مشروع البرمجيات:
+          دراسة الجدوى، إدارة النطاق، الوقت، التكلفة، التغيير، الجودة، المخاطر، والموارد البشرية. كل واحد فيهم هنتكلم
+          عنه بالتفصيل إن شاء الله في المحاضرات الجاية.
+        </div>
+      </div>
+
+      <!-- S24 Project Lifecycle -->
+      <div class="slide glass-card" id="s24">
+        <div class="slide-head"><span class="slide-num">24</span>
+          <h2>Project Lifecycle</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          project lifecycle
+          Vertical Axis: EFFORT | Horizontal Axis: TIME
+          Flow: initiation → planning → execution → close out
+          Control spans across all phases.
+          Each phase has an overlapping effort curve — initiation is smallest, execution is the peak, close out is small
+          again. A control dotted line spans the entire duration.</div>
+        <div class="diagram">
+          <svg viewBox="0 0 700 380" style="max-width:680px">
+            <!-- Axes -->
+            <line x1="80" y1="300" x2="650" y2="300" stroke="#475569" stroke-width="2" />
+            <line x1="80" y1="300" x2="80" y2="40" stroke="#475569" stroke-width="2" />
+            <text x="40" y="170" fill="#94a3b8" font-weight="bold" font-size="13" font-family="Inter"
+              transform="rotate(-90,40,170)">EFFORT</text>
+            <text x="380" y="340" text-anchor="middle" fill="#94a3b8" font-weight="bold" font-size="13"
+              font-family="Inter">TIME</text>
+            <!-- Phase boxes at top -->
+            <rect x="105" y="15" width="110" height="32" rx="16" fill="rgba(244,114,182,0.12)" stroke="#f472b6"
+              stroke-width="1.5" />
+            <text x="160" y="37" text-anchor="middle" fill="#f472b6" font-weight="600" font-size="12"
+              font-family="Inter">initiation</text>
+            <text x="230" y="37" fill="#475569" font-size="16">→</text>
+            <rect x="245" y="15" width="110" height="32" rx="16" fill="rgba(250,204,21,0.12)" stroke="#facc15"
+              stroke-width="1.5" />
+            <text x="300" y="37" text-anchor="middle" fill="#facc15" font-weight="600" font-size="12"
+              font-family="Inter">planning</text>
+            <text x="370" y="37" fill="#475569" font-size="16">→</text>
+            <rect x="385" y="15" width="110" height="32" rx="16" fill="rgba(249,115,22,0.12)" stroke="#f97316"
+              stroke-width="1.5" />
+            <text x="440" y="37" text-anchor="middle" fill="#f97316" font-weight="600" font-size="12"
+              font-family="Inter">execution</text>
+            <text x="510" y="37" fill="#475569" font-size="16">→</text>
+            <rect x="525" y="15" width="110" height="32" rx="16" fill="rgba(34,197,94,0.12)" stroke="#22c55e"
+              stroke-width="1.5" />
+            <text x="580" y="37" text-anchor="middle" fill="#22c55e" font-weight="600" font-size="12"
+              font-family="Inter">close out</text>
+            <!-- Control arrow -->
+            <line x1="130" y1="62" x2="610" y2="62" stroke="#94a3b8" stroke-width="1.5" marker-start="url(#arwL)"
+              marker-end="url(#arwR)" />
+            <text x="370" y="58" text-anchor="middle" fill="#94a3b8" font-weight="600" font-size="12"
+              font-family="Inter">control</text>
+            <!-- Initiation curve (pink) -->
+            <path d="M100,295 Q130,265 160,200 Q190,265 230,290" fill="none" stroke="#f472b6" stroke-width="3.5"
+              stroke-linecap="round" />
+            <text x="160" y="190" text-anchor="middle" fill="#f472b6" font-weight="600" font-size="11"
+              font-family="Inter">initiation</text>
+            <!-- Planning curve (yellow) -->
+            <path d="M180,292 Q230,240 280,140 Q330,240 380,290" fill="none" stroke="#facc15" stroke-width="3.5"
+              stroke-linecap="round" />
+            <text x="280" y="128" text-anchor="middle" fill="#facc15" font-weight="700" font-size="12"
+              font-family="Inter">planning</text>
+            <!-- Execution curve (orange — tallest) -->
+            <path d="M300,290 Q380,200 430,80 Q480,200 550,288" fill="none" stroke="#f97316" stroke-width="4"
+              stroke-linecap="round" />
+            <text x="430" y="70" text-anchor="middle" fill="#f97316" font-weight="700" font-size="13"
+              font-family="Inter">execution</text>
+            <!-- Close Out curve (green) -->
+            <path d="M510,292 Q550,270 575,230 Q600,270 630,292" fill="none" stroke="#22c55e" stroke-width="3"
+              stroke-linecap="round" />
+            <text x="575" y="220" text-anchor="middle" fill="#22c55e" font-weight="600" font-size="11"
+              font-family="Inter">close out</text>
+            <!-- Control dotted line -->
+            <path d="M110,290 Q200,280 300,260 Q400,240 500,265 Q580,280 630,292" fill="none" stroke="#94a3b8"
+              stroke-width="2.5" stroke-dasharray="6,4" stroke-linecap="round" />
+            <text x="350" y="250" text-anchor="middle" fill="#94a3b8" font-style="italic" font-size="11"
+              font-family="Inter">control</text>
+            <defs>
+              <marker id="arwL" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto">
+                <path d="M8,0 L0,3 L8,6" fill="#94a3b8" />
+              </marker>
+              <marker id="arwR" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                <path d="M0,0 L8,3 L0,6" fill="#94a3b8" />
+              </marker>
+            </defs>
+          </svg>
+        </div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          الرسم ده بيوضح دورة حياة المشروع — المحور الرأسي هو المجهود (Effort) والأفقي هو الوقت (Time):
+          • <strong>Initiation</strong> — البداية: مجهود قليل، بتحدد الفكرة والجدوى
+          • <strong>Planning</strong> — التخطيط: المجهود بيزيد، بتحط الخطة التفصيلية
+          • <strong>Execution</strong> — التنفيذ: أعلى مجهود — الشغل الفعلي بيحصل هنا
+          • <strong>Close Out</strong> — الإغلاق: مجهود بيقل، بتسلم المشروع وتوثق الدروس المستفادة
+          • <strong>Control</strong> — الرقابة: خط مستمر على مدار المشروع كله — بتتابع وتراقب طول الوقت
+
+          لاحظ إن المنحنيات بتتداخل — يعني ممكن تكون لسه بتخطط وبدأت تنفذ في نفس الوقت.
+        </div>
+        <div class="tips green"><span class="tag">🎯 النقاط المهمة</span>
+          <ul>
+            <li>Execution هي أكتر مرحلة بتاخد مجهود</li>
+            <li>الرقابة (Control) مستمرة طول المشروع مش في مرحلة واحدة بس</li>
+            <li>المراحل بتتداخل مش بتبدأ واحدة لما التانية تخلص</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- S25 PM Framework -->
+      <div class="slide glass-card" id="s25">
+        <div class="slide-head"><span class="slide-num">25</span>
+          <h2>Project Management Framework</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          Project Management Framework
+          Left Side: Stakeholders' needs and expectations
+          Center (9 Knowledge Areas): Core Functions: Scope Mgt., Time Mgt., Cost Mgt., Quality Mgt.
+          Facilitating Functions: HR Mgt., Comm. Mgt., Risk Mgt., Procure. Mgt.
+          Middle Arrow: Project Integration Management
+          Right Side: Tools and techniques → Project Success</div>
+        <div class="diagram">
+          <svg viewBox="0 0 740 340" style="max-width:700px">
+            <!-- Left — Stakeholders -->
+            <rect x="10" y="120" width="100" height="100" rx="10" fill="rgba(167,139,250,0.1)" stroke="#a78bfa"
+              stroke-width="2" />
+            <text x="60" y="155" text-anchor="middle" fill="#a78bfa" font-weight="700" font-size="11"
+              font-family="Inter">Stakeholders'</text>
+            <text x="60" y="172" text-anchor="middle" fill="#a78bfa" font-weight="700" font-size="11"
+              font-family="Inter">needs &amp;</text>
+            <text x="60" y="189" text-anchor="middle" fill="#a78bfa" font-weight="700" font-size="11"
+              font-family="Inter">expectations</text>
+            <text x="60" y="210" text-anchor="middle" fill="#a78bfa" font-size="20">👥</text>
+            <line x1="110" y1="170" x2="140" y2="170" stroke="#94a3b8" stroke-width="2" marker-end="url(#a3)" />
+            <!-- Core Functions Box -->
+            <rect x="140" y="30" width="380" height="280" rx="12" fill="rgba(0,0,0,0.15)" stroke="#475569"
+              stroke-width="1.5" />
+            <text x="330" y="55" text-anchor="middle" fill="#e2e8f0" font-weight="800" font-size="14"
+              font-family="Inter">9 Knowledge Areas</text>
+            <!-- Core row label -->
+            <text x="330" y="80" text-anchor="middle" fill="#94a3b8" font-weight="600" font-size="11"
+              font-family="Inter">Core Functions</text>
+            <!-- Core boxes -->
+            <rect x="160" y="92" width="80" height="42" rx="6" fill="rgba(99,102,241,0.12)" stroke="#6366f1"
+              stroke-width="1.5" />
+            <text x="200" y="117" text-anchor="middle" fill="#6366f1" font-weight="700" font-size="11"
+              font-family="Inter">Scope</text>
+            <rect x="250" y="92" width="80" height="42" rx="6" fill="rgba(245,158,11,0.12)" stroke="#f59e0b"
+              stroke-width="1.5" />
+            <text x="290" y="117" text-anchor="middle" fill="#f59e0b" font-weight="700" font-size="11"
+              font-family="Inter">Time</text>
+            <rect x="340" y="92" width="80" height="42" rx="6" fill="rgba(34,197,94,0.12)" stroke="#22c55e"
+              stroke-width="1.5" />
+            <text x="380" y="117" text-anchor="middle" fill="#22c55e" font-weight="700" font-size="11"
+              font-family="Inter">Cost</text>
+            <rect x="430" y="92" width="80" height="42" rx="6" fill="rgba(56,189,248,0.12)" stroke="#38bdf8"
+              stroke-width="1.5" />
+            <text x="470" y="117" text-anchor="middle" fill="#38bdf8" font-weight="700" font-size="11"
+              font-family="Inter">Quality</text>
+            <!-- Integration arrow -->
+            <rect x="160" y="148" width="350" height="36" rx="8" fill="rgba(244,114,182,0.1)" stroke="#f472b6"
+              stroke-width="2" />
+            <text x="335" y="172" text-anchor="middle" fill="#f472b6" font-weight="800" font-size="12"
+              font-family="Inter">⟶ Project Integration Management ⟶</text>
+            <!-- Facilitating row -->
+            <text x="330" y="210" text-anchor="middle" fill="#94a3b8" font-weight="600" font-size="11"
+              font-family="Inter">Facilitating Functions</text>
+            <rect x="160" y="222" width="80" height="42" rx="6" fill="rgba(167,139,250,0.12)" stroke="#a78bfa"
+              stroke-width="1.5" />
+            <text x="200" y="247" text-anchor="middle" fill="#a78bfa" font-weight="700" font-size="11"
+              font-family="Inter">HR</text>
+            <rect x="250" y="222" width="80" height="42" rx="6" fill="rgba(20,184,166,0.12)" stroke="#14b8a6"
+              stroke-width="1.5" />
+            <text x="290" y="247" text-anchor="middle" fill="#14b8a6" font-weight="700" font-size="11"
+              font-family="Inter">Comm.</text>
+            <rect x="340" y="222" width="80" height="42" rx="6" fill="rgba(239,68,68,0.12)" stroke="#ef4444"
+              stroke-width="1.5" />
+            <text x="380" y="247" text-anchor="middle" fill="#ef4444" font-weight="700" font-size="11"
+              font-family="Inter">Risk</text>
+            <rect x="430" y="222" width="80" height="42" rx="6" fill="rgba(245,158,11,0.12)" stroke="#eab308"
+              stroke-width="1.5" />
+            <text x="470" y="247" text-anchor="middle" fill="#eab308" font-weight="700" font-size="11"
+              font-family="Inter">Procure.</text>
+            <!-- Right — Tools & Success -->
+            <line x1="520" y1="170" x2="545" y2="170" stroke="#94a3b8" stroke-width="2" marker-end="url(#a3)" />
+            <rect x="545" y="100" width="100" height="60" rx="10" fill="rgba(56,189,248,0.1)" stroke="#38bdf8"
+              stroke-width="1.5" />
+            <text x="595" y="125" text-anchor="middle" fill="#38bdf8" font-weight="700" font-size="11"
+              font-family="Inter">Tools &amp;</text>
+            <text x="595" y="142" text-anchor="middle" fill="#38bdf8" font-weight="700" font-size="11"
+              font-family="Inter">techniques</text>
+            <line x1="595" y1="160" x2="595" y2="185" stroke="#94a3b8" stroke-width="2" marker-end="url(#a3)" />
+            <rect x="545" y="185" width="100" height="50" rx="10" fill="rgba(34,197,94,0.1)" stroke="#22c55e"
+              stroke-width="2" />
+            <text x="595" y="208" text-anchor="middle" fill="#22c55e" font-weight="800" font-size="12"
+              font-family="Inter">Project</text>
+            <text x="595" y="225" text-anchor="middle" fill="#22c55e" font-weight="800" font-size="12"
+              font-family="Inter">Success ✅</text>
+            <defs>
+              <marker id="a3" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                <path d="M0,0 L8,3 L0,6" fill="#94a3b8" />
+              </marker>
+            </defs>
+          </svg>
+        </div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          الرسم ده بيوضح إطار عمل إدارة المشاريع — الصورة الكاملة:
+          البداية من <strong>احتياجات وتوقعات أصحاب المصلحة</strong> (يسار) — ودي بتدخل على الـ 9 مجالات المعرفية:
+          <strong>المجالات الأساسية (Core):</strong> النطاق، الوقت، التكلفة، الجودة — دول الأربع حاجات اللي لازم تديرهم
+          كويس.
+          <strong>المجالات المساعدة (Facilitating):</strong> الموارد البشرية، التواصل، المخاطر، المشتريات — دول بيدعموا
+          الأساسيات.
+          في النص فيه <strong>إدارة التكامل (Integration Management)</strong> — ودي بتربط كل حاجة ببعضها.
+          وفي الآخر بتطبق <strong>أدوات وتقنيات</strong> عشان توصل لـ<strong>نجاح المشروع</strong>.
+        </div>
+      </div>
+
+      <!-- S26 Communication Model -->
+      <div class="slide glass-card" id="s26">
+        <div class="slide-head"><span class="slide-num">26</span>
+          <h2>Model of Communication</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          Model of Communication (Sender-Receiver Model)
+          Sender: Encode → Message → Medium → Decode: Receiver
+          Receiver: Encode → Feedback-Message → Medium → Decode: Sender
+          Noise interferes with both Message and Feedback channels.</div>
+        <div class="diagram">
+          <svg viewBox="0 0 660 300" style="max-width:640px">
+            <!-- Sender Box -->
+            <rect x="20" y="60" width="180" height="180" rx="12" fill="rgba(99,102,241,0.08)" stroke="#6366f1"
+              stroke-width="2" />
+            <text x="110" y="90" text-anchor="middle" fill="#6366f1" font-weight="800" font-size="16"
+              font-family="Inter">Sender</text>
+            <rect x="50" y="105" width="100" height="35" rx="6" fill="rgba(99,102,241,0.15)" stroke="#6366f1"
+              stroke-width="1" />
+            <text x="100" y="128" text-anchor="middle" fill="#6366f1" font-weight="600" font-size="12"
+              font-family="Inter">Encode</text>
+            <rect x="50" y="185" width="100" height="35" rx="6" fill="rgba(167,139,250,0.15)" stroke="#a78bfa"
+              stroke-width="1" />
+            <text x="100" y="208" text-anchor="middle" fill="#a78bfa" font-weight="600" font-size="12"
+              font-family="Inter">Decode</text>
+            <!-- Receiver Box -->
+            <rect x="460" y="60" width="180" height="180" rx="12" fill="rgba(34,197,94,0.08)" stroke="#22c55e"
+              stroke-width="2" />
+            <text x="550" y="90" text-anchor="middle" fill="#22c55e" font-weight="800" font-size="16"
+              font-family="Inter">Receiver</text>
+            <rect x="490" y="105" width="100" height="35" rx="6" fill="rgba(34,197,94,0.15)" stroke="#22c55e"
+              stroke-width="1" />
+            <text x="540" y="128" text-anchor="middle" fill="#22c55e" font-weight="600" font-size="12"
+              font-family="Inter">Decode</text>
+            <rect x="490" y="185" width="100" height="35" rx="6" fill="rgba(20,184,166,0.15)" stroke="#14b8a6"
+              stroke-width="1" />
+            <text x="540" y="208" text-anchor="middle" fill="#14b8a6" font-weight="600" font-size="12"
+              font-family="Inter">Encode</text>
+            <!-- Message arrow (top) -->
+            <line x1="150" y1="122" x2="490" y2="122" stroke="#6366f1" stroke-width="2" marker-end="url(#a4)" />
+            <text x="330" y="112" text-anchor="middle" fill="#e2e8f0" font-weight="700" font-size="13"
+              font-family="Inter">Message</text>
+            <!-- Medium label -->
+            <rect x="270" y="140" width="120" height="25" rx="5" fill="rgba(255,255,255,0.05)" stroke="#475569"
+              stroke-width="1" />
+            <text x="330" y="158" text-anchor="middle" fill="#94a3b8" font-weight="600" font-size="11"
+              font-family="Inter">Medium</text>
+            <!-- Feedback arrow (bottom) -->
+            <line x1="490" y1="202" x2="150" y2="202" stroke="#14b8a6" stroke-width="2" marker-end="url(#a5)" />
+            <text x="330" y="228" text-anchor="middle" fill="#e2e8f0" font-weight="700" font-size="13"
+              font-family="Inter">Feedback — Message</text>
+            <!-- Noise -->
+            <text x="330" y="135" text-anchor="middle" fill="#ef4444" font-weight="700" font-size="10"
+              font-family="Inter">⚡ Noise ⚡</text>
+            <text x="330" y="197" text-anchor="middle" fill="#ef4444" font-weight="700" font-size="10"
+              font-family="Inter">⚡ Noise ⚡</text>
+            <defs>
+              <marker id="a4" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                <path d="M0,0 L8,3 L0,6" fill="#6366f1" />
+              </marker>
+              <marker id="a5" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto">
+                <path d="M8,0 L0,3 L8,6" fill="#14b8a6" />
+              </marker>
+            </defs>
+          </svg>
+        </div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          ده نموذج التواصل الكلاسيكي — وفهمه مهم لأي مدير مشروع:
+          1️⃣ <strong>المرسل (Sender)</strong> عنده فكرة → بيحولها لرسالة (Encode)
+          2️⃣ الرسالة بتتبعت عبر <strong>وسيط (Medium)</strong> — ممكن يكون إيميل، اجتماع، تليفون
+          3️⃣ <strong>المستقبل (Receiver)</strong> بيستلم الرسالة وبيفهمها (Decode)
+          4️⃣ المستقبل بيرد (Feedback) — وده بيمر بنفس العملية بالعكس
+          5️⃣ <strong>التشويش (Noise)</strong> — أي حاجة ممكن تأثر على الرسالة: سوء فهم، لغة مختلفة، إنترنت وحش...
+
+          في إدارة المشاريع: معظم المشاكل بتيجي من سوء التواصل. عشان كده لازم تختار الوسيط المناسب وتتأكد إن الرسالة
+          وصلت صح.
+        </div>
+      </div>
+
+      <!-- S27 Project Procurement Management -->
+      <div class="slide glass-card" id="s27">
+        <div class="slide-head"><span class="slide-num">27</span>
+          <h2>Project Procurement Management</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          Project Procurement Management</div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          ده عنوان القسم اللي بيتكلم عن <strong>إدارة المشتريات</strong> — يعني لو المشروع محتاج حاجات من برا (خدمات،
+          برمجيات، أجهزة) — إزاي تختار الموردين وتتعاقد معاهم ده كله بيتدار تحت عنوان Procurement Management.
+        </div>
+      </div>
+
+      <!-- S28 Procurement Process Flow -->
+      <div class="slide glass-card" id="s28">
+        <div class="slide-head"><span class="slide-num">28</span>
+          <h2>Project Procurement Process Flow</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          Project Procurement Process Flow
+          1. Clearly Define Business Needs → Issue RFI → Receive Information Reports → Evaluate Suppliers → Create
+          Short-list → Issue RFP/RFQ
+          (Note: Can be Part of RFP. Following Steps will occur after RFP)
+          2. Prepare SOW → Prepare RFP/RFQ/IFB → Issue RFP/RFQ
+          3. Prepare Contract
+          4. Issue RFP/RFQ → Host Bidders Conference → Receive Proposals/Quotations
+          5. Select Supplier and Offer (Fed by Prepare Contract and Receive Proposals)
+          6. Select Supplier and Offer → Negotiations → Sign Contract → Initial Payment
+          7. Delivery → Testing → Close-out → Final Payment</div>
+        <div class="diagram" style="overflow-x:auto">
+          <svg viewBox="0 0 760 480" style="min-width:700px;max-width:740px">
+            <!-- Row 1: Business Needs → Short-list -->
+            <rect x="10" y="20" width="95" height="45" rx="6" fill="rgba(99,102,241,0.12)" stroke="#6366f1"
+              stroke-width="1.5" />
+            <text x="57" y="38" text-anchor="middle" fill="#6366f1" font-weight="700" font-size="9"
+              font-family="Inter">Define</text>
+            <text x="57" y="51" text-anchor="middle" fill="#6366f1" font-weight="700" font-size="9"
+              font-family="Inter">Business Needs</text>
+            <line x1="105" y1="42" x2="125" y2="42" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a6)" />
+            <rect x="125" y="20" width="80" height="45" rx="6" fill="rgba(56,189,248,0.1)" stroke="#38bdf8"
+              stroke-width="1.5" />
+            <text x="165" y="47" text-anchor="middle" fill="#38bdf8" font-weight="600" font-size="10"
+              font-family="Inter">Issue RFI</text>
+            <line x1="205" y1="42" x2="225" y2="42" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a6)" />
+            <rect x="225" y="20" width="90" height="45" rx="6" fill="rgba(56,189,248,0.1)" stroke="#38bdf8"
+              stroke-width="1.5" />
+            <text x="270" y="38" text-anchor="middle" fill="#38bdf8" font-weight="600" font-size="9"
+              font-family="Inter">Receive Info</text>
+            <text x="270" y="51" text-anchor="middle" fill="#38bdf8" font-weight="600" font-size="9"
+              font-family="Inter">Reports</text>
+            <line x1="315" y1="42" x2="335" y2="42" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a6)" />
+            <rect x="335" y="20" width="90" height="45" rx="6" fill="rgba(56,189,248,0.1)" stroke="#38bdf8"
+              stroke-width="1.5" />
+            <text x="380" y="38" text-anchor="middle" fill="#38bdf8" font-weight="600" font-size="9"
+              font-family="Inter">Evaluate</text>
+            <text x="380" y="51" text-anchor="middle" fill="#38bdf8" font-weight="600" font-size="9"
+              font-family="Inter">Suppliers</text>
+            <line x1="425" y1="42" x2="445" y2="42" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a6)" />
+            <rect x="445" y="20" width="85" height="45" rx="6" fill="rgba(56,189,248,0.1)" stroke="#38bdf8"
+              stroke-width="1.5" />
+            <text x="487" y="38" text-anchor="middle" fill="#38bdf8" font-weight="600" font-size="9"
+              font-family="Inter">Create</text>
+            <text x="487" y="51" text-anchor="middle" fill="#38bdf8" font-weight="600" font-size="9"
+              font-family="Inter">Short-list</text>
+            <!-- Note -->
+            <text x="250" y="85" fill="#94a3b8" font-style="italic" font-size="8" font-family="Inter">Can be Part of
+              RFP. Following Steps will occur after RFP.</text>
+            <!-- Row 2: SOW → Issue RFP -->
+            <rect x="10" y="100" width="90" height="45" rx="6" fill="rgba(167,139,250,0.1)" stroke="#a78bfa"
+              stroke-width="1.5" />
+            <text x="55" y="118" text-anchor="middle" fill="#a78bfa" font-weight="600" font-size="9"
+              font-family="Inter">Prepare</text>
+            <text x="55" y="131" text-anchor="middle" fill="#a78bfa" font-weight="600" font-size="9"
+              font-family="Inter">SOW</text>
+            <line x1="100" y1="122" x2="120" y2="122" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a6)" />
+            <rect x="120" y="100" width="100" height="45" rx="6" fill="rgba(167,139,250,0.1)" stroke="#a78bfa"
+              stroke-width="1.5" />
+            <text x="170" y="118" text-anchor="middle" fill="#a78bfa" font-weight="600" font-size="9"
+              font-family="Inter">Prepare</text>
+            <text x="170" y="131" text-anchor="middle" fill="#a78bfa" font-weight="600" font-size="9"
+              font-family="Inter">RFP/RFQ/IFB</text>
+            <line x1="220" y1="122" x2="530" y2="122" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a6)" />
+            <!-- Row 3: Prepare Contract -->
+            <rect x="10" y="165" width="100" height="45" rx="6" fill="rgba(245,158,11,0.1)" stroke="#f59e0b"
+              stroke-width="1.5" />
+            <text x="60" y="183" text-anchor="middle" fill="#f59e0b" font-weight="600" font-size="9"
+              font-family="Inter">Prepare</text>
+            <text x="60" y="196" text-anchor="middle" fill="#f59e0b" font-weight="600" font-size="9"
+              font-family="Inter">Contract</text>
+            <!-- Issue RFP/RFQ (shared) → Bidders → Proposals -->
+            <rect x="530" y="95" width="100" height="55" rx="8" fill="rgba(99,102,241,0.12)" stroke="#6366f1"
+              stroke-width="2" />
+            <text x="580" y="118" text-anchor="middle" fill="#6366f1" font-weight="700" font-size="10"
+              font-family="Inter">Issue</text>
+            <text x="580" y="133" text-anchor="middle" fill="#6366f1" font-weight="700" font-size="10"
+              font-family="Inter">RFP/RFQ</text>
+            <line x1="630" y1="122" x2="650" y2="122" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a6)" />
+            <rect x="650" y="100" width="100" height="45" rx="6" fill="rgba(56,189,248,0.1)" stroke="#38bdf8"
+              stroke-width="1.5" />
+            <text x="700" y="118" text-anchor="middle" fill="#38bdf8" font-weight="600" font-size="9"
+              font-family="Inter">Host Bidders</text>
+            <text x="700" y="131" text-anchor="middle" fill="#38bdf8" font-weight="600" font-size="9"
+              font-family="Inter">Conference</text>
+            <line x1="700" y1="145" x2="700" y2="175" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a6)" />
+            <rect x="640" y="175" width="110" height="45" rx="6" fill="rgba(56,189,248,0.1)" stroke="#38bdf8"
+              stroke-width="1.5" />
+            <text x="695" y="193" text-anchor="middle" fill="#38bdf8" font-weight="600" font-size="9"
+              font-family="Inter">Receive</text>
+            <text x="695" y="206" text-anchor="middle" fill="#38bdf8" font-weight="600" font-size="9"
+              font-family="Inter">Proposals</text>
+            <!-- Connectors to Select Supplier -->
+            <line x1="110" y1="210" x2="310" y2="280" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4"
+              marker-end="url(#a6)" />
+            <line x1="695" y1="220" x2="440" y2="280" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="4"
+              marker-end="url(#a6)" />
+            <!-- Row 4: Select → Negotiate → Sign → Initial Payment -->
+            <rect x="290" y="270" width="110" height="50" rx="8" fill="rgba(34,197,94,0.12)" stroke="#22c55e"
+              stroke-width="2" />
+            <text x="345" y="293" text-anchor="middle" fill="#22c55e" font-weight="700" font-size="10"
+              font-family="Inter">Select Supplier</text>
+            <text x="345" y="308" text-anchor="middle" fill="#22c55e" font-weight="700" font-size="10"
+              font-family="Inter">&amp; Offer</text>
+            <line x1="400" y1="295" x2="420" y2="295" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a6)" />
+            <rect x="420" y="275" width="90" height="40" rx="6" fill="rgba(56,189,248,0.1)" stroke="#38bdf8"
+              stroke-width="1.5" />
+            <text x="465" y="299" text-anchor="middle" fill="#38bdf8" font-weight="600" font-size="10"
+              font-family="Inter">Negotiations</text>
+            <line x1="510" y1="295" x2="530" y2="295" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a6)" />
+            <rect x="530" y="275" width="90" height="40" rx="6" fill="rgba(56,189,248,0.1)" stroke="#38bdf8"
+              stroke-width="1.5" />
+            <text x="575" y="293" text-anchor="middle" fill="#38bdf8" font-weight="600" font-size="9"
+              font-family="Inter">Sign</text>
+            <text x="575" y="306" text-anchor="middle" fill="#38bdf8" font-weight="600" font-size="9"
+              font-family="Inter">Contract</text>
+            <line x1="620" y1="295" x2="640" y2="295" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a6)" />
+            <rect x="640" y="275" width="100" height="40" rx="6" fill="rgba(245,158,11,0.1)" stroke="#f59e0b"
+              stroke-width="1.5" />
+            <text x="690" y="293" text-anchor="middle" fill="#f59e0b" font-weight="600" font-size="9"
+              font-family="Inter">Initial</text>
+            <text x="690" y="306" text-anchor="middle" fill="#f59e0b" font-weight="600" font-size="9"
+              font-family="Inter">Payment</text>
+            <!-- Row 5: Delivery → Testing → Close-out → Final Payment -->
+            <rect x="200" y="350" width="90" height="40" rx="6" fill="rgba(34,197,94,0.1)" stroke="#22c55e"
+              stroke-width="1.5" />
+            <text x="245" y="374" text-anchor="middle" fill="#22c55e" font-weight="600" font-size="10"
+              font-family="Inter">Delivery</text>
+            <line x1="290" y1="370" x2="320" y2="370" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a6)" />
+            <rect x="320" y="350" width="90" height="40" rx="6" fill="rgba(56,189,248,0.1)" stroke="#38bdf8"
+              stroke-width="1.5" />
+            <text x="365" y="374" text-anchor="middle" fill="#38bdf8" font-weight="600" font-size="10"
+              font-family="Inter">Testing</text>
+            <line x1="410" y1="370" x2="440" y2="370" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a6)" />
+            <rect x="440" y="350" width="90" height="40" rx="6" fill="rgba(167,139,250,0.1)" stroke="#a78bfa"
+              stroke-width="1.5" />
+            <text x="485" y="374" text-anchor="middle" fill="#a78bfa" font-weight="600" font-size="10"
+              font-family="Inter">Close-out</text>
+            <line x1="530" y1="370" x2="560" y2="370" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a6)" />
+            <rect x="560" y="350" width="100" height="40" rx="6" fill="rgba(34,197,94,0.15)" stroke="#22c55e"
+              stroke-width="2" />
+            <text x="610" y="368" text-anchor="middle" fill="#22c55e" font-weight="700" font-size="9"
+              font-family="Inter">Final</text>
+            <text x="610" y="381" text-anchor="middle" fill="#22c55e" font-weight="700" font-size="9"
+              font-family="Inter">Payment 💰</text>
+            <defs>
+              <marker id="a6" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                <path d="M0,0 L8,3 L0,6" fill="#94a3b8" />
+              </marker>
+            </defs>
+          </svg>
+        </div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          ده كل خطوات عملية المشتريات بالتفصيل:
+          1️⃣ <strong>حدد احتياجات العمل</strong> — عايز إيه بالظبط
+          2️⃣ <strong>أرسل RFI</strong> — طلب معلومات عشان تفهم السوق
+          3️⃣ <strong>قيّم الموردين</strong> واعمل قائمة قصيرة (Short-list)
+          4️⃣ <strong>جهز SOW</strong> (بيان نطاق العمل) و <strong>RFP/RFQ</strong> (طلب عروض أو أسعار)
+          5️⃣ <strong>جهز العقد</strong> بالتوازي
+          6️⃣ <strong>ابعت الـ RFP</strong> → اعمل مؤتمر للمتقدمين → استلم العروض
+          7️⃣ <strong>اختار المورد</strong> → تفاوض → وقّع العقد → دفعة أولى
+          8️⃣ <strong>التسليم</strong> → الاختبار → الإغلاق → الدفعة النهائية
+
+          زي ما تشتري عربية بس بطريقة منظمة ورسمية!
+        </div>
+      </div>
+
+      <!-- S29 Quality Management -->
+      <div class="slide glass-card" id="s29">
+        <div class="slide-head"><span class="slide-num">29</span>
+          <h2>Project Quality Management</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          Project Quality Management</div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          ده عنوان قسم إدارة الجودة — يعني إزاي تتأكد إن المنتج اللي بتطلعه بيحقق المعايير المتفق عليها مع العميل. مش بس
+          "شغال" لأ "شغال كويس".
+        </div>
+      </div>
+
+      <!-- S30 Total Quality Management -->
+      <div class="slide glass-card" id="s30">
+        <div class="slide-head"><span class="slide-num">30</span>
+          <h2>Total Project Quality Management</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          Total Project Quality Management
+          Center: Total Project Quality Management
+          Arrows pointing outwards:
+          • Up: Quality Assurance
+          • Down: Continuous Improvement
+          • Left: Quality Control
+          • Right: Design Basis</div>
+        <div class="diagram">
+          <svg viewBox="0 0 440 340" style="max-width:420px">
+            <!-- Center -->
+            <rect x="120" y="120" width="200" height="70" rx="12" fill="rgba(99,102,241,0.12)" stroke="#6366f1"
+              stroke-width="2.5" />
+            <text x="220" y="150" text-anchor="middle" fill="#6366f1" font-weight="800" font-size="12"
+              font-family="Inter">Total Project</text>
+            <text x="220" y="170" text-anchor="middle" fill="#6366f1" font-weight="800" font-size="12"
+              font-family="Inter">Quality Management</text>
+            <!-- Up — QA -->
+            <line x1="220" y1="120" x2="220" y2="65" stroke="#22c55e" stroke-width="2" marker-end="url(#aq)" />
+            <rect x="150" y="20" width="140" height="45" rx="8" fill="rgba(34,197,94,0.1)" stroke="#22c55e"
+              stroke-width="1.5" />
+            <text x="220" y="48" text-anchor="middle" fill="#22c55e" font-weight="700" font-size="12"
+              font-family="Inter">Quality Assurance</text>
+            <!-- Down — CI -->
+            <line x1="220" y1="190" x2="220" y2="245" stroke="#f59e0b" stroke-width="2" marker-end="url(#aq)" />
+            <rect x="130" y="245" width="180" height="45" rx="8" fill="rgba(245,158,11,0.1)" stroke="#f59e0b"
+              stroke-width="1.5" />
+            <text x="220" y="266" text-anchor="middle" fill="#f59e0b" font-weight="700" font-size="11"
+              font-family="Inter">Continuous</text>
+            <text x="220" y="282" text-anchor="middle" fill="#f59e0b" font-weight="700" font-size="11"
+              font-family="Inter">Improvement</text>
+            <!-- Left — QC -->
+            <line x1="120" y1="155" x2="55" y2="155" stroke="#38bdf8" stroke-width="2" marker-end="url(#aql)" />
+            <rect x="0" y="133" width="55" height="45" rx="8" fill="rgba(56,189,248,0.1)" stroke="#38bdf8"
+              stroke-width="1.5" />
+            <text x="27" y="152" text-anchor="middle" fill="#38bdf8" font-weight="600" font-size="8"
+              font-family="Inter">Quality</text>
+            <text x="27" y="166" text-anchor="middle" fill="#38bdf8" font-weight="600" font-size="8"
+              font-family="Inter">Control</text>
+            <!-- Right — Design Basis -->
+            <line x1="320" y1="155" x2="385" y2="155" stroke="#a78bfa" stroke-width="2" marker-end="url(#aq)" />
+            <rect x="385" y="133" width="55" height="45" rx="8" fill="rgba(167,139,250,0.1)" stroke="#a78bfa"
+              stroke-width="1.5" />
+            <text x="412" y="152" text-anchor="middle" fill="#a78bfa" font-weight="600" font-size="8"
+              font-family="Inter">Design</text>
+            <text x="412" y="166" text-anchor="middle" fill="#a78bfa" font-weight="600" font-size="8"
+              font-family="Inter">Basis</text>
+            <defs>
+              <marker id="aq" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                <path d="M0,0 L8,3 L0,6" fill="currentColor" />
+              </marker>
+              <marker id="aql" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto">
+                <path d="M8,0 L0,3 L8,6" fill="#38bdf8" />
+              </marker>
+            </defs>
+          </svg>
+        </div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          إدارة الجودة الشاملة فيها 4 محاور:
+          • <strong>ضمان الجودة (QA)</strong> — التأكد إن العمليات نفسها صحيحة (الطريقة اللي بنشتغل بيها)
+          • <strong>ضبط الجودة (QC)</strong> — فحص المنتج نفسه والتأكد إنه مطابق للمواصفات
+          • <strong>أساس التصميم (Design Basis)</strong> — المعايير والمواصفات اللي بنبني عليها
+          • <strong>التحسين المستمر (CI)</strong> — دايماً بنتعلم ونحسن من أدائنا
+
+          QA بتركز على العملية، QC بتركز على المنتج — اتنينهم مهمين.
+        </div>
+      </div>
+
+      <!-- S31 Risk Management -->
+      <div class="slide glass-card" id="s31">
+        <div class="slide-head"><span class="slide-num">31</span>
+          <h2>Project Risk Management</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          Project Risk Management
+          Image: Blocks spelling out RISK are stacked/falling.</div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          قسم إدارة المخاطر — وده من أهم المجالات في إدارة المشاريع. المخاطرة هي أي حدث مستقبلي ممكن يأثر على المشروع
+          (سلباً أو إيجاباً). لازم نحددها ونتعامل معاها من بدري قبل ما تحصل.
+        </div>
+      </div>
+
+      <!-- S32 Risk Management Process -->
+      <div class="slide glass-card" id="s32">
+        <div class="slide-head"><span class="slide-num">32</span>
+          <h2>Risk Management Process</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          Risk Management Process (Downward Flow)
+          1. Identify Risk → 2. Analyze Risk → 3. Respond to Risk → 4. Document Risk</div>
+        <div class="diagram">
+          <svg viewBox="0 0 300 340" style="max-width:280px">
+            <rect x="60" y="10" width="180" height="50" rx="10" fill="rgba(239,68,68,0.1)" stroke="#ef4444"
+              stroke-width="2" />
+            <text x="150" y="40" text-anchor="middle" fill="#ef4444" font-weight="700" font-size="14"
+              font-family="Inter">1. Identify Risk</text>
+            <line x1="150" y1="60" x2="150" y2="90" stroke="#94a3b8" stroke-width="2" marker-end="url(#ar7)" />
+            <rect x="60" y="90" width="180" height="50" rx="10" fill="rgba(245,158,11,0.1)" stroke="#f59e0b"
+              stroke-width="2" />
+            <text x="150" y="120" text-anchor="middle" fill="#f59e0b" font-weight="700" font-size="14"
+              font-family="Inter">2. Analyze Risk</text>
+            <line x1="150" y1="140" x2="150" y2="170" stroke="#94a3b8" stroke-width="2" marker-end="url(#ar7)" />
+            <rect x="60" y="170" width="180" height="50" rx="10" fill="rgba(99,102,241,0.1)" stroke="#6366f1"
+              stroke-width="2" />
+            <text x="150" y="200" text-anchor="middle" fill="#6366f1" font-weight="700" font-size="14"
+              font-family="Inter">3. Respond to Risk</text>
+            <line x1="150" y1="220" x2="150" y2="250" stroke="#94a3b8" stroke-width="2" marker-end="url(#ar7)" />
+            <rect x="60" y="250" width="180" height="50" rx="10" fill="rgba(34,197,94,0.1)" stroke="#22c55e"
+              stroke-width="2" />
+            <text x="150" y="280" text-anchor="middle" fill="#22c55e" font-weight="700" font-size="14"
+              font-family="Inter">4. Document Risk</text>
+            <defs>
+              <marker id="ar7" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                <path d="M0,0 L8,3 L0,6" fill="#94a3b8" />
+              </marker>
+            </defs>
+          </svg>
+        </div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          عملية إدارة المخاطر 4 خطوات:
+          1️⃣ <strong>حدد المخاطر (Identify)</strong> — اكتب كل المشاكل المحتملة. مثلاً: مبرمج ممكن يسيب الشغل، السيرفر
+          ممكن يقع، العميل ممكن يغير المتطلبات.
+          2️⃣ <strong>حلل المخاطر (Analyze)</strong> — كل خطر: احتمال حدوثه كام؟ ولو حصل تأثيره إيه؟ (عالي/متوسط/منخفض)
+          3️⃣ <strong>استجب (Respond)</strong> — حط خطة: ممكن تتجنب الخطر، تقلله، تنقله لحد تاني (تأمين مثلاً)، أو
+          تتقبله.
+          4️⃣ <strong>وثّق (Document)</strong> — كل حاجة لازم تتسجل في Risk Register عشان الفريق كله يكون عارف.
+        </div>
+      </div>
+
+      <!-- S33 Project Close-out -->
+      <div class="slide glass-card" id="s33">
+        <div class="slide-head"><span class="slide-num">33</span>
+          <h2>Project Close-out</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          Project Close-out
+          Image: A cartoon illustration of a light switch being flipped to the OFF position.</div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          إغلاق المشروع — يعني المفتاح بيتقفل! مش بس بتوقف الشغل وخلاص. فيه إجراءات رسمية لازم تعملها عشان تقفل المشروع
+          بشكل صحيح واحترافي.
+        </div>
+      </div>
+
+      <!-- S34 Closeout Phases -->
+      <div class="slide glass-card" id="s34">
+        <div class="slide-head"><span class="slide-num">34</span>
+          <h2>Project Closeout — Major Phases</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          Project Closeout - Major Phases
+          • Obtain client acceptance
+          • Conduct the post implementation audit
+          • Issue the final report
+          • Document the Lessons Learned</div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          مراحل إغلاق المشروع — 4 حاجات لازم تعملها:
+          1️⃣ <strong>موافقة العميل (Client Acceptance)</strong> — العميل يوقع إنه استلم وراضي عن الشغل. من غير الخطوة
+          دي المشروع مش مقفول رسمياً.
+          2️⃣ <strong>مراجعة بعد التنفيذ (Post Implementation Audit)</strong> — ارجع شوف: إيه اللي اتعمل صح وإيه اللي
+          اتعمل غلط؟
+          3️⃣ <strong>التقرير النهائي (Final Report)</strong> — وثّق كل حاجة: الأداء، الميزانية الفعلية، الجدول الزمني.
+          4️⃣ <strong>الدروس المستفادة (Lessons Learned)</strong> — أهم خطوة! سجل الحاجات اللي اتعلمتها عشان المشاريع
+          الجاية تبقى أحسن.
+
+          كتير بيهملوا الخطوة الأخيرة ودي غلطة كبيرة — لأن من غيرها هتكرر نفس الأخطاء.
+        </div>
+        <div class="tips red"><span class="tag">⚠️ خد بالك</span>
+          <ul>
+            <li>متهملش Lessons Learned — دي بتوفر عليك مشاكل كتير في المستقبل</li>
+            <li>موافقة العميل لازم تكون مكتوبة ورسمية</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- S35 Thank You -->
+      <div class="slide glass-card" id="s35">
+        <div class="slide-head"><span class="slide-num">35</span>
+          <h2>Thank You</h2>
+        </div>
+        <div class="en-box"><span class="tag">Original Slide</span>
+          THANK YOU</div>
+        <div class="ar-box">
+          <div class="ar-icon"><i class="fas fa-lightbulb"></i></div><span class="tag">الشرح</span>
+          كده خلصنا المحاضرة الأولى! بالتوفيق يا جماعة 💪
+        </div>
+      </div>
+
+    </div><!-- end #content -->
+
+    <!-- ===== Q&A SECTION ===== -->
+    <section class="qa-section" id="qa">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(99,102,241,0.12);color:var(--primary)"><i
+            class="fas fa-question-circle"></i></div>
+        <h2 class="section-title" style="margin-bottom:0">Q&A — أسئلة وأجوبة شاملة</h2>
+      </div>
+      <p style="color:var(--muted);font-size:.82rem;margin-bottom:1.5rem">اضغط على أي سؤال عشان تشوف الإجابة. الأسئلة
+        بتغطي كل محتوى المحاضرة بالتفصيل.</p>
+
+      <div id="qaContainer">
+
+        <div class="q-card">
+          <div class="q-header" onclick="this.parentElement.classList.toggle('open')"><span class="q-num">1</span><span
+              class="q-title">What is the definition of a project according to the PMBOK Guide?</span><i
+              class="q-arrow fas fa-chevron-down"></i></div>
+          <div class="q-body">
+            <div class="q-content">
+              <div class="ans-en">A project is a <strong>temporary endeavor</strong> undertaken to create a
+                <strong>unique product, service, or result</strong> (PMBOK® Guide, Fourth Edition, 2008, p. 5). Unlike
+                operations, which are ongoing and repetitive, projects have a definitive beginning and end.
+              </div>
+              <div class="ans-ar">المشروع حسب كتاب PMBOK هو مجهود مؤقت (ليه بداية ونهاية) عشان يطلع حاجة فريدة — سواء
+                منتج أو خدمة أو نتيجة. الكلمتين المهمين هنا: "مؤقت" و"فريد". لو الشغل مستمر ومتكرر يبقى ده operations مش
+                project.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-header" onclick="this.parentElement.classList.toggle('open')"><span class="q-num">2</span><span
+              class="q-title">What is the difference between a Project and Operations?</span><i
+              class="q-arrow fas fa-chevron-down"></i></div>
+          <div class="q-body">
+            <div class="q-content">
+              <div class="ans-en">A <strong>Project</strong> is temporary and creates something unique (defined
+                start/end). <strong>Operations</strong> is ongoing work done to sustain the business — repetitive and
+                continuous. For example, building a new payroll app is a project; running payroll every month is
+                operations.</div>
+              <div class="ans-ar">المشروع مؤقت وبيطلع حاجة جديدة ومميزة. العمليات (Operations) شغل مستمر ومتكرر عشان
+                تسيّر البيزنس. يعني لو بنيت تطبيق مرتبات = مشروع. لو بتعمل المرتبات كل شهر = operations.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-header" onclick="this.parentElement.classList.toggle('open')"><span class="q-num">3</span><span
+              class="q-title">What are the four characteristics of a project?</span><i
+              class="q-arrow fas fa-chevron-down"></i></div>
+          <div class="q-body">
+            <div class="q-content">
+              <div class="ans-en">1. <strong>Temporary</strong> — Has a definitive begin and end. 2. <strong>Unique
+                  product/service/result</strong> — Creates something that did not exist before. 3. <strong>Progressive
+                  elaboration</strong> — Details become clearer as the project progresses. 4.
+                <strong>Resource-constrained</strong> — Limited by time, budget, and resources.
+              </div>
+              <div class="ans-ar">أربع خصائص: (1) مؤقت — ليه بداية ونهاية. (2) فريد — بيطلع حاجة مختلفة. (3) تدريجي —
+                التفاصيل بتتوضح مع الوقت. (4) محدود الموارد — الوقت والفلوس والناس محدودين.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-header" onclick="this.parentElement.classList.toggle('open')"><span class="q-num">4</span><span
+              class="q-title">What does "Progressive Elaboration" mean?</span><i
+              class="q-arrow fas fa-chevron-down"></i></div>
+          <div class="q-body">
+            <div class="q-content">
+              <div class="ans-en"><strong>Progressive elaboration</strong> means that project characteristics and
+                details are developed incrementally and become clearer as the project advances. In early phases, you
+                know the broad goals; later, specifics like exact features, costs, and schedules become refined through
+                continuous analysis and planning.</div>
+              <div class="ans-ar">يعني التفاصيل بتتوضح بالتدريج. في الأول بتكون عندك فكرة عامة عن المشروع، ومع كل مرحلة
+                بتعدي التفاصيل بتتحدد أكتر — زي الـ features بالظبط، التكلفة الفعلية، والجدول الزمني. مش ضروري تعرف كل
+                حاجة من أول يوم.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-header" onclick="this.parentElement.classList.toggle('open')"><span class="q-num">5</span><span
+              class="q-title">List the eight most important elements of a project.</span><i
+              class="q-arrow fas fa-chevron-down"></i></div>
+          <div class="q-body">
+            <div class="q-content">
+              <div class="ans-en">1. Goal 2. Success Criteria 3. Requirements 4. Team 5. Scope of Work 6. Budget 7.
+                Resources 8. Schedule.</div>
+              <div class="ans-ar">الهدف، معايير النجاح، المتطلبات، الفريق، نطاق العمل، الميزانية، الموارد، والجدول
+                الزمني. أي عنصر ناقص من دول = مشكلة أكيدة هتظهر بعدين.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-header" onclick="this.parentElement.classList.toggle('open')"><span class="q-num">6</span><span
+              class="q-title">What is a Subproject?</span><i class="q-arrow fas fa-chevron-down"></i></div>
+          <div class="q-body">
+            <div class="q-content">
+              <div class="ans-en"><strong>Subprojects</strong> are smaller portions of a larger project. They may be
+                referred to as "projects" and managed as such. This decomposition allows for easier management and
+                delegation of work.</div>
+              <div class="ans-ar">المشروع الفرعي (Subproject) هو جزء أصغر من مشروع كبير. بيتدار لوحده كمشروع مستقل.
+                بيسهل الإدارة لأن بدل ما تدير حاجة ضخمة، بتقسمها لأجزاء أصغر.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-header" onclick="this.parentElement.classList.toggle('open')"><span class="q-num">7</span><span
+              class="q-title">What is a Program and how is it different from a Project?</span><i
+              class="q-arrow fas fa-chevron-down"></i></div>
+          <div class="q-body">
+            <div class="q-content">
+              <div class="ans-en">A <strong>program</strong> is a collection of related projects, processes, and
+                activities managed as a group to accomplish a common objective. While a project is a single endeavor
+                with a specific goal, a program coordinates multiple related projects for broader strategic impact.
+                <strong>Program management</strong> is strategizing and coordinating programs to achieve initiatives and
+                deliver change to an organization.
+              </div>
+              <div class="ans-ar">البرنامج (Program) مجموعة مشاريع مرتبطة ببعض بتتدار مع بعض عشان يحققوا هدف مشترك. يعني
+                المشروع الواحد = scope واحد. البرنامج = عدة مشاريع بتخدم هدف استراتيجي أكبر. إدارة البرامج بتنسق بين
+                البرامج عشان تحقق تغيير حقيقي في المنظمة.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-header" onclick="this.parentElement.classList.toggle('open')"><span class="q-num">8</span><span
+              class="q-title">What is a Portfolio and Portfolio Management?</span><i
+              class="q-arrow fas fa-chevron-down"></i></div>
+          <div class="q-body">
+            <div class="q-content">
+              <div class="ans-en">A <strong>portfolio</strong> is a collection of unrelated projects or programs and
+                other work, grouped together to facilitate management and meet strategic objectives. Projects fit within
+                larger programs, which themselves fit within portfolios. Portfolio Management ensures the organization
+                invests in the right projects to meet its strategy.</div>
+              <div class="ans-ar">المحفظة (Portfolio) مجموعة مشاريع وبرامج — حتى لو مش مرتبطة — بتتدار مع بعض عشان تحقق
+                الأهداف الاستراتيجية. الترتيب: مشروع ← برنامج ← محفظة. إدارة المحفظة بتتأكد إن المنظمة بتستثمر في
+                المشاريع الصح.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-header" onclick="this.parentElement.classList.toggle('open')"><span class="q-num">9</span><span
+              class="q-title">What are the five types of software development projects?</span><i
+              class="q-arrow fas fa-chevron-down"></i></div>
+          <div class="q-body">
+            <div class="q-content">
+              <div class="ans-en">1. <strong>Application Development</strong> (desktop, web, mobile, embedded) 2.
+                <strong>Process and Systems Re-Engineering</strong> 3. <strong>System Integration</strong> 4.
+                <strong>Consulting Services</strong> 5. <strong>Installation and Training</strong>
+              </div>
+              <div class="ans-ar">خمس أنواع: تطوير تطبيقات، إعادة هندسة العمليات والنظم، دمج النظم، خدمات استشارية،
+                وخدمات التركيب والتدريب. كل نوع ليه طبيعته وتحدياته.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-header" onclick="this.parentElement.classList.toggle('open')"><span class="q-num">10</span><span
+              class="q-title">What are the three types of Application Development?</span><i
+              class="q-arrow fas fa-chevron-down"></i></div>
+          <div class="q-body">
+            <div class="q-content">
+              <div class="ans-en">1. <strong>One-offs</strong>: Systems specifically created for one client. 2.
+                <strong>Off-the-shelf</strong>: Products built for a large set of users. 3. <strong>Customized
+                  off-the-shelf</strong>: Standardized systems requiring significant customization (e.g., ERP systems).
+              </div>
+              <div class="ans-ar">ثلاث أنواع: (1) مخصوص لعميل واحد (One-off). (2) جاهز لفئة كبيرة زي Word. (3) جاهز بس
+                محتاج تعديلات كتير زي أنظمة ERP — النظام جاهز بس كل شركة بتعدله على حسب احتياجاتها.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-header" onclick="this.parentElement.classList.toggle('open')"><span class="q-num">11</span><span
+              class="q-title">What is Process and Systems Re-Engineering?</span><i
+              class="q-arrow fas fa-chevron-down"></i></div>
+          <div class="q-body">
+            <div class="q-content">
+              <div class="ans-en">It aims to <strong>change the way operational work is carried out</strong> to achieve
+                strategic goals (improve quality, become more efficient). It involves analyzing the "as is" situation
+                (current procedures, systems, infrastructure) and designing a new way. These are typically large
+                projects and often support ERP introduction.</div>
+              <div class="ans-ar">الهدف تغيير طريقة عمل المنظمة عشان تحقق أهداف زي تحسين الجودة أو الكفاءة. بتبدأ بتحليل
+                الوضع الحالي (as is) وبعدين تصمم الوضع الجديد. المشاريع دي عادةً كبيرة ومعقدة ومرتبطة بتركيب ERP.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-header" onclick="this.parentElement.classList.toggle('open')"><span class="q-num">12</span><span
+              class="q-title">What is the difference between Horizontal and Vertical System Integration?</span><i
+              class="q-arrow fas fa-chevron-down"></i></div>
+          <div class="q-body">
+            <div class="q-content">
+              <div class="ans-en"><strong>Horizontal</strong>: Integration of systems performing similar operations
+                (e.g., connecting two sales systems in different branches). <strong>Vertical</strong>: Integration of
+                systems automating different steps of a procedure (e.g., connecting orders → inventory → shipping).
+              </div>
+              <div class="ans-ar">الأفقي: ربط أنظمة بتعمل نفس الحاجة في أماكن مختلفة (زي نظام مبيعات فرع القاهرة مع فرع
+                إسكندرية). الرأسي: ربط أنظمة بتعمل خطوات مختلفة في نفس العملية (طلبات ← مخازن ← شحن).</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-header" onclick="this.parentElement.classList.toggle('open')"><span class="q-num">13</span><span
+              class="q-title">Why does an organization need System Integration?</span><i
+              class="q-arrow fas fa-chevron-down"></i></div>
+          <div class="q-body">
+            <div class="q-content">
+              <div class="ans-en">To solve: 1. <strong>Poor productivity</strong> — complicated data access and
+                redundant tasks across siloed infrastructure. 2. <strong>Uninformed decision-making and errors</strong>
+                — lack of integrated data leads to bad decisions. 3. <strong>High cost</strong> of developing or
+                transitioning to entirely new systems.</div>
+              <div class="ans-ar">ثلاث أسباب: (1) إنتاجية ضعيفة بسبب صعوبة الوصول للبيانات والمهام المكررة. (2) قرارات
+                غلط بسبب نقص المعلومات المتكاملة. (3) تكلفة عالية لو حبيت تبني نظام جديد من الصفر بدل ما تربط الموجود.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-header" onclick="this.parentElement.classList.toggle('open')"><span class="q-num">14</span><span
+              class="q-title">What is a Project Stakeholder?</span><i class="q-arrow fas fa-chevron-down"></i></div>
+          <div class="q-body">
+            <div class="q-content">
+              <div class="ans-en">A project stakeholder is <strong>any individual or organization</strong> that is
+                actively involved in a project, or whose interest might be affected (positively or negatively) as a
+                result of project execution or completion.</div>
+              <div class="ans-ar">أي شخص أو منظمة مشاركة في المشروع أو ممكن المشروع يأثر عليها — إيجابياً أو سلبياً.
+                يعني مش بس اللي شغال، لأ حتى اللي ممكن يتأثر بالنتيجة.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-header" onclick="this.parentElement.classList.toggle('open')"><span class="q-num">15</span><span
+              class="q-title">List all types of stakeholders mentioned in the lecture.</span><i
+              class="q-arrow fas fa-chevron-down"></i></div>
+          <div class="q-body">
+            <div class="q-content">
+              <div class="ans-en">1. The project manager 2. The project team 3. The project sponsor 4. The performing
+                organizations 5. The partners 6. The client 7. The "rest" — anyone who might be affected by the project
+                outputs.</div>
+              <div class="ans-ar">مدير المشروع، فريق المشروع، الراعي (Sponsor)، المنظمة المنفذة، الشركاء، العميل،
+                و"الباقي" — أي حد ممكن يتأثر بنتائج المشروع.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-header" onclick="this.parentElement.classList.toggle('open')"><span class="q-num">16</span><span
+              class="q-title">How are Key Stakeholders classified (Internal, External, In between)?</span><i
+              class="q-arrow fas fa-chevron-down"></i></div>
+          <div class="q-body">
+            <div class="q-content">
+              <div class="ans-en"><strong>Internal</strong>: Project team members (doing the work) and Project
+                management team (managing the work). <strong>External</strong>: Influencers — not directly involved but
+                can influence the project. <strong>In between</strong>: Customer/User, Sponsor (financial resources),
+                and Performing Organization.</div>
+              <div class="ans-ar">داخليين: أعضاء الفريق وفريق الإدارة. خارجيين: المؤثرين (مش في المشروع بس بيأثروا
+                عليه). في النص: العميل/المستخدم، الراعي (اللي بيدفع)، والمنظمة المنفذة.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-header" onclick="this.parentElement.classList.toggle('open')"><span class="q-num">17</span><span
+              class="q-title">What skills should a Project Manager have?</span><i
+              class="q-arrow fas fa-chevron-down"></i></div>
+          <div class="q-body">
+            <div class="q-content">
+              <div class="ans-en">1. Communication and negotiation skills 2. A little predisposition to risk 3. Goal
+                orientation 4. Leadership 5. Thinking outside the box 6. Professional correctness 7. A lot of common
+                sense.</div>
+              <div class="ans-ar">التواصل والتفاوض، تقبل المخاطرة، التركيز على الهدف، القيادة، التفكير الإبداعي،
+                الاحترافية، والعقل والمنطق (Common sense). أهم حاجة صراحةً هي الـ common sense — لأن مفيش قاعدة تغنيك عن
+                التفكير السليم.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-header" onclick="this.parentElement.classList.toggle('open')"><span class="q-num">18</span><span
+              class="q-title">What are the six responsibilities of a Program Manager?</span><i
+              class="q-arrow fas fa-chevron-down"></i></div>
+          <div class="q-body">
+            <div class="q-content">
+              <div class="ans-en">1. Support decisions 2. Evaluate the portfolio 3. Manage risks 4. Run the program 5.
+                Engage with stakeholders 6. Refine the operating model.</div>
+              <div class="ans-ar">ست مسؤوليات: يدعم القرارات، يقيّم المحفظة، يدير المخاطر، يشغّل البرنامج، يتواصل مع
+                الأطراف المعنية، ويحسّن نموذج العمل.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-header" onclick="this.parentElement.classList.toggle('open')"><span class="q-num">19</span><span
+              class="q-title">What are the eight concerns (areas) of Software Project Management?</span><i
+              class="q-arrow fas fa-chevron-down"></i></div>
+          <div class="q-body">
+            <div class="q-content">
+              <div class="ans-en">1. Feasibility Assessment 2. Goals (Scope) Management 3. Time Management 4. Cost
+                Management 5. Change Control and Configuration Management 6. Quality Management 7. Risk Management 8.
+                Human Resource Management.</div>
+              <div class="ans-ar">ثمان مجالات: دراسة الجدوى، إدارة النطاق، إدارة الوقت، إدارة التكلفة، إدارة التغيير
+                والتكوين، إدارة الجودة، إدارة المخاطر، وإدارة الموارد البشرية.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-header" onclick="this.parentElement.classList.toggle('open')"><span class="q-num">20</span><span
+              class="q-title">What are the four phases of the Project Lifecycle?</span><i
+              class="q-arrow fas fa-chevron-down"></i></div>
+          <div class="q-body">
+            <div class="q-content">
+              <div class="ans-en">1. <strong>Initiation</strong> — Define the project concept and feasibility. 2.
+                <strong>Planning</strong> — Develop detailed plans (scope, schedule, budget). 3.
+                <strong>Execution</strong> — Perform the actual work (highest effort phase). 4. <strong>Close
+                  Out</strong> — Deliver the product, obtain acceptance, document lessons learned.
+                <strong>Control</strong> spans across all phases as an ongoing monitoring activity.
+              </div>
+              <div class="ans-ar">أربع مراحل: البدء (Initiation)، التخطيط (Planning)، التنفيذ (Execution) ودي أكتر مرحلة
+                مجهود، والإغلاق (Close Out). الرقابة (Control) مستمرة طول المشروع مش في مرحلة واحدة بس. والمنحنيات
+                بتتداخل يعني ممكن تكون لسه بتخطط وبدأت تنفذ.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-header" onclick="this.parentElement.classList.toggle('open')"><span class="q-num">21</span><span
+              class="q-title">What are the 9 Knowledge Areas in the PM Framework?</span><i
+              class="q-arrow fas fa-chevron-down"></i></div>
+          <div class="q-body">
+            <div class="q-content">
+              <div class="ans-en"><strong>Core Functions</strong> (4): Scope Management, Time Management, Cost
+                Management, Quality Management. <strong>Facilitating Functions</strong> (4): HR Management,
+                Communications Management, Risk Management, Procurement Management. Plus <strong>Project Integration
+                  Management</strong> which ties them all together (total = 9).</div>
+              <div class="ans-ar">أربع أساسيات (Core): النطاق، الوقت، التكلفة، الجودة. أربع مساعدات (Facilitating):
+                الموارد البشرية، التواصل، المخاطر، المشتريات. زائد إدارة التكامل (Integration Management) اللي بتربط كل
+                حاجة ببعضها = 9 مجالات.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-header" onclick="this.parentElement.classList.toggle('open')"><span class="q-num">22</span><span
+              class="q-title">Explain the Sender-Receiver Communication Model.</span><i
+              class="q-arrow fas fa-chevron-down"></i></div>
+          <div class="q-body">
+            <div class="q-content">
+              <div class="ans-en">The Sender encodes a message → transmits through a Medium → Receiver decodes it. The
+                Receiver then sends Feedback-Message back through the same medium. <strong>Noise</strong> can interfere
+                with both the message and the feedback channel. Effective communication requires choosing the right
+                medium and minimizing noise.</div>
+              <div class="ans-ar">المرسل (Sender) بيحول الفكرة لرسالة (Encode) → بيبعتها عبر وسيط (Medium) → المستقبل
+                (Receiver) بيفهمها (Decode). المستقبل بيرد (Feedback) بنفس الطريقة. التشويش (Noise) أي حاجة ممكن تأثر
+                على الرسالة: سوء فهم، لغة مختلفة، أو حتى نت وحش. الحل: اختار الوسيط المناسب واتأكد إن الرسالة وصلت.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-header" onclick="this.parentElement.classList.toggle('open')"><span class="q-num">23</span><span
+              class="q-title">What is the Project Procurement Process Flow?</span><i
+              class="q-arrow fas fa-chevron-down"></i></div>
+          <div class="q-body">
+            <div class="q-content">
+              <div class="ans-en">The full flow: Define Business Needs → Issue RFI → Receive Info Reports → Evaluate
+                Suppliers → Create Short-list → Prepare SOW → Prepare RFP/RFQ/IFB → Prepare Contract → Issue RFP/RFQ →
+                Host Bidders Conference → Receive Proposals/Quotations → Select Supplier and Offer → Negotiations → Sign
+                Contract → Initial Payment → Delivery → Testing → Close-out → Final Payment.</div>
+              <div class="ans-ar">خطوات المشتريات كاملة: حدد الاحتياجات → ابعت طلب معلومات (RFI) → قيّم الموردين → اعمل
+                قائمة قصيرة → جهز بيان العمل (SOW) وطلب العروض (RFP) → جهز العقد → ابعت الـ RFP → اعمل مؤتمر → استلم
+                العروض → اختار المورد → تفاوض → وقّع العقد → دفعة أولى → تسليم → اختبار → إقفال → دفعة نهائية.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-header" onclick="this.parentElement.classList.toggle('open')"><span class="q-num">24</span><span
+              class="q-title">What are the four components of Total Project Quality Management?</span><i
+              class="q-arrow fas fa-chevron-down"></i></div>
+          <div class="q-body">
+            <div class="q-content">
+              <div class="ans-en">1. <strong>Quality Assurance (QA)</strong> — Focus on processes being correct. 2.
+                <strong>Quality Control (QC)</strong> — Focus on inspecting the product to check conformance. 3.
+                <strong>Design Basis</strong> — The standards and specifications used as foundation. 4.
+                <strong>Continuous Improvement</strong> — Always learning and improving performance.
+              </div>
+              <div class="ans-ar">أربع حاجات: ضمان الجودة (QA) = العملية صح. ضبط الجودة (QC) = المنتج مطابق. أساس
+                التصميم = المعايير اللي بنبني عليها. التحسين المستمر = دايماً بنتعلم من أخطائنا ونحسن.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-header" onclick="this.parentElement.classList.toggle('open')"><span class="q-num">25</span><span
+              class="q-title">What are the four steps of the Risk Management Process?</span><i
+              class="q-arrow fas fa-chevron-down"></i></div>
+          <div class="q-body">
+            <div class="q-content">
+              <div class="ans-en">1. <strong>Identify Risk</strong> — List all potential risks. 2. <strong>Analyze
+                  Risk</strong> — Assess probability and impact of each risk. 3. <strong>Respond to Risk</strong> — Plan
+                mitigation strategies (avoid, mitigate, transfer, or accept). 4. <strong>Document Risk</strong> — Record
+                everything in a Risk Register.</div>
+              <div class="ans-ar">أربع خطوات: حدد المخاطر (اكتب كل المشاكل المحتملة) → حلل (احتمال كام وتأثير إيه) →
+                استجب (تجنب، قلل، انقل، أو اتقبل) → وثّق (سجل كل حاجة في Risk Register عشان الكل يكون عارف).</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-header" onclick="this.parentElement.classList.toggle('open')"><span class="q-num">26</span><span
+              class="q-title">What are the Major Phases of Project Closeout?</span><i
+              class="q-arrow fas fa-chevron-down"></i></div>
+          <div class="q-body">
+            <div class="q-content">
+              <div class="ans-en">1. <strong>Obtain client acceptance</strong> — The client formally signs off. 2.
+                <strong>Conduct the post implementation audit</strong> — Review what went right and wrong. 3.
+                <strong>Issue the final report</strong> — Document performance, actual budget, timeline. 4.
+                <strong>Document the Lessons Learned</strong> — The most important step for future improvement.
+              </div>
+              <div class="ans-ar">أربع خطوات: (1) موافقة العميل رسمياً (2) مراجعة بعد التنفيذ — إيه اتعمل صح وإيه غلط
+                (3) التقرير النهائي — وثّق كل الأرقام (4) الدروس المستفادة — أهم خطوة ومعظم الناس بتهملها.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-header" onclick="this.parentElement.classList.toggle('open')"><span class="q-num">27</span><span
+              class="q-title">What is the goal of the SET422 course?</span><i class="q-arrow fas fa-chevron-down"></i>
+          </div>
+          <div class="q-body">
+            <div class="q-content">
+              <div class="ans-en">The course aims to: Understand software project management, produce better project
+                plans, reduce risks, capture complexity, stay on top of projects, successfully develop/implement
+                procedures, present organized management, complete projects on time and budget, and discover
+                optimization tools and techniques.</div>
+              <div class="ans-ar">المادة بتعلمك: تفهم إدارة المشاريع، تعمل خطط أحسن، تقلل المخاطر، تفهم التعقيد، تفضل
+                مسيطر، تطبق الإجراءات بنجاح، تكون منظم واحترافي، تخلص في الوقت والميزانية، وتكتشف أدوات بتساعدك تحسن
+                الشغل.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-header" onclick="this.parentElement.classList.toggle('open')"><span class="q-num">28</span><span
+              class="q-title">How are the course grades distributed?</span><i class="q-arrow fas fa-chevron-down"></i>
+          </div>
+          <div class="q-body">
+            <div class="q-content">
+              <div class="ans-en">Midterm Exam: 20 (7th week), Quizzes: 10 (6th and 12th weeks), Semester Work: 30
+                (ongoing), Final Exam: 40 (15th week). Total: 100.</div>
+              <div class="ans-ar">ميدتيرم 20 درجة (أسبوع 7)، كويزات 10 درجات (أسبوع 6 و12)، أعمال السنة 30 درجة، فاينال
+                40 درجة (أسبوع 15). المجموع 100.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-header" onclick="this.parentElement.classList.toggle('open')"><span class="q-num">29</span><span
+              class="q-title">What is the difference between Consulting Services and Installation/Training?</span><i
+              class="q-arrow fas fa-chevron-down"></i></div>
+          <div class="q-body">
+            <div class="q-content">
+              <div class="ans-en"><strong>Consulting Services</strong>: Typically asked to gain know-how outside a
+                company's core competence. <strong>Installation and Training</strong>: Services related to installing
+                and training on specific software systems. In open source development, this is also a revenue model —
+                the software is free but the service is paid.</div>
+              <div class="ans-ar">الاستشارة: لما الشركة محتاجة خبرة مش عندها بتجيب consultant. التركيب والتدريب: بتركب
+                النظام وتدرب الناس عليه. حاجة مهمة: في شركات الـ Open Source البرنامج ببلاش بس الخدمة (تركيب وتدريب)
+                بفلوس — ده مصدر دخلهم.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-header" onclick="this.parentElement.classList.toggle('open')"><span class="q-num">30</span><span
+              class="q-title">What is an ERP system and why is it important in project management?</span><i
+              class="q-arrow fas fa-chevron-down"></i></div>
+          <div class="q-body">
+            <div class="q-content">
+              <div class="ans-en"><strong>ERP (Enterprise Resource Planning)</strong> is an example of a customized
+                off-the-shelf system. It's a standardized system that requires significant customization for each
+                organization. ERP projects are common in Process and Systems Re-Engineering and require extensive system
+                and data integration activities.</div>
+              <div class="ans-ar">ERP (تخطيط موارد المؤسسة) هو نظام جاهز بس كل شركة بتعدله على حسب احتياجاتها — وده
+                بيحتاج شغل كتير. مشاريع الـ ERP من أشهر المشاريع في إعادة هندسة النظم وبتحتاج دمج بيانات وأنظمة كبير.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end qaContainer -->
+    </section>
+
+  </div><!-- end container -->
+
+  <!-- Footer -->
+  <footer
+    style="border-top:1px solid var(--glass-border);padding:2rem;text-align:center;color:var(--muted);font-size:.8rem;margin-top:2rem">
+    <p>SET422 — Software Project Management — Lecture 01 — Dr. Fatma Sakr</p>
+    <p style="font-family:var(--font-ar);margin-top:.3rem;color:var(--dim)">إدارة مشاريع البرمجيات — المحاضرة الأولى</p>
+  </footer>
+
+  <script>
+    // Theme Toggle
+    const themeBtn = document.getElementById('themeBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const saved = localStorage.getItem('pm-theme');
+    if (saved === 'light') { document.documentElement.setAttribute('data-theme', 'light'); themeIcon.classList.replace('fa-moon', 'fa-sun') }
+    themeBtn.addEventListener('click', () => {
+      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      document.documentElement.setAttribute('data-theme', isLight ? 'dark' : 'light');
+      themeIcon.classList.replace(isLight ? 'fa-sun' : 'fa-moon', isLight ? 'fa-moon' : 'fa-sun');
+      localStorage.setItem('pm-theme', isLight ? 'dark' : 'light');
+    });
+
+    // Progress Bar
+    const pFill = document.getElementById('progressFill');
+    window.addEventListener('scroll', () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      pFill.style.width = (window.scrollY / h * 100) + '%';
+    });
+
+    // TOC Generation
+    const tocGrid = document.getElementById('tocGrid');
+    const slides = document.querySelectorAll('.slide');
+    const titles = { 1: 'SET422 Overview', 2: 'Grades', 3: 'Motivations', 4: 'Course Outline (1)', 5: 'Course Outline (2)', 6: 'Skills & Goals', 7: 'What is a Project?', 8: 'Project Characteristics', 9: 'Project Elements', 10: 'PM Context', 11: 'Portfolio Mgt', 12: 'Dev Project Types', 13: 'App Development', 14: 'Re-Engineering', 15: 'System Integration', 16: 'Why Integration?', 17: 'Other Types', 18: 'Stakeholder Def', 19: 'Stakeholder Types', 20: 'Key Stakeholders', 21: 'Project Manager', 22: 'Program Manager', 23: 'SMP Concerns', 24: 'Project Lifecycle', 25: 'PM Framework', 26: 'Communication', 27: 'Procurement Mgt', 28: 'Procurement Flow', 29: 'Quality Mgt', 30: 'Total Quality', 31: 'Risk Mgt', 32: 'Risk Process', 33: 'Project Close-out', 34: 'Closeout Phases', 35: 'Thank You' };
+    for (let i = 1; i <= 35; i++) {
+      const a = document.createElement('a');
+      a.className = 'toc-item'; a.href = '#s' + i;
+      a.innerHTML = '<span class="num">' + i + '</span> ' + (titles[i] || 'Slide ' + i);
+      tocGrid.appendChild(a);
+    }
+
+    // Search
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', function () {
+      const q = this.value.trim().toLowerCase();
+      slides.forEach(s => {
+        if (!q) { s.style.display = ''; s.querySelectorAll('mark').forEach(m => { const t = document.createTextNode(m.textContent); m.replaceWith(t) }); return }
+        const text = s.textContent.toLowerCase();
+        s.style.display = text.includes(q) ? '' : 'none';
+      });
+      // Q&A too
+      document.querySelectorAll('.q-card').forEach(c => {
+        if (!q) { c.style.display = ''; return }
+        c.style.display = c.textContent.toLowerCase().includes(q) ? '' : 'none';
+      });
+    });
+
+    // Q&A toggle
+    document.querySelectorAll('.q-card').forEach(card => {
+      const body = card.querySelector('.q-body');
+      const arrow = card.querySelector('.q-arrow');
+      card.querySelector('.q-header').addEventListener('click', () => {
+        const isOpen = body.style.maxHeight && body.style.maxHeight !== '0px';
+        if (isOpen) { body.style.maxHeight = '0'; arrow.style.transform = 'rotate(0)'; card.style.borderColor = '' }
+        else { body.style.maxHeight = body.scrollHeight + 'px'; arrow.style.transform = 'rotate(180deg)'; card.style.borderColor = 'rgba(99,102,241,0.4)' }
+      });
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+        const current = Math.max(1, ...[...slides].filter(s => { const r = s.getBoundingClientRect(); return r.top <= 200 }).map(s => parseInt(s.id.replace('s', ''))));
+        const next = e.key === 'ArrowRight' ? Math.min(current + 1, 35) : Math.max(current - 1, 1);
+        document.getElementById('s' + next)?.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+
+    // Save/Load progress
+    window.addEventListener('beforeunload', () => localStorage.setItem('pm-scroll', window.scrollY));
+    window.addEventListener('load', () => { const s = localStorage.getItem('pm-scroll'); if (s) window.scrollTo(0, parseInt(s)) });
+  </script>
+</body>
+
+</html>

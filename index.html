@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SET422 - Software Project Management</title>
+    <meta name="description"
+        content="SET422 Software Project Management — Full lecture explanations with Egyptian Arabic by Dr. Fatma Sakr.">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e1b4b 100%);
+            min-height: 100vh;
+            color: #e2e8f0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 80% 70%, rgba(167, 139, 250, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.05) 0%, transparent 35%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 4rem 0 3rem;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #6366f1, #a78bfa);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: white;
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.3);
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #818cf8, #a78bfa, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            max-width: 650px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .subtitle strong {
+            color: #a78bfa;
+            -webkit-text-fill-color: #a78bfa;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #f8fafc;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title i {
+            color: #6366f1;
+        }
+
+        /* Lecture Grid */
+        .lectures-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .lecture-card {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .lecture-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #6366f1, #a78bfa);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .lecture-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(99, 102, 241, 0.4);
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.15);
+        }
+
+        .lecture-card:hover::before {
+            opacity: 1;
+        }
+
+        .lecture-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6366f1, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .lecture-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #f8fafc;
+            margin-bottom: 0.5rem;
+        }
+
+        .lecture-desc {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            line-height: 1.7;
+            flex-grow: 1;
+        }
+
+        .lecture-tags {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+            margin: 0.75rem 0 0;
+        }
+
+        .tag {
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .tag.slides {
+            background: rgba(99, 102, 241, 0.12);
+            color: #818cf8;
+        }
+
+        .tag.arabic {
+            background: rgba(245, 158, 11, 0.12);
+            color: #f59e0b;
+        }
+
+        .tag.svg {
+            background: rgba(34, 197, 94, 0.12);
+            color: #22c55e;
+        }
+
+        .tag.qa {
+            background: rgba(244, 114, 182, 0.12);
+            color: #f472b6;
+        }
+
+        .lecture-links {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .lecture-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 10px;
+            color: #818cf8;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .lecture-link:hover {
+            background: #6366f1;
+            color: white;
+            border-color: #6366f1;
+        }
+
+        .lecture-link.secondary {
+            background: rgba(167, 139, 250, 0.1);
+            border-color: rgba(167, 139, 250, 0.3);
+            color: #a78bfa;
+        }
+
+        .lecture-link.secondary:hover {
+            background: #8b5cf6;
+            color: white;
+            border-color: #8b5cf6;
+        }
+
+        /* Coming Soon */
+        .lecture-card.coming-soon {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .lecture-card.coming-soon:hover {
+            transform: none;
+            box-shadow: none;
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .lecture-card.coming-soon::before {
+            display: none;
+        }
+
+        .coming-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(251, 191, 36, 0.15);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 20px;
+            color: #fbbf24;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: auto;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 2rem;
+            color: #64748b;
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        footer a {
+            color: #818cf8;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            header {
+                padding: 2rem 0;
+            }
+
+            .lectures-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">PM</div>
+            </div>
+            <h1>Software Project Management</h1>
+            <p class="subtitle">SET422 — Full lecture explanations with <strong>Egyptian Arabic</strong>, SVG diagrams,
+                and comprehensive Q&A sections. By Dr. Fatma Sakr.</p>
+        </header>
+
+        <main>
+            <h2 class="section-title"><i class="fas fa-book-open"></i> Course Lectures</h2>
+
+            <div class="lectures-grid">
+
+                <!-- Lecture 01 -->
+                <div class="lecture-card">
+                    <div class="lecture-number">01</div>
+                    <div class="lecture-title">Introduction to Project Management</div>
+                    <div class="lecture-desc">ما هو المشروع وخصائصه، أنواع مشاريع البرمجيات، أصحاب المصلحة، مهارات مدير
+                        المشروع، دورة حياة المشروع، الـ9 مجالات المعرفية، إدارة الجودة والمخاطر والمشتريات، وإغلاق
+                        المشروع.</div>
+                    <div class="lecture-tags">
+                        <span class="tag slides">35 Slides</span>
+                        <span class="tag arabic">عربي</span>
+                        <span class="tag svg">11 SVG</span>
+                        <span class="tag qa">30 Q&A</span>
+                    </div>
+                    <div class="lecture-links">
+                        <a href="lecture01.html" class="lecture-link">
+                            <i class="fas fa-book-open"></i> Open Lecture
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Lecture 02 — Coming Soon -->
+                <div class="lecture-card coming-soon">
+                    <div class="lecture-number">02</div>
+                    <div class="lecture-title">Lecture 02</div>
+                    <div class="lecture-desc">Content coming soon...</div>
+                    <span class="coming-badge"><i class="fas fa-clock"></i> Coming Soon</span>
+                </div>
+
+                <!-- Lecture 03 — Coming Soon -->
+                <div class="lecture-card coming-soon">
+                    <div class="lecture-number">03</div>
+                    <div class="lecture-title">Lecture 03</div>
+                    <div class="lecture-desc">Content coming soon...</div>
+                    <span class="coming-badge"><i class="fas fa-clock"></i> Coming Soon</span>
+                </div>
+
+                <!-- Lecture 04 — Coming Soon -->
+                <div class="lecture-card coming-soon">
+                    <div class="lecture-number">04</div>
+                    <div class="lecture-title">Lecture 04</div>
+                    <div class="lecture-desc">Content coming soon...</div>
+                    <span class="coming-badge"><i class="fas fa-clock"></i> Coming Soon</span>
+                </div>
+
+                <!-- Lecture 05 — Coming Soon -->
+                <div class="lecture-card coming-soon">
+                    <div class="lecture-number">05</div>
+                    <div class="lecture-title">Lecture 05</div>
+                    <div class="lecture-desc">Content coming soon...</div>
+                    <span class="coming-badge"><i class="fas fa-clock"></i> Coming Soon</span>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <p>SET422 — Software Project Management &copy; 2026 &middot; Dr. Fatma Sakr</p>
+    </footer>
+</body>
+
+</html>
