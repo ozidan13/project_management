@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SET422 — Lecture 02: Why Project Management?</title>
+<meta name="description" content="SET422 Software Project Management Lecture 02 — Why Project Management, Phases, Charter, WBS, Scheduling, Budget">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#020617;--surface:rgba(15,23,42,.7);--border:rgba(255,255,255,.08);--text:#e2e8f0;--text-dim:#94a3b8;--accent:#818cf8;--accent2:#a78bfa;--accent3:#f472b6;--glow:rgba(99,102,241,.15);--radius:16px;--glass:blur(16px)}
+[data-theme=light]{--bg:#f1f5f9;--surface:rgba(255,255,255,.85);--border:rgba(0,0,0,.08);--text:#0f172a;--text-dim:#475569;--glow:rgba(99,102,241,.08)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:'Inter','Cairo',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;transition:background .4s,color .4s;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle at 20% 30%,rgba(99,102,241,.07) 0%,transparent 25%),radial-gradient(circle at 80% 70%,rgba(167,139,250,.07) 0%,transparent 25%),radial-gradient(circle at 50% 50%,rgba(244,114,182,.04) 0%,transparent 35%);pointer-events:none;z-index:0}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:rgba(2,6,23,.85);backdrop-filter:var(--glass);border-bottom:1px solid var(--border);padding:.75rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+[data-theme=light] .nav{background:rgba(241,245,249,.9)}
+.nav-brand{font-weight:800;font-size:1.1rem;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap}
+.nav-actions{display:flex;gap:.5rem;align-items:center}
+.nav-btn{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:.45rem .85rem;border-radius:8px;cursor:pointer;font-size:.8rem;font-family:inherit;transition:all .3s}
+.nav-btn:hover{border-color:var(--accent);color:var(--accent)}
+#searchBox{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:.45rem .85rem;border-radius:8px;font-family:inherit;font-size:.8rem;width:180px;transition:all .3s}
+#searchBox:focus{outline:none;border-color:var(--accent);width:240px}
+#searchBox::placeholder{color:var(--text-dim)}
+.progress-bar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3));z-index:101;transition:width .2s;width:0}
+
+/* CONTAINER */
+.container{max-width:960px;margin:0 auto;padding:2rem 1.5rem;position:relative;z-index:1}
+
+/* HERO */
+.hero{text-align:center;padding:4rem 0 3rem}
+.hero-badge{display:inline-block;padding:.35rem 1rem;background:linear-gradient(135deg,rgba(99,102,241,.15),rgba(167,139,250,.15));border:1px solid rgba(99,102,241,.3);border-radius:20px;font-size:.75rem;font-weight:600;color:var(--accent);margin-bottom:1.5rem;letter-spacing:.05em}
+.hero h1{font-size:2.8rem;font-weight:800;background:linear-gradient(135deg,#818cf8,#a78bfa,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:1rem;line-height:1.3}
+.hero p{color:var(--text-dim);font-size:1.05rem;max-width:600px;margin:0 auto;line-height:1.8}
+
+/* TOC */
+.toc{background:var(--surface);backdrop-filter:var(--glass);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 2rem;margin-bottom:2.5rem}
+.toc h3{color:var(--accent);font-size:1.1rem;margin-bottom:1rem}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:.4rem .8rem}
+.toc a{color:var(--text-dim);text-decoration:none;font-size:.85rem;padding:.25rem .4rem;border-radius:6px;transition:all .2s;display:block}
+.toc a:hover{color:var(--accent);background:rgba(99,102,241,.08)}
+.toc a span{color:var(--accent);font-weight:700;margin-right:.3rem}
+
+/* SLIDE CARD */
+.slide{background:var(--surface);backdrop-filter:var(--glass);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;margin-bottom:2rem;transition:all .3s}
+.slide:hover{border-color:rgba(99,102,241,.25);box-shadow:0 8px 32px var(--glow)}
+.slide-header{display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem}
+.slide-num{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem;flex-shrink:0}
+.slide-title{font-size:1.35rem;font-weight:700;color:var(--text)}
+.slide p,.slide li{font-size:.95rem;color:var(--text);margin-bottom:.5rem}
+.slide ul,.slide ol{padding-left:1.5rem;margin-bottom:1rem}
+.slide li{margin-bottom:.35rem}
+.slide strong{color:var(--accent)}
+
+/* AR BOX */
+.ar-box{direction:rtl;text-align:right;font-family:'Cairo',sans-serif;background:linear-gradient(135deg,rgba(99,102,241,.06),rgba(167,139,250,.06));border:1px solid rgba(99,102,241,.2);border-radius:12px;padding:1.25rem 1.5rem;margin-top:1.25rem;position:relative;font-size:.95rem;line-height:2;color:var(--text)}
+.ar-box .ar-icon{position:absolute;top:-12px;right:16px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.75rem}
+.ar-box .tag{position:absolute;top:-10px;right:52px;background:var(--accent);color:#fff;font-size:.6rem;padding:2px 8px;border-radius:4px;font-weight:700}
+
+/* SVG BOX */
+.svg-box{background:rgba(0,0,0,.2);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin:1.25rem 0;overflow-x:auto}
+[data-theme=light] .svg-box{background:rgba(0,0,0,.03)}
+.svg-box svg{display:block;margin:0 auto}
+.svg-caption{text-align:center;font-size:.75rem;color:var(--text-dim);margin-top:.75rem;font-style:italic}
+
+/* TABLE */
+.slide table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.85rem}
+.slide th,.slide td{border:1px solid var(--border);padding:.5rem .75rem;text-align:left}
+.slide th{background:rgba(99,102,241,.1);color:var(--accent);font-weight:700}
+.slide td{color:var(--text)}
+
+/* Q&A */
+.qa-section{margin-top:3rem}
+.qa-section h2{font-size:1.5rem;font-weight:800;color:var(--accent);margin-bottom:1.5rem;text-align:center}
+.q-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:1rem;overflow:hidden;transition:all .3s}
+.q-card:hover{border-color:rgba(99,102,241,.3)}
+.q-header{padding:1rem 1.25rem;cursor:pointer;display:flex;align-items:center;gap:.75rem;font-weight:600;font-size:.95rem;color:var(--text);user-select:none}
+.q-header::before{content:'Q';background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff;width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;flex-shrink:0}
+.q-header::after{content:'+';margin-left:auto;font-size:1.2rem;color:var(--text-dim);transition:transform .3s}
+.q-card.open .q-header::after{content:'-';transform:rotate(180deg)}
+.q-body{padding:0 1.25rem;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s}
+.q-card.open .q-body{max-height:800px;padding:0 1.25rem 1.25rem}
+.q-body p,.q-body li{font-size:.9rem;margin-bottom:.4rem}
+.q-body .ar-box{margin-top:.75rem}
+
+/* FOOTER */
+footer{text-align:center;padding:2rem;color:var(--text-dim);font-size:.8rem;border-top:1px solid var(--border);margin-top:3rem}
+footer a{color:var(--accent);text-decoration:none}
+
+/* RESPONSIVE */
+@media(max-width:768px){.hero h1{font-size:1.8rem}.container{padding:1rem}.nav{padding:.5rem 1rem}.toc-grid{grid-template-columns:1fr}#searchBox{width:120px}#searchBox:focus{width:160px}}
+@media print{.nav,.progress-bar,.nav-actions{display:none!important}.slide{break-inside:avoid;border:1px solid #ddd;box-shadow:none}.ar-box{background:#f0f0ff!important}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav">
+<div class="nav-brand">SET422 — Lec 02</div>
+<div class="nav-actions">
+<input type="text" id="searchBox" placeholder="Search... بحث">
+<button class="nav-btn" id="tocBtn" title="Table of Contents">☰</button>
+<button class="nav-btn" id="themeBtn" title="Toggle theme">🌙</button>
+</div>
+</nav>
+
+<div class="container">
+<section class="hero">
+<div class="hero-badge">LECTURE 02 — SET422</div>
+<h1>Why Project Management?</h1>
+<p>Project Charter, WBS, Scheduling, Budget — الأدوات الأساسية لإدارة المشروع بنجاح من البداية للنهاية.</p>
+</section>
+
+<!-- TOC -->
+<div class="toc" id="toc">
+<h3>📑 Table of Contents</h3>
+<div class="toc-grid">
+<a href="#s1"><span>01</span> Why Project Management?</a>
+<a href="#s2"><span>02</span> Official & Unofficial Definitions</a>
+<a href="#s3"><span>03</span> Why Projects Fail</a>
+<a href="#s4"><span>04</span> Why Projects Succeed</a>
+<a href="#s5"><span>05</span> PM Phases</a>
+<a href="#s6"><span>06</span> Core PM Tools</a>
+<a href="#s7"><span>07</span> Initiating Process</a>
+<a href="#s8"><span>08</span> Project Initiation Importance</a>
+<a href="#s9"><span>09</span> What is Project Initiation?</a>
+<a href="#s10"><span>10</span> Define Project Charter</a>
+<a href="#s11"><span>11</span> Project Charter Content</a>
+<a href="#s12"><span>12</span> Charter Content — Requirements</a>
+<a href="#s13"><span>13</span> Charter Content — Risks & Schedule</a>
+<a href="#s14"><span>14</span> Charter Content — Stakeholders</a>
+<a href="#s15"><span>15</span> Charter Content — PM Authority</a>
+<a href="#s16"><span>16</span> Scope Statement</a>
+<a href="#s17"><span>17</span> Scope Statement Example</a>
+<a href="#s18"><span>18</span> Charter Example — SAP</a>
+<a href="#s19"><span>19</span> Charter Templates</a>
+<a href="#s20"><span>20</span> Tips on Writing the Charter</a>
+<a href="#s21"><span>21</span> Planning Process</a>
+<a href="#s22"><span>22</span> Planning Process — Details</a>
+<a href="#s23"><span>23</span> What is WBS?</a>
+<a href="#s24"><span>24</span> WBS — Structure</a>
+<a href="#s25"><span>25</span> WBS Diagram</a>
+<a href="#s26"><span>26</span> WBS Example — House</a>
+<a href="#s27"><span>27</span> WBS Dictionary</a>
+<a href="#s28"><span>28</span> Project Schedule Tools</a>
+<a href="#s29"><span>29</span> MS Project — Gantt</a>
+<a href="#s30"><span>30</span> Gantt Chart — Project X</a>
+<a href="#s31"><span>31</span> Project Budget</a>
+<a href="#s32"><span>32</span> Sheet 1 — Questions</a>
+<a href="#qa">Q&A Section</a>
+</div>
+</div>
+
+<!-- ==================== SLIDES ==================== -->
+
+<!-- Slide 1 -->
+<div class="slide" id="s1">
+<div class="slide-header"><div class="slide-num">01</div><div class="slide-title">Why Project Management?</div></div>
+<ul>
+<li>Today's complex environments require <strong>continuing implementations</strong></li>
+<li>Project management provides a <strong>framework for working amidst persistent change</strong></li>
+</ul>
+<div class="ar-box">
+<div class="ar-icon">💡</div><span class="tag">الشرح</span>
+ليه أصلاً محتاجين إدارة مشاريع؟ ببساطة لأن الدنيا بقت معقدة. الشركات بتتغير كل يوم، التكنولوجيا بتتطور، والمتطلبات مش ثابتة. إدارة المشاريع بتديك إطار عمل تقدر تشتغل بيه وسط كل التغييرات دي من غير ما تتوه.
+</div>
+</div>
+
+<!-- Slide 2 -->
+<div class="slide" id="s2">
+<div class="slide-header"><div class="slide-num">02</div><div class="slide-title">PM: Official & Unofficial Definitions</div></div>
+<p><strong>Official Definition (PMBOK):</strong></p>
+<p>A project is a <strong>temporary effort</strong> undertaken to create a unique product or service. It implies:</p>
+<ul>
+<li>A specific <strong>timeframe</strong></li>
+<li>A <strong>budget</strong></li>
+<li><strong>Unique specifications</strong></li>
+<li>Working across <strong>organizational boundaries</strong></li>
+</ul>
+<p style="margin-top:1rem"><strong>Unofficial Definition:</strong></p>
+<ul>
+<li>Project management is about <strong>organization</strong></li>
+<li>Project management is about <strong>decision making</strong></li>
+<li>Project management is about <strong>changing people's behavior</strong></li>
+<li>Project management is about creating an environment encouraging to <strong>getting critical projects done!</strong></li>
+</ul>
+<div class="ar-box">
+<div class="ar-icon">💡</div><span class="tag">الشرح</span>
+التعريف الرسمي بيركز على إن المشروع مجهود مؤقت بهدف فريد. بس التعريف الحقيقي أعمق من كده — إدارة المشاريع هي إزاي تنظم الشغل، تاخد قرارات صح، وتخلي الناس تغير سلوكها عشان المشروع ينجح. يعني مش بس planning — ده تغيير ثقافة شغل كاملة.
+</div>
+</div>
+
+<!-- Slide 3 -->
+<div class="slide" id="s3">
+<div class="slide-header"><div class="slide-num">03</div><div class="slide-title">Why Projects Fail</div></div>
+<ul>
+<li><strong>Poor scope</strong> — النطاق مش واضح</li>
+<li><strong>Unrealistic expectations</strong> — توقعات غير واقعية</li>
+<li><strong>Lack of executive sponsorship</strong> — مفيش دعم من الإدارة العليا</li>
+<li><strong>Lack of project management</strong> — مفيش إدارة مشروع أصلاً</li>
+<li><strong>Inability to move beyond individual and personality conflicts</strong> — مشاكل شخصية بين الفريق</li>
+<li><strong>Politics changes</strong> — تغييرات سياسية أو تنظيمية</li>
+</ul>
+<div class="ar-box">
+<div class="ar-icon">⚠️</div><span class="tag">الشرح</span>
+ليه المشاريع بتفشل؟ السبب الأول دايماً هو الـ scope — لو مش عارف إنت عايز تعمل إيه بالظبط، هتفضل تلف في دواير. السبب التاني هو التوقعات الخيالية — "عايزين التطبيق في أسبوعين بفريق اتنين!" وده مستحيل. وكمان لو الإدارة العليا مش واقفة وراك — المشروع هيموت لوحده.
+</div>
+</div>
+
+<!-- Slide 4 -->
+<div class="slide" id="s4">
+<div class="slide-header"><div class="slide-num">04</div><div class="slide-title">Why Projects Succeed</div></div>
+<ul>
+<li><strong>Project Sponsorship at executive level</strong></li>
+<li><strong>Good project charter agreement</strong> / ميثاق بنود الاتفاق</li>
+<li><strong>Strong project management</strong></li>
+<li><strong>The right mix of team players</strong></li>
+<li><strong>Good decision making structure</strong></li>
+<li><strong>Good communication</strong></li>
+<li><strong>Team members are working toward common goals</strong></li>
+</ul>
+<div class="ar-box">
+<div class="ar-icon">✅</div><span class="tag">الشرح</span>
+المشروع بينجح لما يكون عنده راعي (sponsor) من الإدارة العليا بيدعمه، و charter واضح الكل متفق عليه، وإدارة مشروع قوية، وفريق متناسق. والأهم — تواصل كويس وهدف واحد الكل ماشي عليه.
+</div>
+</div>
+
+<!-- Slide 5 -->
+<div class="slide" id="s5">
+<div class="slide-header"><div class="slide-num">05</div><div class="slide-title">Project Management Phases</div></div>
+<ol>
+<li><strong>Initiating/Define:</strong> Scope the project; Charter the project (reasons, objectives, stakeholders); identify stakeholders</li>
+<li><strong>Planning:</strong> Develop the project plan. Determine the steps needed to achieve the goals. The "how" of completing a project. Calculate and predict risk</li>
+<li><strong>Executing:</strong> Launch the plan. Direct and manage project work; perform quality assurance; manage and develop project team; conduct procurements</li>
+<li><strong>Monitoring and Controlling:</strong> Monitor project progress. Manage scope change; control schedule; control quality; control risks; control procurements</li>
+<li><strong>Closing:</strong> Close out the project; close procurements</li>
+</ol>
+
+<!-- Process Flow SVG -->
+<div class="svg-box">
+<svg viewBox="0 0 750 180" xmlns="http://www.w3.org/2000/svg" width="100%">
+<!-- Boxes -->
+<rect x="10" y="60" width="120" height="50" rx="10" fill="#6366f1" opacity=".85"/>
+<text x="70" y="90" text-anchor="middle" fill="#fff" font-size="13" font-weight="700" font-family="Inter">Initiation</text>
+<rect x="170" y="60" width="120" height="50" rx="10" fill="#818cf8" opacity=".85"/>
+<text x="230" y="82" text-anchor="middle" fill="#fff" font-size="11" font-weight="600" font-family="Inter">Planning &amp;</text>
+<text x="230" y="97" text-anchor="middle" fill="#fff" font-size="11" font-weight="600" font-family="Inter">Design</text>
+<rect x="340" y="60" width="120" height="50" rx="10" fill="#a78bfa" opacity=".85"/>
+<text x="400" y="90" text-anchor="middle" fill="#fff" font-size="13" font-weight="700" font-family="Inter">Executing</text>
+<rect x="500" y="60" width="130" height="50" rx="10" fill="#f472b6" opacity=".85"/>
+<text x="565" y="82" text-anchor="middle" fill="#fff" font-size="11" font-weight="600" font-family="Inter">Monitoring &amp;</text>
+<text x="565" y="97" text-anchor="middle" fill="#fff" font-size="11" font-weight="600" font-family="Inter">Controlling</text>
+<rect x="670" y="60" width="70" height="50" rx="10" fill="#10b981" opacity=".85"/>
+<text x="705" y="90" text-anchor="middle" fill="#fff" font-size="13" font-weight="700" font-family="Inter">Closing</text>
+<!-- Arrows forward -->
+<line x1="130" y1="85" x2="170" y2="85" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowG)"/>
+<line x1="290" y1="85" x2="340" y2="85" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowG)"/>
+<line x1="460" y1="85" x2="500" y2="85" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowG)"/>
+<line x1="630" y1="85" x2="670" y2="85" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowG)"/>
+<!-- Cycle arrows between Planning, Executing, Monitoring -->
+<path d="M350,110 Q350,145 280,145" stroke="#fbbf24" stroke-width="1.5" fill="none" stroke-dasharray="4 3" marker-end="url(#arrowY)"/>
+<path d="M510,110 Q510,155 450,155" stroke="#fbbf24" stroke-width="1.5" fill="none" stroke-dasharray="4 3" marker-end="url(#arrowY)"/>
+<text x="320" y="165" font-size="9" fill="#fbbf24" font-family="Inter" font-style="italic">feedback loop</text>
+<defs>
+<marker id="arrowG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#94a3b8"/></marker>
+<marker id="arrowY" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#fbbf24"/></marker>
+</defs>
+</svg>
+<div class="svg-caption">Process Flow Diagram — The 5 PM Phases with feedback loops</div>
+</div>
+
+<div class="ar-box">
+<div class="ar-icon">💡</div><span class="tag">الشرح</span>
+المشروع بيمر بـ5 مراحل: البدء (بتحدد الفكرة والـ charter)، التخطيط (بتحط الخطة)، التنفيذ (بتشتغل فعلاً)، المراقبة (بتتابع التقدم وتصلح الانحرافات)، والإغلاق (بتسلم وبتوثق). لاحظوا إن المراقبة والتنفيذ بيدوروا في دورة — لو لقيت مشكلة بترجع تعدل في الخطة.
+</div>
+</div>
+
+<!-- Slide 6 -->
+<div class="slide" id="s6">
+<div class="slide-header"><div class="slide-num">06</div><div class="slide-title">Core Project Management Tools</div></div>
+<ol>
+<li><strong>Project Charter</strong> — ميثاق المشروع</li>
+<li><strong>Work Breakdown Structure (WBS)</strong> — هيكل تجزئة العمل</li>
+<li><strong>Project Schedule</strong> — الجدول الزمني</li>
+<li><strong>Project Budget</strong> — الميزانية</li>
+</ol>
+<div class="ar-box">
+<div class="ar-icon">🔧</div><span class="tag">الشرح</span>
+دي الأربع أدوات الأساسية اللي أي مدير مشروع لازم يعرفها. الـ Charter بيقول "إيه المشروع وليه"، الـ WBS بيكسر الشغل لقطع صغيرة، الـ Schedule بيحدد "امتى"، والـ Budget بيحدد "بكام". المحاضرة دي هنتكلم عن كل واحدة فيهم بالتفصيل.
+</div>
+</div>
+
+<!-- Slide 7 -->
+<div class="slide" id="s7">
+<div class="slide-header"><div class="slide-num">07</div><div class="slide-title">Initiating Process</div></div>
+<p><strong>Project initiation</strong> is the first step in starting a new project. During the project initiation phase, you establish why you are doing the project and what business value it will deliver.</p>
+<p style="margin-top:.75rem"><strong>Develop project charter:</strong></p>
+<p>A project charter demonstrates why your project is important, what it will entail, and who will work on it.</p>
+<p style="margin-top:.75rem"><strong>All through the following elements:</strong></p>
+<ul>
+<li><strong>Why:</strong> The project's goals and purpose</li>
+<li><strong>What:</strong> The scope of the project, including an outline of your project budget</li>
+<li><strong>Who:</strong> Key stakeholders, project sponsors, and project team members</li>
+</ul>
+<p style="margin-top:.75rem"><strong>Also includes:</strong></p>
+<ul>
+<li>Develop a preliminary <strong>project scope statement</strong></li>
+<li>Produce a preliminary, high-level definition of the project</li>
+<li>Broadly defines what is and what is <strong>not</strong> part of the project</li>
+<li>Establish the <strong>project plan</strong></li>
+<li>Define the project <strong>objectives</strong></li>
+<li>Identify the <strong>success criteria</strong></li>
+<li>List <strong>assumptions, risks, obstacles</strong></li>
+</ul>
+<p style="margin-top:.75rem"><strong>Input:</strong> Product Description, Strategic plan, Project Selection Criteria, Historical Information</p>
+<p><strong>Output:</strong> Project Charter, Project Manager assigned, Constraints, Assumptions</p>
+<div class="ar-box">
+<div class="ar-icon">💡</div><span class="tag">الشرح</span>
+مرحلة البدء هي أول خطوة. بتجاوب على 3 أسئلة: ليه بنعمل المشروع ده (Why)؟ هنعمل إيه بالظبط (What)؟ ومين هيشتغل فيه (Who)؟ ودي بتطلع في وثيقة اسمها الـ Project Charter. وبنحدد scope أولي — يعني إيه جوا المشروع وإيه برا.
+</div>
+</div>
+
+<!-- Slide 8 -->
+<div class="slide" id="s8">
+<div class="slide-header"><div class="slide-num">08</div><div class="slide-title">Project Initiation — Why It Matters</div></div>
+<p>If asked to name one step that is crucial for the success of project execution, the answer would have to be a <strong>well-executed software project initiation</strong>.</p>
+<ul>
+<li>A software project that <strong>begins well is more likely to succeed</strong> than a project that starts poorly</li>
+<li>Certain mistakes committed during initiation <strong>do not lend themselves to corrections</strong> as the project progresses</li>
+<li>A project that starts out on the <strong>"right foot"</strong> is well on its way to being successful</li>
+<li>Proper preparation for a project's execution journey is <strong>as important as the project's goal</strong></li>
+</ul>
+<div class="ar-box">
+<div class="ar-icon">⚠️</div><span class="tag">الشرح</span>
+البداية هي كل حاجة. لو بدأت غلط — صعب جداً تصلح بعدين. تخيل إنك بتبني عمارة وأساساتها مش مظبوطة — لو وصلت للدور العاشر مش هتقدر ترجع تعدل الأساس! نفس الكلام في المشاريع — لو الـ initiation ضعيفة، المشاكل هتفضل تتراكم.
+</div>
+</div>
+
+<!-- Slide 9 -->
+<div class="slide" id="s9">
+<div class="slide-header"><div class="slide-num">09</div><div class="slide-title">What is Project Initiation?</div></div>
+<p><strong>Project initiation</strong> is the first phase of the project management life cycle. In this stage, companies decide whether the project is needed and how beneficial it will be.</p>
+<p style="margin-top:.75rem"><strong>Why is it important?</strong></p>
+<ul>
+<li>Take major decisions that establish the <strong>direction and resource requirements</strong></li>
+<li>The stakeholders arrive at a <strong>clear objective</strong> to ensure everyone stays on the same page</li>
+<li>Multiple checks will be conducted to prevent <strong>miscommunication</strong> and keep the project on track</li>
+<li>Effective project management requires you to <strong>maximize benefits and minimize costs</strong> while delivering value to the customer</li>
+</ul>
+<div class="ar-box">
+<div class="ar-icon">💡</div><span class="tag">الشرح</span>
+مرحلة الـ Initiation بنقرر فيها: المشروع ده يستاهل نعمله ولا لأ؟ لو أيوه — بنحدد الاتجاه، الموارد المطلوبة، والهدف الواضح اللي كل الناس متفقة عليه. لو مبدأتش صح — هتضيع وقت وفلوس في حاجة ممكن من الأول تعرف إنها مش هتنفع.
+</div>
+</div>
+
+<!-- Slide 10 -->
+<div class="slide" id="s10">
+<div class="slide-header"><div class="slide-num">10</div><div class="slide-title">Define Project Charter</div></div>
+<p>The project charter is perhaps the <strong>most comprehensive and important part</strong> of the project initiation process.</p>
+<ul>
+<li>It answers the <strong>3Ws</strong> to identify the project's scope/objective, team members, and possible timeframe</li>
+<li>It is the <strong>first document</strong> that identifies the necessary details — goals, constraints, scope, resources</li>
+</ul>
+<p style="margin-top:.75rem"><strong>The project charter typically documents:</strong></p>
+<ul>
+<li>Reasons for the project</li>
+<li>Objectives and constraints</li>
+<li>The main stakeholders</li>
+<li>Risks identified</li>
+<li>Benefits of the project</li>
+<li>General overview of the budget</li>
+</ul>
+<p style="margin-top:.75rem"><strong>The 5Ws of the Charter:</strong></p>
+<ul>
+<li><strong>What</strong> must be done? — Resources? Constraints? Short/long term suggestions?</li>
+<li><strong>Why</strong> do it?</li>
+<li><strong>When</strong> must it be done?</li>
+<li><strong>Where</strong> must it be done?</li>
+<li><strong>Who</strong> does what? — Who is behind it? Funding? Performing the work?</li>
+</ul>
+<div class="ar-box">
+<div class="ar-icon">📋</div><span class="tag">الشرح</span>
+الـ Project Charter هو أهم وثيقة في بداية المشروع. بيجاوب على الـ 5Ws — إيه هنعمله (What)، ليه (Why)، امتى (When)، فين (Where)، ومين (Who). لو عملت charter قوي — نص المشاكل اتحلت من قبل ما تبدأ. فكر فيه كخريطة — من غيره هتتوه في الطريق.
+</div>
+</div>
+
+<!-- Slide 11 -->
+<div class="slide" id="s11">
+<div class="slide-header"><div class="slide-num">11</div><div class="slide-title">Project Charter Content — Overview</div></div>
+<p>The charter should include these key elements:</p>
+<ul>
+<li><strong>Project Objective</strong></li>
+<li><strong>Timeline</strong></li>
+<li><strong>Project Manager</strong></li>
+<li><strong>Resources Required</strong></li>
+<li><strong>Project Team</strong></li>
+<li><strong>Deliverables</strong></li>
+<li><strong>Budget</strong></li>
+<li><strong>Decision Making</strong></li>
+<li><strong>Signatures</strong></li>
+<li><strong>Risks</strong></li>
+<li><strong>Sponsor</strong></li>
+<li><strong>Stakeholders</strong></li>
+</ul>
+<div class="ar-box">
+<div class="ar-icon">📝</div><span class="tag">الشرح</span>
+دي قائمة بالعناصر اللي لازم تكون في أي charter. اتخيل إنك بتملا استمارة بتشرح فيها المشروع كله — من الهدف والفريق والميزانية والمخاطر، لحد مين بيوقع ومين بيموّل. لو أي عنصر ناقص — في ثغرة ممكن تسبب مشكلة.
+</div>
+</div>
+
+<!-- Slide 12 -->
+<div class="slide" id="s12">
+<div class="slide-header"><div class="slide-num">12</div><div class="slide-title">Charter Content — Requirements & Assumptions</div></div>
+<p><strong>High-level requirements:</strong></p>
+<p>Describe the high-level product capabilities that satisfy stakeholder needs. <strong>Do not include detailed requirements.</strong></p>
+<ul>
+<li><em>Example:</em> As a retail customer, I want to shop by either brand or by product category</li>
+<li><em>Example:</em> As the site owner, I want a customer to find a product within <strong>three (3) mouse clicks</strong></li>
+<li><em>Anti-example:</em> As the site owner, I want the products to be displayed in a 4-across grid against a light grey background (❌ too detailed!)</li>
+</ul>
+<p style="margin-top:.75rem"><strong>Assumptions and Constraints:</strong></p>
+<ul>
+<li>An <strong>assumption</strong> is "a thing that is accepted as true without proof"
+<br><em>Example:</em> The site will allow all visitors to access all public features</li>
+<li>A <strong>constraint</strong> is a limitation or restriction
+<br><em>Example:</em> The site must use a hosting service for the new site</li>
+</ul>
+<div class="ar-box">
+<div class="ar-icon">💡</div><span class="tag">الشرح</span>
+في الـ requirements بنكتب المطلوب بشكل عام — مش تفاصيل التصميم. يعني "العميل يقدر يلاقي المنتج في 3 كليكات" ✅ — مش "المنتجات في grid 4 أعمدة بخلفية رمادي" ❌. الأول requirement والتاني design detail.<br><br>
+الـ assumption = حاجة بنفترضها صح من غير إثبات. الـ constraint = قيد أو حدود لازم نمشي جواها.
+</div>
+</div>
+
+<!-- Slide 13 -->
+<div class="slide" id="s13">
+<div class="slide-header"><div class="slide-num">13</div><div class="slide-title">Charter Content — Scope, Risks & Schedule</div></div>
+<p><strong>High-level project description and boundaries (scope):</strong></p>
+<ul>
+<li>Provide an executive-summary-level description</li>
+<li>Identify what <strong>will and will not</strong> be included
+<br><em>Example:</em> The site is a one-stop source for health info… It will <strong>not</strong> provide direct access to the HR site.</li>
+</ul>
+<p style="margin-top:.75rem"><strong>High-level risks:</strong></p>
+<ul>
+<li>Risks represent any major areas of <strong>uncertainty</strong></li>
+<li>May be <strong>internal or external</strong>
+<br><em>Example:</em> Existing customers may have difficulty transitioning to the new site
+<br><em>Example:</em> The company does not have sufficient in-house Web design expertise</li>
+</ul>
+<p style="margin-top:.75rem"><strong>Summary milestone schedule:</strong></p>
+<ul>
+<li>Identify significant points — key deliverables, beginning/ending of phases, acceptance</li>
+<li>Include <strong>estimated completion dates</strong>
+<br><em>Example:</em> Requirements document complete: 1/31/2017; Website online with training: 6/30/2017</li>
+</ul>
+<p style="margin-top:.75rem"><strong>Summary budget:</strong></p>
+<ul>
+<li>Provide a <strong>Rough Order of Magnitude (ROM)</strong> estimate — usually ±35%</li>
+<li>Break down by categories: software, hardware, human resources, etc.</li>
+</ul>
+<div class="ar-box">
+<div class="ar-icon">📊</div><span class="tag">الشرح</span>
+الـ scope بيحدد حدود المشروع — إيه جوا وإيه برا. والمخاطر دي الحاجات اللي مش متأكدين منها وممكن تأثر سلباً. والـ milestones دي نقاط مهمة في الجدول الزمني — زي تسليم وثيقة أو إطلاق نسخة تجريبية. والميزانية بتكون تقديرية في الأول — مش لازم تكون دقيقة 100%.
+</div>
+</div>
+
+<!-- Slide 14 -->
+<div class="slide" id="s14">
+<div class="slide-header"><div class="slide-num">14</div><div class="slide-title">Charter Content — Stakeholders & Approval</div></div>
+<p><strong>Stakeholder list:</strong></p>
+<ul>
+<li>A stakeholder is an individual, group, or organization who may <strong>affect, be affected by, or perceive itself to be affected by</strong> a decision, activity, or outcome of the project</li>
+<li>Identify a preliminary list of the most critical stakeholders — this list will be <strong>refined later</strong></li>
+</ul>
+<p style="margin-top:.75rem"><strong>Project approval requirements:</strong></p>
+<ul>
+<li>Identify criteria that must be met for the project to be <strong>accepted by the customer</strong></li>
+<li><em>Example:</em> The project must implement the set of 'must-have' user stories agreed upon at project initiation</li>
+</ul>
+<div class="ar-box">
+<div class="ar-icon">👥</div><span class="tag">الشرح</span>
+لازم تحدد مين الـ stakeholders من البداية — مش بس الفريق، ده كمان أي حد ممكن يتأثر بالمشروع. وبتحدد معايير القبول — يعني إيه اللي لو اتعمل العميل يقول "تمام مقبول". لو مش محدد ده من الأول — هتفضل في خناقات لحد ما المشروع يموت.
+</div>
+</div>
+
+<!-- Slide 15 -->
+<div class="slide" id="s15">
+<div class="slide-header"><div class="slide-num">15</div><div class="slide-title">Charter Content — PM Authority</div></div>
+<p><strong>Project manager, responsibility, and authority levels:</strong></p>
+<ul>
+<li><strong>Staffing:</strong> Authority to hire/fire, discipline, or accept/reject project staff</li>
+<li><strong>Budget management:</strong> Authority to commit, manage, and control project funds; what variance requires higher approval</li>
+<li><strong>Technical decisions:</strong> Authority regarding deliverable technical decisions or project approach</li>
+<li><strong>Conflict resolution:</strong> Authority to resolve team, organizational, and external conflicts</li>
+<li><strong>Escalation path:</strong> Define the path for issues exceeding the PM's authority</li>
+</ul>
+<p style="margin-top:.5rem">Name and authority of the <strong>sponsor</strong> or other person(s) authorizing the project charter.</p>
+<div class="ar-box">
+<div class="ar-icon">👔</div><span class="tag">الشرح</span>
+لازم يكون واضح صلاحيات مدير المشروع — يقدر يعيّن ويفصل ناس؟ يقدر يصرف فلوس لحد كام؟ يقدر ياخد قرارات تقنية بنفسه؟ ولو حصلت مشكلة أكبر من صلاحياته، مين بيروحله؟ ده الـ escalation path. لو ده مش واضح — هيحصل تأخير في كل قرار.
+</div>
+</div>
+
+<!-- Slide 16 -->
+<div class="slide" id="s16">
+<div class="slide-header"><div class="slide-num">16</div><div class="slide-title">Scope Statement</div></div>
+<p>A <strong>scope statement</strong> is a document that defines <strong>all the elements of the project scope</strong> as well as assumptions, project requirements, and acceptance criteria.</p>
+<p>Your project scope statement will act as the primary tool for stakeholders and teammates to refer back to and use as a <strong>guideline to accurately measure project success</strong>.</p>
+
+<p style="margin-top:.75rem"><strong>Example — Model T Electric Vehicle:</strong></p>
+<table>
+<tr><th>Element</th><th>Details</th></tr>
+<tr><td><strong>Product Scope</strong></td><td>Model T is a low-cost electric vehicle with 4 doors, high mileage, great durability. Gas cars are increasing pollution — low-cost EVs solve this.</td></tr>
+<tr><td><strong>Acceptance Criteria</strong></td><td>300km on full charge; Low service costs; Low financing options; Upgrade options; High durability; 2-year warranty; 0-110 km/h in 10 seconds</td></tr>
+<tr><td><strong>Deliverables</strong></td><td>1 electric vehicle; 1 battery warranty; 1 spare wheel; 1 front airbag; leather seat covers</td></tr>
+<tr><td><strong>Exclusions</strong></td><td>No free spare battery; No free charging cables; No spare parts; No insurance; No free service</td></tr>
+<tr><td><strong>Constraints</strong></td><td>COVID-19 may affect demand; Launch by fall 2021; Budget/time/personnel limits</td></tr>
+<tr><td><strong>Assumptions</strong></td><td>All raw materials available; Semiconductor chips available; Staff not reassigned; Funding available</td></tr>
+</table>
+<div class="ar-box">
+<div class="ar-icon">📄</div><span class="tag">الشرح</span>
+الـ Scope Statement بيوصف حدود المشروع بالتفصيل. المثال ده عن عربية كهربائية — بيقول إيه المنتج بالظبط، إيه معايير القبول، إيه اللي هنسلمه، إيه اللي مش داخل المشروع (Exclusions — مثلاً مفيش بطارية مجانية)، إيه القيود (COVID ممكن يأثر)، وإيه اللي بنفترضه (المواد الخام متوفرة). وثيقة زي دي بتمنع أي سوء فهم بعدين.
+</div>
+</div>
+
+<!-- Slide 17 -->
+<div class="slide" id="s17">
+<div class="slide-header"><div class="slide-num">17</div><div class="slide-title">Scope Statement Example — Timesheet Tool</div></div>
+<table>
+<tr><th>Title</th><td colspan="3">Timesheet Reporting Tool</td></tr>
+<tr><th>Date</th><td colspan="3">June 08, 2017</td></tr>
+<tr><th>Project Manager</th><td colspan="3">Nicole Hansen</td></tr>
+<tr><th>Justification</th><td colspan="3">Web-based application to automate tracking daily time entries made by employees</td></tr>
+<tr><th>Scope Description</th><td colspan="3">Tracking tool to review time entries by IT employees globally</td></tr>
+<tr><th>Objective</th><td colspan="3">Create a tool to track timesheet entries for all IT employees</td></tr>
+<tr><th>High-Level Requirements</th><td colspan="3">User access for all employees; Admin access to support team; Report generation for PMs; Remote access; Standard templates</td></tr>
+<tr><th>In Scope</th><td colspan="3">Multi-level approvals; Task additions by Admin; 'Copy Previous Week' feature; Desktop access</td></tr>
+<tr><th>Out of Scope</th><td colspan="3">New project/task by managers; HRMS connectivity; Role-based templates; Mobile/tablet access</td></tr>
+<tr><th>Cost Estimate</th><td><em>Software:</em> $2,300 est / $900 actual</td><td><em>Hardware:</em> $5,000 est / $1,500 actual</td><td></td></tr>
+</table>
+<div class="ar-box">
+<div class="ar-icon">📋</div><span class="tag">الشرح</span>
+ده مثال حقيقي لـ scope statement — نظام timesheet. لاحظ إزاي الـ In Scope واضح (بيقول إيه اللي هنعمله) والـ Out of Scope كمان واضح (بيقول إيه اللي مش هنعمله). ده بيمنع الـ scope creep — إن العميل ييجي بعدين يقولك "أنا كنت فاكر ده داخل!".
+</div>
+</div>
+
+<!-- Slide 18 -->
+<div class="slide" id="s18">
+<div class="slide-header"><div class="slide-num">18</div><div class="slide-title">Charter Example — SAP Implementation</div></div>
+<table>
+<tr><th>Project Description</th><td>Purchase and implement SAP module to automate substance volume tracking for all chemical plants. Data necessary for accurate chemical inventory reporting to EPA and local authorities.</td></tr>
+<tr><th>Business Need</th><td>Plants currently estimate hazardous substance levels using manual methods subject to error. Inaccurate calculations can result in <strong>$1M+ fines</strong>.</td></tr>
+<tr><th>Project Manager</th><td>Brian Frizzel</td></tr>
+<tr><th>Project Number</th><td>PR4030</td></tr>
+<tr><th>Champion</th><td>Michael Cote</td></tr>
+<tr><th>Approval Date</th><td>11/1/14</td></tr>
+</table>
+<table style="margin-top:.75rem">
+<tr><th colspan="3">Financial & Timing</th></tr>
+<tr><td><strong>Expenses:</strong> $12,000</td><td><strong>Capital:</strong> $55,000</td><td></td></tr>
+</table>
+<table style="margin-top:.75rem">
+<tr><th colspan="3">Milestones</th></tr>
+<tr><td>Initial Consultation: 1-Oct</td><td>Plan Complete: 1-Nov</td><td>Purchase Software: 15-Dec</td></tr>
+<tr><td>Implementation: 1-Feb</td><td></td><td></td></tr>
+</table>
+<table style="margin-top:.75rem">
+<tr><th colspan="3">Resources & Risks</th></tr>
+<tr><td>Compliance Specialist: 320 hrs (40/wk)</td><td>IT Support: 80 hrs (20/wk)</td><td>Product Data Mgmt: 360 hrs (60/wk)</td></tr>
+<tr><td>SAP Consultant: $12,000</td><td colspan="2"></td></tr>
+<tr><td colspan="3"><strong>Risks:</strong> Data Readiness (Medium); Missing March 1 Deadline (Medium)</td></tr>
+</table>
+<div class="ar-box">
+<div class="ar-icon">🏢</div><span class="tag">الشرح</span>
+ده مثال واقعي من شركة كيماويات — محتاجين يركبوا SAP عشان يتابعوا المواد الخطرة. ليه؟ لأن الطريقة اليدوية ممكن يطلعوا غرامة مليون دولار! لاحظوا إن الـ charter فيه كل حاجة: المشكلة، التبرير، الميزانية، المواعيد، الموارد، والمخاطر.
+</div>
+</div>
+
+<!-- Slide 19 -->
+<div class="slide" id="s19">
+<div class="slide-header"><div class="slide-num">19</div><div class="slide-title">Charter Templates</div></div>
+<p><strong>Template 1 — Generic Project Charter:</strong></p>
+<ul>
+<li><strong>Project Goal & Objective:</strong> Concise description of the proposed work</li>
+<li><strong>Project Owner & Sponsor:</strong> Highest level leader who can troubleshoot and manage resources</li>
+<li><strong>Stakeholders:</strong> People impacted by the work</li>
+<li><strong>Timeline:</strong> Key milestones or deadlines</li>
+<li><strong>Resources Required:</strong> People and other resources</li>
+<li><strong>Decision Making:</strong> What decisions required, by whom, at what level</li>
+<li><strong>Deliverables:</strong> How to measure success</li>
+<li><strong>Assumptions & Risks</strong></li>
+<li><strong>Business Process Changes:</strong> Re-engineering of procedures? Personnel changes?</li>
+<li><strong>PM & Recommended Team Members</strong></li>
+<li><strong>Expense Budget:</strong> Short- and long-term costs</li>
+</ul>
+<p style="margin-top:1rem"><strong>Template 2 — DHS Oregon Charter:</strong></p>
+<ul>
+<li>Project Title, Sponsor, Date, PM, Customer</li>
+<li>Project Description (summary-level)</li>
+<li>Summary Milestones with Due Dates</li>
+<li>Estimated Budget</li>
+<li>PM Authority Level (staffing, technical, financial decisions, escalation path)</li>
+<li>Approvals — PM Signature + Sponsor Signature</li>
+</ul>
+<div class="ar-box">
+<div class="ar-icon">📑</div><span class="tag">الشرح</span>
+دي templates جاهزة ممكن تستخدمها في أي مشروع. الأول عام — بيغطي كل العناصر الأساسية. التاني من DHS — أبسط وأكثر رسمية. لاحظوا إن كل template بيحتاج توقيعات — ده لأن الـ charter وثيقة رسمية بتمثل اتفاق بين كل الأطراف.
+</div>
+</div>
+
+<!-- Slide 20 -->
+<div class="slide" id="s20">
+<div class="slide-header"><div class="slide-num">20</div><div class="slide-title">Tips on Writing the Charter</div></div>
+<ul>
+<li><strong>Distribution of project by type:</strong> In-house, contract/for-hire, startup</li>
+<li><strong>Distribution by technology:</strong> Web, Windows/Mac OS/Linux, Mobile, No platform</li>
+<li><strong>Distribution by Industry:</strong> Financial Services, Law, Retail</li>
+</ul>
+<p style="margin-top:.75rem"><strong>Most important elements:</strong></p>
+<ul>
+<li>Why, who, what, what not, and a little bit of when</li>
+<li>Make sure it's <strong>clear</strong></li>
+<li>Don't shortchange downstream activities: Integration, testing, rollout, etc.</li>
+</ul>
+<p style="margin-top:.75rem"><strong>Risks:</strong></p>
+<ul>
+<li><strong>Business risks</strong> vs. <strong>Project risks</strong></li>
+<li>Ex: "lack of market adoption" (business) vs. "inexperienced team" (project)</li>
+</ul>
+<p style="margin-top:.75rem"><strong>Formalities:</strong></p>
+<ul>
+<li>Spell check, proofread</li>
+<li>Make sure your name is on the first page and the header/footer on each page</li>
+</ul>
+<div class="ar-box">
+<div class="ar-icon">✍️</div><span class="tag">الشرح</span>
+نصائح مهمة لما تكتب charter: ركز على الـ Why و Who و What — متدخلش في التفاصيل التقنية أوي. متنساش المراحل اللي بعد كده (testing, rollout). فرّق بين مخاطر بزنس (السوق مش هيتقبل المنتج) ومخاطر مشروع (الفريق مش خبير). وأخيراً — spell check! مفيش أسخف من charter فيه أخطاء إملائية.
+</div>
+</div>
+
+<!-- Slide 21 -->
+<div class="slide" id="s21">
+<div class="slide-header"><div class="slide-num">21</div><div class="slide-title">Planning Process</div></div>
+<p>Planning enables project managers to <strong>turn an intangible idea into reality</strong>.</p>
+<p>Devising and maintaining a workable scheme to accomplish the business need the project was undertaken to address.</p>
+<p style="margin-top:.75rem"><strong>Planning includes 16 key activities:</strong></p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:.3rem .8rem">
+<span>✦ Scope Planning</span><span>✦ Schedule Development</span>
+<span>✦ Scope Definition</span><span>✦ Quality Planning</span>
+<span>✦ Activity Definition</span><span>✦ Communications Planning</span>
+<span>✦ Activity Sequencing</span><span>✦ Organization Planning</span>
+<span>✦ Activity Duration Estimating</span><span>✦ Staff Acquisition</span>
+<span>✦ Resource Planning</span><span>✦ Risk Planning</span>
+<span>✦ Cost Estimating</span><span>✦ Procurement Planning</span>
+<span>✦ Cost Budgeting</span><span>✦ Project Plan Development</span>
+</div>
+<div class="ar-box">
+<div class="ar-icon">📐</div><span class="tag">الشرح</span>
+التخطيط هو اللي بيحول الفكرة من كلام على ورق لخطة حقيقية. فيه 16 نشاط — من تحديد النطاق وتعريف الأنشطة وتقدير المدة والتكلفة، لحد تخطيط الجودة والمخاطر والمشتريات. كل ده لازم يتعمل قبل ما تبدأ في التنفيذ!
+</div>
+</div>
+
+<!-- Slide 22 -->
+<div class="slide" id="s22">
+<div class="slide-header"><div class="slide-num">22</div><div class="slide-title">Planning Process — Details</div></div>
+<ul>
+<li><strong>Develop a project management plan</strong> — Creating and integrating all sub-plans into a single source of information</li>
+<li><strong>Identify the project activities</strong></li>
+<li><strong>Scope planning</strong> — Concerned with how the project scope statement will be created</li>
+<li><strong>Create WBS</strong> (Work Breakdown Structure)</li>
+<li><strong>Scope definition</strong> — Actual creation of project scope statement</li>
+<li><strong>Activity definition</strong></li>
+<li><strong>Activity sequencing</strong></li>
+<li><strong>Activity duration estimating</strong></li>
+<li><strong>Activity resource estimating</strong></li>
+<li><strong>Determine resource requirements</strong></li>
+</ul>
+<div class="ar-box">
+<div class="ar-icon">🔧</div><span class="tag">الشرح</span>
+التفاصيل هنا بتقول إن التخطيط مش خطوة واحدة — ده سلسلة من الخطوات المتتابعة: أول حاجة بتحدد النطاق وبتعمل WBS، بعدين بتحدد الأنشطة وترتيبها، بعدين بتقدر مدة كل نشاط والموارد اللي محتاجها. وفي الآخر بتجمع ده كله في خطة واحدة متكاملة.
+</div>
+</div>
+
+<!-- Slide 23 -->
+<div class="slide" id="s23">
+<div class="slide-header"><div class="slide-num">23</div><div class="slide-title">What is a Work Breakdown Structure?</div></div>
+<p>Breaking work into smaller tasks is a common productivity technique used to make the work <strong>more manageable and approachable</strong>.</p>
+<p>The <strong>WBS</strong> is a tool that utilizes this technique and is one of the <strong>most important project management documents</strong>.</p>
+<ul>
+<li>It integrates <strong>scope, cost, and schedule baselines</strong>, ensuring that project plans are in alignment</li>
+<li>PMI defines WBS as: <strong>"deliverable oriented hierarchical decomposition of the work to be executed by the project team"</strong></li>
+<li>There are <strong>two types</strong> of WBS:
+<ol>
+<li><strong>Deliverable-Based</strong> (most common and preferred)</li>
+<li><strong>Phase-Based</strong></li>
+</ol></li>
+<li>The main difference is the <strong>elements identified in the first level</strong></li>
+</ul>
+<div class="ar-box">
+<div class="ar-icon">🧩</div><span class="tag">الشرح</span>
+الـ WBS ببساطة هو إنك بتكسر المشروع الكبير لحاجات صغيرة. زي ما لو عندك بيتزا كبيرة — مش هتاكلها كلها مرة واحدة — بتقطعها شرائح! الـ WBS نفس الفكرة — بيخلي الشغل أسهل في الإدارة والتتبع. فيه نوعين: Deliverable-Based (بتقسم على حسب المخرجات) و Phase-Based (بتقسم على حسب المراحل).
+</div>
+</div>
+
+<!-- Slide 24 -->
+<div class="slide" id="s24">
+<div class="slide-header"><div class="slide-num">24</div><div class="slide-title">WBS — Structure</div></div>
+<ul>
+<li>Identify the <strong>major task categories</strong></li>
+<li>Identify <strong>sub-tasks</strong>, and <strong>sub-sub-tasks</strong></li>
+<li>Break down structure is essential to determine <strong>small activities and their time and resources</strong></li>
+</ul>
+<div class="ar-box">
+<div class="ar-icon">🏗️</div><span class="tag">الشرح</span>
+الطريقة: أول حاجة بتحدد الفئات الكبيرة (Major deliverables)، بعدين بتكسر كل فئة لحاجات أصغر (sub-tasks)، وبتفضل تكسر لحد ما توصل لـ Work Packages — ودي أصغر وحدة ممكن تقدر وقتها وتكلفتها.
+</div>
+</div>
+
+<!-- Slide 25: WBS Diagram SVG -->
+<div class="slide" id="s25">
+<div class="slide-header"><div class="slide-num">25</div><div class="slide-title">WBS Diagram</div></div>
+<p>Work Breakdown Structure — Hierarchical Template</p>
+<div class="svg-box">
+<svg viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg" width="100%">
+<style>
+.wbs-box{fill:rgba(255,255,255,0.08);stroke:#818cf8;stroke-width:1.5;rx:6}
+.wbs-text{fill:#e2e8f0;font-family:Inter,sans-serif;font-size:11px;text-anchor:middle}
+.wbs-sub{fill:#a78bfa;font-size:10px}
+.wbs-line{stroke:#555;stroke-width:1.2}
+</style>
+<!-- Level 0: Project -->
+<rect class="wbs-box" x="330" y="10" width="140" height="45"/>
+<text class="wbs-text" x="400" y="30" font-weight="700" fill="#818cf8" font-size="13">Project</text>
+<text class="wbs-text wbs-sub" x="400" y="45">1.0</text>
+
+<!-- Lines to Level 1 -->
+<line class="wbs-line" x1="400" y1="55" x2="400" y2="75"/>
+<line class="wbs-line" x1="130" y1="75" x2="670" y2="75"/>
+<line class="wbs-line" x1="130" y1="75" x2="130" y2="90"/>
+<line class="wbs-line" x1="400" y1="75" x2="400" y2="90"/>
+<line class="wbs-line" x1="670" y1="75" x2="670" y2="90"/>
+
+<!-- Level 1: Major deliverables -->
+<rect class="wbs-box" x="55" y="90" width="150" height="45" style="stroke:#6366f1"/>
+<text class="wbs-text" x="130" y="108">Major deliverable</text>
+<text class="wbs-text wbs-sub" x="130" y="125">1.1</text>
+
+<rect class="wbs-box" x="325" y="90" width="150" height="45" style="stroke:#6366f1"/>
+<text class="wbs-text" x="400" y="108">Major deliverable</text>
+<text class="wbs-text wbs-sub" x="400" y="125">1.2</text>
+
+<rect class="wbs-box" x="595" y="90" width="150" height="45" style="stroke:#6366f1"/>
+<text class="wbs-text" x="670" y="108">Major deliverable</text>
+<text class="wbs-text wbs-sub" x="670" y="125">1.3</text>
+
+<!-- Lines from 1.1 to level 2 -->
+<line class="wbs-line" x1="130" y1="135" x2="130" y2="155"/>
+<line class="wbs-line" x1="70" y1="155" x2="230" y2="155"/>
+<line class="wbs-line" x1="70" y1="155" x2="70" y2="170"/>
+<line class="wbs-line" x1="230" y1="155" x2="230" y2="170"/>
+
+<rect class="wbs-box" x="15" y="170" width="110" height="42" style="stroke:#a78bfa"/>
+<text class="wbs-text" x="70" y="188">Deliverable</text>
+<text class="wbs-text wbs-sub" x="70" y="203">1.1.1</text>
+
+<rect class="wbs-box" x="175" y="170" width="110" height="42" style="stroke:#a78bfa"/>
+<text class="wbs-text" x="230" y="188">Work Package</text>
+<text class="wbs-text wbs-sub" x="230" y="203">1.1.2</text>
+
+<!-- Lines from 1.1.1 to level 3 -->
+<line class="wbs-line" x1="70" y1="212" x2="70" y2="232"/>
+<line class="wbs-line" x1="15" y1="232" x2="200" y2="232"/>
+<line class="wbs-line" x1="15" y1="232" x2="15" y2="247"/>
+<line class="wbs-line" x1="105" y1="232" x2="105" y2="247"/>
+<line class="wbs-line" x1="200" y1="232" x2="200" y2="247"/>
+
+<rect class="wbs-box" x="-30" y="247" width="90" height="42" style="stroke:#f472b6"/>
+<text class="wbs-text" x="15" y="265" font-size="9">Work Package</text>
+<text class="wbs-text wbs-sub" x="15" y="280" font-size="9">1.1.1.1</text>
+
+<rect class="wbs-box" x="60" y="247" width="90" height="42" style="stroke:#f472b6"/>
+<text class="wbs-text" x="105" y="265" font-size="9">Work Package</text>
+<text class="wbs-text wbs-sub" x="105" y="280" font-size="9">1.1.1.2</text>
+
+<rect class="wbs-box" x="155" y="247" width="90" height="42" style="stroke:#f472b6"/>
+<text class="wbs-text" x="200" y="265" font-size="9">Work Package</text>
+<text class="wbs-text wbs-sub" x="200" y="280" font-size="9">1.1.1.3</text>
+
+<!-- Lines from 1.2 to level 2 -->
+<line class="wbs-line" x1="400" y1="135" x2="400" y2="155"/>
+<line class="wbs-line" x1="350" y1="155" x2="450" y2="155"/>
+<line class="wbs-line" x1="350" y1="155" x2="350" y2="170"/>
+<line class="wbs-line" x1="450" y1="155" x2="450" y2="170"/>
+
+<rect class="wbs-box" x="295" y="170" width="110" height="42" style="stroke:#a78bfa"/>
+<text class="wbs-text" x="350" y="188">Work Package</text>
+<text class="wbs-text wbs-sub" x="350" y="203">1.2.1</text>
+
+<rect class="wbs-box" x="395" y="170" width="110" height="42" style="stroke:#a78bfa"/>
+<text class="wbs-text" x="450" y="188">Work Package</text>
+<text class="wbs-text wbs-sub" x="450" y="203">1.2.2</text>
+
+<!-- Lines from 1.3 to level 2 -->
+<line class="wbs-line" x1="670" y1="135" x2="670" y2="155"/>
+<line class="wbs-line" x1="610" y1="155" x2="730" y2="155"/>
+<line class="wbs-line" x1="610" y1="155" x2="610" y2="170"/>
+<line class="wbs-line" x1="730" y1="155" x2="730" y2="170"/>
+
+<rect class="wbs-box" x="555" y="170" width="110" height="42" style="stroke:#a78bfa"/>
+<text class="wbs-text" x="610" y="188">Work Package</text>
+<text class="wbs-text wbs-sub" x="610" y="203">1.3.1</text>
+
+<rect class="wbs-box" x="675" y="170" width="110" height="42" style="stroke:#a78bfa"/>
+<text class="wbs-text" x="730" y="188">Deliverable</text>
+<text class="wbs-text wbs-sub" x="730" y="203">1.3.2</text>
+
+<!-- Lines from 1.3.2 to level 3 -->
+<line class="wbs-line" x1="730" y1="212" x2="730" y2="232"/>
+<line class="wbs-line" x1="680" y1="232" x2="780" y2="232"/>
+<line class="wbs-line" x1="680" y1="232" x2="680" y2="247"/>
+<line class="wbs-line" x1="780" y1="232" x2="780" y2="247"/>
+
+<rect class="wbs-box" x="635" y="247" width="90" height="42" style="stroke:#f472b6"/>
+<text class="wbs-text" x="680" y="265" font-size="9">Work Package</text>
+<text class="wbs-text wbs-sub" x="680" y="280" font-size="9">1.3.2.1</text>
+
+<rect class="wbs-box" x="735" y="247" width="90" height="42" style="stroke:#f472b6"/>
+<text class="wbs-text" x="780" y="265" font-size="9">Work Package</text>
+<text class="wbs-text wbs-sub" x="780" y="280" font-size="9">1.3.2.2</text>
+</svg>
+<div class="svg-caption">Work Breakdown Structure — DHS Template (2.06_PCoE_WBS_Diagram.doc)</div>
+</div>
+<div class="ar-box">
+<div class="ar-icon">🗂️</div><span class="tag">الشرح</span>
+ده شكل الـ WBS كشجرة. المستوى الأول هو المشروع ككل، بعدين بيتقسم لـ Major Deliverables (الحاجات الكبيرة)، بعدين لـ Deliverables (مسلمات أصغر)، وأخيراً الـ Work Packages — ودي أصغر وحدة شغل ممكن تتقدر وتتابعها.
+</div>
+</div>
+
+<!-- Slide 26: WBS Example - House Construction SVG -->
+<div class="slide" id="s26">
+<div class="slide-header"><div class="slide-num">26</div><div class="slide-title">WBS Example — Construction of a House</div></div>
+<p>Phase-Based Work Breakdown Structure example:</p>
+<div class="svg-box">
+<svg viewBox="0 0 800 340" xmlns="http://www.w3.org/2000/svg" width="100%">
+<style>
+.h-root{fill:#86efac;stroke:#166534;rx:8}
+.h-phase{fill:#93c5fd;stroke:#1e40af;rx:6}
+.h-task{fill:#fdba74;stroke:#c2410c;rx:4}
+.h-text{font-family:Inter,sans-serif;text-anchor:middle;font-size:12px;fill:#0f172a;font-weight:600}
+.h-sub{font-size:10px;font-weight:400;fill:#1e293b}
+.h-line{stroke:#64748b;stroke-width:1.2}
+</style>
+
+<!-- Root -->
+<rect class="h-root" x="295" y="10" width="210" height="40"/>
+<text class="h-text" x="400" y="35">Construction of a House</text>
+
+<!-- Lines -->
+<line class="h-line" x1="400" y1="50" x2="400" y2="65"/>
+<line class="h-line" x1="80" y1="65" x2="720" y2="65"/>
+<line class="h-line" x1="80" y1="65" x2="80" y2="80"/>
+<line class="h-line" x1="240" y1="65" x2="240" y2="80"/>
+<line class="h-line" x1="400" y1="65" x2="400" y2="80"/>
+<line class="h-line" x1="560" y1="65" x2="560" y2="80"/>
+<line class="h-line" x1="720" y1="65" x2="720" y2="80"/>
+
+<!-- Phase boxes -->
+<rect class="h-phase" x="20" y="80" width="120" height="40"/>
+<text class="h-text" x="80" y="105">1. Design</text>
+
+<rect class="h-phase" x="180" y="80" width="120" height="40"/>
+<text class="h-text" x="240" y="105">2. Pro-curement</text>
+
+<rect class="h-phase" x="340" y="80" width="120" height="40"/>
+<text class="h-text" x="400" y="105">3. Construction</text>
+
+<rect class="h-phase" x="500" y="80" width="120" height="40"/>
+<text class="h-text" x="560" y="105">4. Inspections</text>
+
+<rect class="h-phase" x="660" y="80" width="120" height="40"/>
+<text class="h-text" x="720" y="105">5. Turnover</text>
+
+<!-- Task lines & boxes 1. Design -->
+<line class="h-line" x1="80" y1="120" x2="80" y2="140"/>
+<rect class="h-task" x="25" y="140" width="110" height="32"/>
+<text class="h-sub" x="80" y="161">1.1 Permits</text>
+<rect class="h-task" x="25" y="180" width="110" height="32"/>
+<text class="h-sub" x="80" y="201">1.2 Drawings</text>
+
+<!-- 2. Pro-curement -->
+<line class="h-line" x1="240" y1="120" x2="240" y2="140"/>
+<rect class="h-task" x="185" y="140" width="110" height="32"/>
+<text class="h-sub" x="240" y="161">1.1 Electrical</text>
+<rect class="h-task" x="185" y="180" width="110" height="32"/>
+<text class="h-sub" x="240" y="201">2.2 Plumbing</text>
+<rect class="h-task" x="185" y="220" width="110" height="32"/>
+<text class="h-sub" x="240" y="241">2.3 HVAC</text>
+
+<!-- 3. Construction -->
+<line class="h-line" x1="400" y1="120" x2="400" y2="140"/>
+<rect class="h-task" x="345" y="140" width="110" height="32"/>
+<text class="h-sub" x="400" y="161">3.1 Interior</text>
+<rect class="h-task" x="345" y="180" width="110" height="32"/>
+<text class="h-sub" x="400" y="201">3.2 Exterior</text>
+
+<!-- 4. Inspections -->
+<line class="h-line" x1="560" y1="120" x2="560" y2="140"/>
+<rect class="h-task" x="495" y="140" width="130" height="32"/>
+<text class="h-sub" x="560" y="161">4.1 Masonry Work</text>
+<rect class="h-task" x="495" y="180" width="130" height="32"/>
+<text class="h-sub" x="560" y="201">4.2 Building Finishes</text>
+
+<!-- 5. Turnover -->
+<line class="h-line" x1="720" y1="120" x2="720" y2="140"/>
+<rect class="h-task" x="665" y="140" width="110" height="32"/>
+<text class="h-sub" x="720" y="161">5.1 Walk Thru</text>
+<rect class="h-task" x="665" y="180" width="110" height="32"/>
+<text class="h-sub" x="720" y="201">5.2 Closing</text>
+
+<text x="400" y="290" text-anchor="middle" font-size="11" fill="#94a3b8" font-family="Inter" font-weight="600" font-style="italic">FIGURE 2 — PHASE BASED WORK BREAKDOWN STRUCTURE</text>
+</svg>
+<div class="svg-caption">Phase-Based WBS — Construction of a House example</div>
+</div>
+<div class="ar-box">
+<div class="ar-icon">🏠</div><span class="tag">الشرح</span>
+ده مثال عملي على WBS لبناء بيت. المستوى الأول (الأزرق) هو المراحل: التصميم، المشتريات، البناء، التفتيش، التسليم. والمستوى التاني (البرتقالي) هو المهام الفعلية في كل مرحلة. ده اسمه Phase-Based WBS — بتقسم على حسب المراحل مش المخرجات. لاحظوا إن كل مرحلة ليها مهام مختلفة.
+</div>
+</div>
+
+<!-- Slide 27 -->
+<div class="slide" id="s27">
+<div class="slide-header"><div class="slide-num">27</div><div class="slide-title">WBS Dictionary & Explanation</div></div>
+<p>In the previous Figure, a Phase-Based WBS, Level 1, has <strong>five Elements</strong>. Each of these elements is a typical phase of a project.</p>
+<ul>
+<li>The Level 2 Elements are the <strong>unique deliverables</strong> in each phase</li>
+<li>Regardless of the type of WBS, the lower-level elements are all <strong>deliverables</strong></li>
+<li>Notice that Elements in different Legs have the same name</li>
+<li>A Phase-Based WBS requires work associated with multiple elements to be divided into the work <strong>unique to each Level 1 Element</strong></li>
+<li>A <strong>WBS Dictionary</strong> is created to describe the work in each Element</li>
+</ul>
+<div class="ar-box">
+<div class="ar-icon">📖</div><span class="tag">الشرح</span>
+كل عنصر في الـ WBS محتاج وصف — ده اللي بنحطه في الـ WBS Dictionary. فيه بنكتب تفاصيل كل work package: وصفه إيه، مين المسؤول، الوقت المتوقع، والتكلفة. فكر فيه كمعجم — لو حد سأل "يعني إيه 3.1 Interior" بيلاقي الإجابة هناك.
+</div>
+</div>
+
+<!-- Slide 28 -->
+<div class="slide" id="s28">
+<div class="slide-header"><div class="slide-num">28</div><div class="slide-title">Project Schedule Tools</div></div>
+<p><strong>Many tools available:</strong></p>
+<ul>
+<li><strong>Microsoft Project</strong></li>
+<li><strong>Primavera</strong></li>
+</ul>
+<p style="margin-top:.75rem"><strong>Most important tasks:</strong></p>
+<ul>
+<li>Monitor tasks</li>
+<li><strong>Gantt views</strong> of project</li>
+<li><strong>Critical Paths</strong></li>
+<li><strong>Dependencies</strong></li>
+<li>Resources assigned to tasks</li>
+</ul>
+<div class="ar-box">
+<div class="ar-icon">📅</div><span class="tag">الشرح</span>
+أدوات الجدولة بتساعدك تتابع المهام وتشوف الصورة الكبيرة. أشهر أداة هي Microsoft Project — بتعرض الشغل في شكل Gantt Chart (أعمدة بتوري المدة والتقدم). ومن أهم الحاجات اللي بتوفرها: الـ Critical Path (المسار الحرج — لو اتأخر أي مهمة فيه المشروع كله هيتأخر) والـ Dependencies (المهام اللي بتعتمد على بعض).
+</div>
+</div>
+
+<!-- Slide 29: MS Project Gantt SVG -->
+<div class="slide" id="s29">
+<div class="slide-header"><div class="slide-num">29</div><div class="slide-title">MS Project — Gantt Chart (SDLC Example)</div></div>
+<p>Screenshot representation of Microsoft Project showing an SDLC project schedule:</p>
+<div class="svg-box" style="overflow-x:auto">
+<svg viewBox="0 0 850 580" xmlns="http://www.w3.org/2000/svg" width="100%">
+<style>
+.g-h{fill:rgba(99,102,241,.15);stroke:none}
+.g-t{fill:#e2e8f0;font-family:'JetBrains Mono',monospace;font-size:10px}
+.g-th{fill:#818cf8;font-family:Inter,sans-serif;font-weight:700;font-size:10px}
+.g-bar{rx:3;ry:3}
+.g-done{fill:#6366f1}
+.g-prog{fill:#a78bfa}
+.g-todo{fill:rgba(255,255,255,.1);stroke:#555;stroke-width:.5}
+.g-sum{fill:#f472b6;font-weight:700}
+.g-grid{stroke:rgba(255,255,255,.05);stroke-width:.5}
+.g-link{stroke:#fbbf24;stroke-width:1;fill:none}
+</style>
+<!-- Header -->
+<rect x="0" y="0" width="420" height="24" fill="rgba(99,102,241,.2)"/>
+<text class="g-th" x="5" y="16">#</text>
+<text class="g-th" x="30" y="16">Task Name</text>
+<text class="g-th" x="230" y="16">Duration</text>
+<text class="g-th" x="290" y="16">% Done</text>
+<text class="g-th" x="340" y="16">Start</text>
+<text class="g-th" x="400" y="16">Finish</text>
+
+<!-- Gantt header -->
+<rect x="420" y="0" width="430" height="24" fill="rgba(99,102,241,.12)"/>
+<text class="g-th" x="470" y="16">Aug</text>
+<text class="g-th" x="540" y="16">Sep</text>
+<text class="g-th" x="610" y="16">Oct</text>
+<text class="g-th" x="680" y="16">Nov</text>
+<text class="g-th" x="750" y="16">Dec</text>
+<text class="g-th" x="810" y="16">Jan</text>
+
+<!-- Grid lines -->
+<line class="g-grid" x1="420" y1="24" x2="420" y2="580"/>
+<line class="g-grid" x1="490" y1="24" x2="490" y2="580"/>
+<line class="g-grid" x1="560" y1="24" x2="560" y2="580"/>
+<line class="g-grid" x1="630" y1="24" x2="630" y2="580"/>
+<line class="g-grid" x1="700" y1="24" x2="700" y2="580"/>
+<line class="g-grid" x1="770" y1="24" x2="770" y2="580"/>
+
+<!-- Row 1: SDLC Project (summary) -->
+<rect class="g-h" x="0" y="26" width="420" height="20"/>
+<text class="g-t g-sum" x="5" y="40">1</text>
+<text class="g-t g-sum" x="30" y="40" fill="#f472b6">SDLC Project</text>
+<text class="g-t" x="230" y="40">87 days</text>
+<text class="g-t" x="290" y="40">45%</text>
+<rect class="g-bar g-done" x="450" y="30" width="380" height="8" opacity=".3"/>
+<rect class="g-bar g-done" x="450" y="30" width="171" height="8"/>
+
+<!-- Row 2: Define Problem (summary) -->
+<rect class="g-h" x="0" y="48" width="420" height="20" opacity=".5"/>
+<text class="g-t" x="5" y="62" fill="#a78bfa" font-weight="700">2</text>
+<text class="g-t" x="30" y="62" fill="#a78bfa" font-weight="700">Define Problem</text>
+<text class="g-t" x="230" y="62">9 days</text>
+<text class="g-t" x="290" y="62">100%</text>
+<rect class="g-bar g-done" x="450" y="52" width="50" height="8"/>
+
+<!-- Row 3-6: Sub-tasks -->
+<text class="g-t" x="5" y="82">3</text><text class="g-t" x="40" y="82">Define Concept</text><text class="g-t" x="230" y="82">2 days</text><text class="g-t" x="290" y="82">100%</text>
+<rect class="g-bar g-done" x="450" y="74" width="12" height="7"/>
+
+<text class="g-t" x="5" y="100">4</text><text class="g-t" x="40" y="100">Initiate Dev Process</text><text class="g-t" x="230" y="100">4 days</text><text class="g-t" x="290" y="100">100%</text>
+<rect class="g-bar g-done" x="464" y="92" width="22" height="7"/>
+
+<text class="g-t" x="5" y="118">5</text><text class="g-t" x="40" y="118">Compile Feasibility</text><text class="g-t" x="230" y="118">3 days</text><text class="g-t" x="290" y="118">100%</text>
+<rect class="g-bar g-done" x="488" y="110" width="17" height="7"/>
+
+<text class="g-t" x="5" y="136">6</text><text class="g-t" x="40" y="136">Submit Feasibility ◆</text><text class="g-t" x="230" y="136">0 days</text><text class="g-t" x="290" y="136">100%</text>
+<polygon points="507,128 513,134 507,140 501,134" fill="#fbbf24"/>
+
+<!-- Row 7: Analyze Situation (summary) -->
+<rect class="g-h" x="0" y="146" width="420" height="20" opacity=".5"/>
+<text class="g-t" x="5" y="160" fill="#a78bfa" font-weight="700">7</text>
+<text class="g-t" x="30" y="160" fill="#a78bfa" font-weight="700">Analyze Situation</text>
+<text class="g-t" x="230" y="160">19 days</text>
+<text class="g-t" x="290" y="160">100%</text>
+<rect class="g-bar g-done" x="510" y="150" width="105" height="8"/>
+
+<!-- Rows 8-13 -->
+<text class="g-t" x="5" y="180">8</text><text class="g-t" x="40" y="180">Review Data</text><text class="g-t" x="230" y="180">1 day</text><text class="g-t" x="290" y="180">100%</text>
+<rect class="g-bar g-done" x="510" y="172" width="7" height="7"/>
+
+<text class="g-t" x="5" y="198">9</text><text class="g-t" x="40" y="198">Determine Cost</text><text class="g-t" x="230" y="198">5 days</text><text class="g-t" x="290" y="198">100%</text>
+<rect class="g-bar g-done" x="527" y="190" width="28" height="7"/>
+
+<text class="g-t" x="5" y="216">10</text><text class="g-t" x="40" y="216">Review Hardware</text><text class="g-t" x="230" y="216">3 days</text><text class="g-t" x="290" y="216">100%</text>
+<rect class="g-bar g-done" x="540" y="208" width="17" height="7"/>
+
+<text class="g-t" x="5" y="234">11</text><text class="g-t" x="40" y="234">Interview Users</text><text class="g-t" x="230" y="234">5 days</text><text class="g-t" x="290" y="234">100%</text>
+<rect class="g-bar g-done" x="558" y="226" width="28" height="7"/>
+
+<text class="g-t" x="5" y="252">12</text><text class="g-t" x="40" y="252">Compile Requirements</text><text class="g-t" x="230" y="252">5 days</text><text class="g-t" x="290" y="252">100%</text>
+<rect class="g-bar g-done" x="582" y="244" width="28" height="7"/>
+
+<text class="g-t" x="5" y="270">13</text><text class="g-t" x="40" y="270">Submit Requirements ◆</text><text class="g-t" x="230" y="270">0 days</text><text class="g-t" x="290" y="270">100%</text>
+<polygon points="614,262 620,268 614,274 608,268" fill="#fbbf24"/>
+
+<!-- Row 14: Design Solution (summary) -->
+<rect class="g-h" x="0" y="278" width="420" height="20" opacity=".5"/>
+<text class="g-t" x="5" y="292" fill="#a78bfa" font-weight="700">14</text>
+<text class="g-t" x="30" y="292" fill="#a78bfa" font-weight="700">Design Solution</text>
+<text class="g-t" x="230" y="292">33 days</text>
+<text class="g-t" x="290" y="292">46%</text>
+<rect class="g-bar g-todo" x="625" y="282" width="150" height="8"/>
+<rect class="g-bar g-prog" x="625" y="282" width="69" height="8"/>
+
+<!-- Rows 15-21 -->
+<text class="g-t" x="5" y="312">15</text><text class="g-t" x="40" y="312">Design Network</text><text class="g-t" x="230" y="312">6 days</text><text class="g-t" x="290" y="312">100%</text>
+<rect class="g-bar g-done" x="625" y="304" width="33" height="7"/>
+
+<text class="g-t" x="5" y="330">16</text><text class="g-t" x="40" y="330">Design Software</text><text class="g-t" x="230" y="330">10 days</text><text class="g-t" x="290" y="330">60%</text>
+<rect class="g-bar g-todo" x="644" y="322" width="56" height="7"/>
+<rect class="g-bar g-prog" x="644" y="322" width="34" height="7"/>
+
+<text class="g-t" x="5" y="348">17</text><text class="g-t" x="40" y="348">Design Procedures</text><text class="g-t" x="230" y="348">4 days</text><text class="g-t" x="290" y="348">30%</text>
+<rect class="g-bar g-todo" x="690" y="340" width="22" height="7"/>
+<rect class="g-bar g-prog" x="690" y="340" width="7" height="7"/>
+
+<text class="g-t" x="5" y="366">18</text><text class="g-t" x="40" y="366">Design New Forms</text><text class="g-t" x="230" y="366">3 days</text><text class="g-t" x="290" y="366">0%</text>
+<rect class="g-bar g-todo" x="708" y="358" width="17" height="7"/>
+
+<text class="g-t" x="5" y="384">19</text><text class="g-t" x="40" y="384">Design Website</text><text class="g-t" x="230" y="384">5 days</text><text class="g-t" x="290" y="384">0%</text>
+<rect class="g-bar g-todo" x="716" y="376" width="28" height="7"/>
+
+<text class="g-t" x="5" y="402">20</text><text class="g-t" x="40" y="402">Compile Spec Doc</text><text class="g-t" x="230" y="402">5 days</text><text class="g-t" x="290" y="402">40%</text>
+<rect class="g-bar g-todo" x="733" y="394" width="28" height="7"/>
+<rect class="g-bar g-prog" x="733" y="394" width="12" height="7"/>
+
+<text class="g-t" x="5" y="420">21</text><text class="g-t" x="40" y="420">Submit Spec Doc ◆</text><text class="g-t" x="230" y="420">0 days</text><text class="g-t" x="290" y="420">0%</text>
+<polygon points="765,412 771,418 765,424 759,418" fill="rgba(251,191,36,.3)" stroke="#fbbf24" stroke-width=".5"/>
+
+<!-- Row 22: Implement Design (summary) -->
+<rect class="g-h" x="0" y="428" width="420" height="20" opacity=".5"/>
+<text class="g-t" x="5" y="442" fill="#a78bfa" font-weight="700">22</text>
+<text class="g-t" x="30" y="442" fill="#a78bfa" font-weight="700">Implement Design</text>
+<text class="g-t" x="230" y="442">26 days</text>
+<text class="g-t" x="290" y="442">0%</text>
+<rect class="g-bar g-todo" x="770" y="432" width="60" height="8"/>
+
+<text class="g-t" x="5" y="462">23</text><text class="g-t" x="40" y="462">Perform Unit Test</text><text class="g-t" x="230" y="462">2 days</text><text class="g-t" x="290" y="462">0%</text>
+<rect class="g-bar g-todo" x="770" y="454" width="12" height="7"/>
+
+<text class="g-t" x="5" y="480">24</text><text class="g-t" x="40" y="480">Integration Test</text><text class="g-t" x="230" y="480">2 days</text><text class="g-t" x="290" y="480">0%</text>
+<rect class="g-bar g-todo" x="783" y="472" width="12" height="7"/>
+
+<text class="g-t" x="5" y="498">25</text><text class="g-t" x="40" y="498">System Test</text><text class="g-t" x="230" y="498">5 days</text><text class="g-t" x="290" y="498">0%</text>
+<rect class="g-bar g-todo" x="795" y="490" width="28" height="7"/>
+
+<text class="g-t" x="5" y="516">26</text><text class="g-t" x="40" y="516">User Acceptance Test</text><text class="g-t" x="230" y="516">10 days</text><text class="g-t" x="290" y="516">0%</text>
+<rect class="g-bar g-todo" x="797" y="508" width="33" height="7"/>
+
+<text class="g-t" x="5" y="534">27</text><text class="g-t" x="40" y="534">Test Full Product</text><text class="g-t" x="230" y="534">2 days</text><text class="g-t" x="290" y="534">0%</text>
+<rect class="g-bar g-todo" x="817" y="526" width="12" height="7"/>
+
+<text class="g-t" x="5" y="552">28</text><text class="g-t" x="40" y="552">Compile Test Results</text><text class="g-t" x="230" y="552">5 days</text><text class="g-t" x="290" y="552">0%</text>
+<rect class="g-bar g-todo" x="822" y="544" width="28" height="7"/>
+</svg>
+<div class="svg-caption">Microsoft Project — SDLC Project schedule with Gantt Chart (Aug–Jan)</div>
+</div>
+<div class="ar-box">
+<div class="ar-icon">📊</div><span class="tag">الشرح</span>
+ده شكل MS Project الفعلي. على الشمال: المهام مع المدة ونسبة الإنجاز. على اليمين: الـ Gantt Chart اللي بيوري الجدول الزمني بصرياً. الأعمدة الزرقاء = مهام خلصت. البنفسجي = في التقدم. الرمادي = لسه مبدأتش. الماسات الصفراء ◆ = Milestones (نقاط مهمة).
+</div>
+</div>
+
+<!-- Slide 30: Gantt Chart for Project X SVG -->
+<div class="slide" id="s30">
+<div class="slide-header"><div class="slide-num">30</div><div class="slide-title">Gantt Chart for Project X</div></div>
+<div class="svg-box">
+<svg viewBox="0 0 740 380" xmlns="http://www.w3.org/2000/svg" width="100%">
+<style>
+.gx-h{fill:rgba(99,102,241,.15)}
+.gx-t{fill:#e2e8f0;font-family:Inter,sans-serif;font-size:12px;font-weight:700}
+.gx-w{fill:#94a3b8;font-size:9px;text-anchor:middle}
+.gx-bar{fill:#818cf8;rx:3;ry:3;opacity:.85}
+.gx-dep{stroke:#fbbf24;stroke-width:1.5;fill:none;marker-end:url(#gxArrow)}
+.gx-grid{stroke:rgba(255,255,255,.04);stroke-width:.5}
+</style>
+<defs><marker id="gxArrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#fbbf24"/></marker></defs>
+
+<!-- Header -->
+<rect class="gx-h" x="0" y="0" width="80" height="40"/>
+<text class="gx-t" x="10" y="25">Task</text>
+<rect class="gx-h" x="80" y="0" width="660" height="20"/>
+<!-- Week headers -->
+<text class="gx-t" x="90" y="15" font-size="11" fill="#818cf8">May 29</text>
+<text class="gx-t" x="250" y="15" font-size="11" fill="#818cf8">Jun 5</text>
+<text class="gx-t" x="410" y="15" font-size="11" fill="#818cf8">Jun 12</text>
+<text class="gx-t" x="580" y="15" font-size="11" fill="#818cf8">Jun 19</text>
+
+<!-- Day headers -->
+<rect x="80" y="20" width="660" height="20" fill="rgba(99,102,241,.08)"/>
+<!-- May 29 week: S M T W T F S -->
+<text class="gx-w" x="95" y="35">S</text><text class="gx-w" x="118" y="35">M</text><text class="gx-w" x="141" y="35">T</text><text class="gx-w" x="164" y="35" font-weight="700" fill="#f472b6">W</text><text class="gx-w" x="187" y="35">T</text><text class="gx-w" x="210" y="35">F</text><text class="gx-w" x="233" y="35">S</text>
+<!-- Jun 5 week -->
+<text class="gx-w" x="256" y="35">S</text><text class="gx-w" x="279" y="35">M</text><text class="gx-w" x="302" y="35">T</text><text class="gx-w" x="325" y="35">W</text><text class="gx-w" x="348" y="35">T</text><text class="gx-w" x="371" y="35">F</text><text class="gx-w" x="394" y="35">S</text>
+<!-- Jun 12 week -->
+<text class="gx-w" x="417" y="35">S</text><text class="gx-w" x="440" y="35">M</text><text class="gx-w" x="463" y="35">T</text><text class="gx-w" x="486" y="35">W</text><text class="gx-w" x="509" y="35">T</text><text class="gx-w" x="532" y="35">F</text><text class="gx-w" x="555" y="35">S</text>
+<!-- Jun 19 week -->
+<text class="gx-w" x="578" y="35">S</text><text class="gx-w" x="601" y="35">M</text><text class="gx-w" x="624" y="35">T</text><text class="gx-w" x="647" y="35">W</text><text class="gx-w" x="670" y="35">T</text><text class="gx-w" x="693" y="35">F</text>
+
+<!-- Grid -->
+<line class="gx-grid" x1="80" y1="40" x2="80" y2="380"/>
+<line class="gx-grid" x1="234" y1="40" x2="234" y2="380"/>
+<line class="gx-grid" x1="395" y1="40" x2="395" y2="380"/>
+<line class="gx-grid" x1="556" y1="40" x2="556" y2="380"/>
+
+<!-- Row backgrounds and task names -->
+<!-- A -->
+<text class="gx-t" x="35" y="65">A</text>
+<rect class="gx-bar" x="164" y="52" width="23" height="14"/>
+<!-- B -->
+<text class="gx-t" x="35" y="95">B</text>
+<rect class="gx-bar" x="141" y="82" width="50" height="14"/>
+<!-- C -->
+<text class="gx-t" x="35" y="125">C</text>
+<rect class="gx-bar" x="141" y="112" width="46" height="14"/>
+<!-- D -->
+<text class="gx-t" x="35" y="155">D</text>
+<rect class="gx-bar" x="233" y="142" width="92" height="14" opacity=".75"/>
+<!-- E -->
+<text class="gx-t" x="35" y="185">E</text>
+<rect class="gx-bar" x="233" y="172" width="115" height="14" opacity=".75"/>
+<!-- F -->
+<text class="gx-t" x="35" y="215">F</text>
+<rect class="gx-bar" x="256" y="202" width="138" height="14" opacity=".65"/>
+<!-- G -->
+<text class="gx-t" x="35" y="245">G</text>
+<rect class="gx-bar" x="325" y="232" width="138" height="14" opacity=".65"/>
+<!-- H -->
+<text class="gx-t" x="35" y="275">H</text>
+<rect class="gx-bar" x="371" y="262" width="115" height="14" opacity=".55"/>
+<!-- I -->
+<text class="gx-t" x="35" y="305">I</text>
+<rect class="gx-bar" x="463" y="292" width="46" height="14" opacity=".55"/>
+<!-- J -->
+<text class="gx-t" x="35" y="335">J</text>
+<rect class="gx-bar" x="509" y="322" width="69" height="14" opacity=".45"/>
+
+<!-- Dependencies (arrows down-right) -->
+<path class="gx-dep" d="M175,66 L175,79 L259,79 L259,88"/>
+<path class="gx-dep" d="M187,126 L187,136 L245,136 L245,148"/>
+<path class="gx-dep" d="M187,126 L187,136 L245,136 L245,178"/>
+<path class="gx-dep" d="M325,156 L325,166 L280,166 L280,208"/>
+<path class="gx-dep" d="M348,186 L348,196 L280,196 L280,208"/>
+<path class="gx-dep" d="M348,186 L348,196 L395,196 L395,268"/>
+<path class="gx-dep" d="M394,216 L394,226 L345,226 L345,238"/>
+<path class="gx-dep" d="M463,246 L463,256 L400,256 L400,268"/>
+<path class="gx-dep" d="M394,216 L394,290 L460,290 L460,298"/>
+<path class="gx-dep" d="M486,276 L486,316 L520,316 L520,328"/>
+<path class="gx-dep" d="M509,306 L509,316 L520,316 L520,328"/>
+</svg>
+<div class="svg-caption">Gantt Chart for Project X — Tasks A–J with dependency arrows (May 29 – Jun 19)</div>
+</div>
+<div class="ar-box">
+<div class="ar-icon">🔗</div><span class="tag">الشرح</span>
+ده Gantt Chart لمشروع X فيه 10 مهام (A–J). السهام الصفراء بتوري الـ dependencies — يعني المهمة مش بتبدأ غير لما المهمة اللي قبلها تخلص. مثلاً: A لازم يخلص عشان B يبدأ، و C لازم يخلص عشان D و E يبدأوا. ده بيساعدك تحدد الـ Critical Path — المسار الأطول اللي بيحدد مدة المشروع.
+</div>
+</div>
+
+<!-- Slide 31 -->
+<div class="slide" id="s31">
+<div class="slide-header"><div class="slide-num">31</div><div class="slide-title">Project Budget</div></div>
+<p>Project budget consists of three main categories:</p>
+<ul>
+<li><strong>Direct Costs:</strong> Costs directly attributable to the project — salaries, hardware, software, licenses</li>
+<li><strong>Indirect Costs:</strong> Overhead costs shared across projects — office rent, utilities, admin</li>
+<li><strong>Ongoing Costs:</strong> Recurring costs that continue after the project — maintenance, support, hosting</li>
+</ul>
+
+<!-- Budget Timeline SVG -->
+<div class="svg-box">
+<svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg" width="70%">
+<text x="40" y="25" fill="#818cf8" font-family="Inter" font-size="14" font-weight="700">TOTALS</text>
+<!-- Year arrows -->
+<rect x="140" y="30" width="90" height="140" rx="8" fill="rgba(99,102,241,.1)" stroke="#818cf8" stroke-width="1"/>
+<text x="185" y="55" text-anchor="middle" fill="#818cf8" font-family="Inter" font-size="13" font-weight="700">Year 1</text>
+<line x1="185" y1="65" x2="185" y2="155" stroke="#818cf8" stroke-width="2" marker-end="url(#budArrow)"/>
+
+<rect x="250" y="30" width="90" height="140" rx="8" fill="rgba(167,139,250,.1)" stroke="#a78bfa" stroke-width="1"/>
+<text x="295" y="55" text-anchor="middle" fill="#a78bfa" font-family="Inter" font-size="13" font-weight="700">Year 2</text>
+<line x1="295" y1="65" x2="295" y2="155" stroke="#a78bfa" stroke-width="2" marker-end="url(#budArrow2)"/>
+
+<rect x="360" y="30" width="90" height="140" rx="8" fill="rgba(244,114,182,.1)" stroke="#f472b6" stroke-width="1"/>
+<text x="405" y="55" text-anchor="middle" fill="#f472b6" font-family="Inter" font-size="13" font-weight="700">Year 3</text>
+<line x1="405" y1="65" x2="405" y2="155" stroke="#f472b6" stroke-width="2" marker-end="url(#budArrow3)"/>
+
+<text x="185" y="185" text-anchor="middle" fill="#94a3b8" font-family="Inter" font-size="10">Direct + Indirect</text>
+<text x="295" y="185" text-anchor="middle" fill="#94a3b8" font-family="Inter" font-size="10">Direct + Indirect</text>
+<text x="405" y="185" text-anchor="middle" fill="#94a3b8" font-family="Inter" font-size="10">Ongoing</text>
+
+<defs>
+<marker id="budArrow" viewBox="0 0 10 10" refX="5" refY="9" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L5,10 L10,0 Z" fill="#818cf8"/></marker>
+<marker id="budArrow2" viewBox="0 0 10 10" refX="5" refY="9" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L5,10 L10,0 Z" fill="#a78bfa"/></marker>
+<marker id="budArrow3" viewBox="0 0 10 10" refX="5" refY="9" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L5,10 L10,0 Z" fill="#f472b6"/></marker>
+</defs>
+</svg>
+<div class="svg-caption">Project Budget Timeline — 3-Year expenditure tracking</div>
+</div>
+<div class="ar-box">
+<div class="ar-icon">💰</div><span class="tag">الشرح</span>
+الميزانية مش بس "المشروع هيكلف كام" — ده بتتقسم لأنواع: تكاليف مباشرة (مرتبات، أجهزة، برامج)، تكاليف غير مباشرة (إيجار، كهرباء — بتتشارك بين مشاريع)، وتكاليف مستمرة (صيانة وهوستينج بعد ما المشروع يخلص). مهم تحسب التلاتة عشان تعرف التكلفة الحقيقية.
+</div>
+</div>
+
+<!-- Slide 32 -->
+<div class="slide" id="s32">
+<div class="slide-header"><div class="slide-num">32</div><div class="slide-title">Sheet 1 — Exam Questions</div></div>
+<ol>
+<li>Define: <strong>project</strong> – <strong>project management</strong></li>
+<li>Why projects <strong>fail</strong>?</li>
+<li>Why projects <strong>succeed</strong>?</li>
+<li>State the <strong>core management tools</strong></li>
+<li>Explain (<strong>What-Why-When-Where-Who</strong>) related to project charter</li>
+<li>What does <strong>break down</strong> mean related to project management? Support your answer with drawing</li>
+<li>What are the main items of <strong>project budget</strong>?</li>
+</ol>
+<div class="ar-box">
+<div class="ar-icon">📝</div><span class="tag">الشرح</span>
+دي أسئلة ممكن تيجي في الامتحان. تأكد إنك تقدر تجاوب عليها. لو راجعت الـ slides كويس — كل إجابة موجودة فيها! الأسئلة بتغطي التعريفات، أسباب الفشل والنجاح، الأدوات الأربعة، الـ 5Ws في الـ charter، الـ WBS، والميزانية.
+</div>
+</div>
+
+<!-- ==================== Q&A SECTION ==================== -->
+<section class="qa-section" id="qa">
+<h2>❓ Q&A — اختبر نفسك</h2>
+
+<div class="q-card">
+<div class="q-header" onclick="this.parentNode.classList.toggle('open')">What is the official definition of a project?</div>
+<div class="q-body">
+<p>A project is a <strong>temporary effort</strong> undertaken to create a <strong>unique product or service</strong>. It implies a specific timeframe, a budget, unique specifications, and working across organizational boundaries.</p>
+<div class="ar-box"><div class="ar-icon">💡</div>المشروع = مجهود مؤقت بهدف فريد. ليه بداية ونهاية، وبينتج حاجة مختلفة.</div>
+</div>
+</div>
+
+<div class="q-card">
+<div class="q-header" onclick="this.parentNode.classList.toggle('open')">List 4 reasons why projects fail.</div>
+<div class="q-body">
+<ul>
+<li>Poor scope</li>
+<li>Unrealistic expectations</li>
+<li>Lack of executive sponsorship</li>
+<li>Lack of project management</li>
+<li>Personality conflicts</li>
+<li>Politics changes</li>
+</ul>
+<div class="ar-box"><div class="ar-icon">💡</div>أكتر سبب = النطاق مش واضح + توقعات غير واقعية + مفيش دعم إدارة.</div>
+</div>
+</div>
+
+<div class="q-card">
+<div class="q-header" onclick="this.parentNode.classList.toggle('open')">What are the 5 PM phases?</div>
+<div class="q-body">
+<ol>
+<li>Initiating/Define</li>
+<li>Planning</li>
+<li>Executing</li>
+<li>Monitoring and Controlling</li>
+<li>Closing</li>
+</ol>
+<div class="ar-box"><div class="ar-icon">💡</div>بدء ← تخطيط ← تنفيذ ← مراقبة ← إغلاق. والمراقبة بتحصل طول المشروع مش بس في مرحلة واحدة.</div>
+</div>
+</div>
+
+<div class="q-card">
+<div class="q-header" onclick="this.parentNode.classList.toggle('open')">What are the 4 core PM tools?</div>
+<div class="q-body">
+<ol><li>Project Charter</li><li>Work Breakdown Structure (WBS)</li><li>Project Schedule</li><li>Project Budget</li></ol>
+<div class="ar-box"><div class="ar-icon">💡</div>ميثاق + تجزئة العمل + الجدول الزمني + الميزانية. الأربعة دول أساس أي مشروع.</div>
+</div>
+</div>
+
+<div class="q-card">
+<div class="q-header" onclick="this.parentNode.classList.toggle('open')">What is a Project Charter?</div>
+<div class="q-body">
+<p>The first and most comprehensive document that identifies the project's scope, goals, constraints, stakeholders, risks, budget, and benefits. It answers the 5Ws: What, Why, When, Where, Who.</p>
+<div class="ar-box"><div class="ar-icon">💡</div>أول وثيقة رسمية في المشروع. بتشرح كل حاجة من الهدف للمخاطر للميزانية.</div>
+</div>
+</div>
+
+<div class="q-card">
+<div class="q-header" onclick="this.parentNode.classList.toggle('open')">What is a Scope Statement? How is it different from the Charter?</div>
+<div class="q-body">
+<p>A scope statement defines <strong>all elements of the project scope</strong>, assumptions, requirements, and acceptance criteria. It's more detailed than the charter — the charter gives a high-level overview, while the scope statement goes into specifics of what's in/out of scope.</p>
+<div class="ar-box"><div class="ar-icon">💡</div>الـ Charter بيقول الفكرة العامة. الـ Scope Statement بيفصّل — إيه جوا وإيه برا المشروع بالظبط.</div>
+</div>
+</div>
+
+<div class="q-card">
+<div class="q-header" onclick="this.parentNode.classList.toggle('open')">What is WBS? What are its two types?</div>
+<div class="q-body">
+<p><strong>Work Breakdown Structure</strong> — a deliverable-oriented hierarchical decomposition of the work. Two types:</p>
+<ol><li><strong>Deliverable-Based</strong> (most common) — organized by what is produced</li><li><strong>Phase-Based</strong> — organized by project phases (Design, Procurement, etc.)</li></ol>
+<div class="ar-box"><div class="ar-icon">💡</div>هيكل تجزئة العمل — بيكسر المشروع لحاجات صغيرة. نوعين: حسب المخرجات أو حسب المراحل.</div>
+</div>
+</div>
+
+<div class="q-card">
+<div class="q-header" onclick="this.parentNode.classList.toggle('open')">What is the difference between Assumption and Constraint?</div>
+<div class="q-body">
+<p><strong>Assumption:</strong> Something accepted as true without proof. <em>Example: All raw materials will be available.</em></p>
+<p><strong>Constraint:</strong> A limitation or restriction. <em>Example: The project must be completed by fall 2021.</em></p>
+<div class="ar-box"><div class="ar-icon">💡</div>الافتراض = حاجة بنفترض إنها صح من غير دليل. القيد = حد أو حدود لازم نشتغل جواها.</div>
+</div>
+</div>
+
+<div class="q-card">
+<div class="q-header" onclick="this.parentNode.classList.toggle('open')">What are the 3 types of project budget costs?</div>
+<div class="q-body">
+<ol><li><strong>Direct Costs</strong> — directly attributable to the project (salaries, hardware, software)</li><li><strong>Indirect Costs</strong> — overhead shared across projects (office rent, utilities)</li><li><strong>Ongoing Costs</strong> — recurring costs after the project (maintenance, hosting)</li></ol>
+<div class="ar-box"><div class="ar-icon">💡</div>مباشرة (مرتبات وأجهزة) + غير مباشرة (إيجار وكهرباء) + مستمرة (صيانة بعد المشروع).</div>
+</div>
+</div>
+
+<div class="q-card">
+<div class="q-header" onclick="this.parentNode.classList.toggle('open')">What does PM authority level in the charter cover?</div>
+<div class="q-body">
+<ul>
+<li><strong>Staffing:</strong> Hire/fire/discipline</li>
+<li><strong>Budget:</strong> Commit and control project funds</li>
+<li><strong>Technical:</strong> Make deliverable decisions</li>
+<li><strong>Conflict:</strong> Resolve team/org/external conflicts</li>
+<li><strong>Escalation:</strong> Path for issues beyond PM's authority</li>
+</ul>
+<div class="ar-box"><div class="ar-icon">💡</div>صلاحيات مدير المشروع بتشمل التوظيف، الميزانية، القرارات التقنية، حل النزاعات. ولو المشكلة أكبر منه — فيه escalation path.</div>
+</div>
+</div>
+
+<div class="q-card">
+<div class="q-header" onclick="this.parentNode.classList.toggle('open')">What is a Gantt Chart and what does it show?</div>
+<div class="q-body">
+<p>A <strong>Gantt Chart</strong> is a horizontal bar chart that visually shows the project schedule. It displays:</p>
+<ul><li>Task names and durations as horizontal bars</li><li>Task progress (% complete)</li><li>Dependencies between tasks (arrows)</li><li>Milestones (diamond shapes)</li><li>Critical path</li></ul>
+<div class="ar-box"><div class="ar-icon">💡</div>الـ Gantt Chart هو رسم بياني بيوري المهام كأعمدة أفقية على الخط الزمني. بيوضح المدة والتقدم والترابط بين المهام.</div>
+</div>
+</div>
+
+<div class="q-card">
+<div class="q-header" onclick="this.parentNode.classList.toggle('open')">List 4 key elements of a Scope Statement.</div>
+<div class="q-body">
+<ul>
+<li>Product Scope Description</li>
+<li>Acceptance Criteria</li>
+<li>Deliverables</li>
+<li>Project Exclusions</li>
+<li>Constraints</li>
+<li>Assumptions</li>
+</ul>
+<div class="ar-box"><div class="ar-icon">💡</div>وصف المنتج + معايير القبول + المسلمات + الاستثناءات + القيود + الافتراضات.</div>
+</div>
+</div>
+
+<div class="q-card">
+<div class="q-header" onclick="this.parentNode.classList.toggle('open')">What is ROM in project budgeting?</div>
+<div class="q-body">
+<p><strong>Rough Order of Magnitude (ROM)</strong> — a very early estimate of expenditures. ROM estimates may be as broad as <strong>±100%</strong> but usually range <strong>±35%</strong>. The budget should break down by categories: software, hardware, human resources.</p>
+<div class="ar-box"><div class="ar-icon">💡</div>ROM = تقدير مبدئي للميزانية — ممكن يكون غير دقيق بنسبة ±35%. بيتحسن كل ما المشروع اتقدم.</div>
+</div>
+</div>
+
+<div class="q-card">
+<div class="q-header" onclick="this.parentNode.classList.toggle('open')">Differentiate between Business Risks and Project Risks.</div>
+<div class="q-body">
+<p><strong>Business Risks:</strong> Related to market/business — "lack of market adoption"</p>
+<p><strong>Project Risks:</strong> Related to execution — "inexperienced team"</p>
+<div class="ar-box"><div class="ar-icon">💡</div>مخاطر بزنس = السوق مش هيتقبل المنتج. مخاطر مشروع = الفريق مش خبير أو الجدول مش واقعي.</div>
+</div>
+</div>
+
+<div class="q-card">
+<div class="q-header" onclick="this.parentNode.classList.toggle('open')">What is a WBS Dictionary?</div>
+<div class="q-body">
+<p>A <strong>WBS Dictionary</strong> describes the work in each WBS Element. It includes details about each work package: description, responsible person, estimated duration, and cost.</p>
+<div class="ar-box"><div class="ar-icon">💡</div>الـ WBS Dictionary = معجم بيشرح كل عنصر في الـ WBS — وصفه إيه ومين مسؤول عنه وهياخد كام وقت وكام فلوس.</div>
+</div>
+</div>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+<p>SET422 — Software Project Management | Lecture 02: Why Project Management?</p>
+<p style="margin-top:.25rem"><a href="index.html">← Course Home</a> · <a href="lecture01.html">Lecture 01</a></p>
+<p style="margin-top:.5rem;font-size:.7rem;color:var(--text-dim)">Built with ❤️ for learning</p>
+</footer>
+</div>
+
+<!-- JAVASCRIPT -->
+<script>
+// Theme toggle
+const themeBtn=document.getElementById('themeBtn');
+themeBtn.addEventListener('click',()=>{const t=document.documentElement.getAttribute('data-theme')==='light'?'':'light';document.documentElement.setAttribute('data-theme',t);themeBtn.textContent=t==='light'?'🌙':'☀️';localStorage.setItem('theme',t)});
+(()=>{const t=localStorage.getItem('theme');if(t){document.documentElement.setAttribute('data-theme',t);themeBtn.textContent=t==='light'?'🌙':'☀️'}})();
+
+// Progress bar
+window.addEventListener('scroll',()=>{const h=document.documentElement;const p=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100;document.getElementById('progressBar').style.width=p+'%'});
+
+// TOC toggle
+const tocBtn=document.getElementById('tocBtn');
+const toc=document.getElementById('toc');
+tocBtn.addEventListener('click',()=>{toc.style.display=toc.style.display==='none'?'block':'none'});
+
+// Search
+const searchBox=document.getElementById('searchBox');
+searchBox.addEventListener('input',e=>{const q=e.target.value.toLowerCase();document.querySelectorAll('.slide,.q-card').forEach(el=>{const match=el.textContent.toLowerCase().includes(q);el.style.display=q&&!match?'none':''})});
+
+// Keyboard shortcuts
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();searchBox.focus()}if(e.key==='Escape'){searchBox.value='';searchBox.dispatchEvent(new Event('input'));searchBox.blur()}});
+</script>
+</body>
+</html>
