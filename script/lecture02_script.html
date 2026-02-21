@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Script - Lecture 02: Why Project Management?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            margin: 0;
+            padding: 2rem;
+            color: #e0e0e0;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #fff;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            border-color: rgba(99, 102, 241, 0.4);
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #818cf8;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title::before {
+            content: "\1F3AC";
+        }
+
+        .section-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #6366f1, #a78bfa);
+            color: #fff;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            text-align: center;
+            line-height: 28px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            margin-left: 6px;
+        }
+
+        .script-text {
+            font-size: 1.15rem;
+            line-height: 2;
+            color: #f5f5f5;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            border-right: 4px solid #818cf8;
+        }
+
+        .note {
+            font-size: 0.9rem;
+            color: #ffc107;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 193, 7, 0.1);
+            border-radius: 8px;
+            border-right: 3px solid #ffc107;
+        }
+
+        .note::before {
+            content: "\1F4CC \0645\0644\0627\062D\0638\0629: ";
+            font-weight: bold;
+        }
+
+        .action {
+            font-size: 0.9rem;
+            color: #10b981;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 8px;
+            border-right: 3px solid #10b981;
+        }
+
+        .action::before {
+            content: "\1F5A5\FE0F \0639\0644\0649 \0627\0644\0634\0627\0634\0629: ";
+            font-weight: bold;
+        }
+
+        .english {
+            direction: ltr;
+            text-align: left;
+            font-family: 'Segoe UI', 'Consolas', sans-serif;
+            color: #b3e5fc;
+        }
+
+        .highlight {
+            color: #69f0ae;
+            font-weight: 600;
+        }
+
+        .keyword {
+            color: #818cf8;
+            font-weight: 700;
+        }
+
+        .pause {
+            color: #ff8a65;
+            font-size: 0.85rem;
+            display: block;
+            margin: 0.5rem 0;
+        }
+
+        a.back-btn {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(99, 102, 241, 0.2);
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            border-radius: 8px;
+            color: #818cf8;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        a.back-btn:hover {
+            background: rgba(99, 102, 241, 0.4);
+            color: #fff;
+        }
+
+        .toc {
+            background: rgba(99, 102, 241, 0.08);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .toc h2 {
+            color: #818cf8;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .toc ol {
+            padding-right: 1.5rem;
+            line-height: 2.2;
+        }
+
+        .toc a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .toc a:hover {
+            color: #818cf8;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="../lecture02.html" class="back-btn">← رجوع للمحاضرة</a>
+        <h1>📜 سكريبت الشرح — المحاضرة الثانية</h1>
+        <p class="subtitle">ليه إدارة المشاريع؟ — من التعريفات لحد الـ Gantt Chart والميزانية</p>
+        <div class="toc">
+            <h2>📑 فهرس الأقسام</h2>
+            <ol>
+                <li><a href="#intro">المقدمة — مراجعة سريعة ودخول الموضوع</a></li>
+                <li><a href="#why-pm">ليه إدارة المشاريع مهمة؟</a></li>
+                <li><a href="#definitions">التعريفات الرسمية وغير الرسمية</a></li>
+                <li><a href="#fail-succeed">أسباب الفشل والنجاح</a></li>
+                <li><a href="#phases">مراحل إدارة المشروع الخمسة</a></li>
+                <li><a href="#core-tools">الأدوات الأربعة الأساسية</a></li>
+                <li><a href="#initiation">مرحلة البدء — ليه مهمة؟</a></li>
+                <li><a href="#charter">الـ Project Charter</a></li>
+                <li><a href="#charter-content">محتويات الـ Charter بالتفصيل</a></li>
+                <li><a href="#scope">الـ Scope Statement</a></li>
+                <li><a href="#charter-examples">أمثلة وقوالب للـ Charter</a></li>
+                <li><a href="#tips">نصائح كتابة الـ Charter</a></li>
+                <li><a href="#planning">مرحلة التخطيط</a></li>
+                <li><a href="#wbs">الـ Work Breakdown Structure</a></li>
+                <li><a href="#schedule">أدوات الجدولة والـ Gantt Chart</a></li>
+                <li><a href="#budget">ميزانية المشروع</a></li>
+                <li><a href="#exam-qs">أسئلة الامتحان</a></li>
+                <li><a href="#closing">الخاتمة</a></li>
+            </ol>
+        </div>
+
+        <div class="section" id="intro">
+            <div class="section-title">المقدمة — مراجعة سريعة ودخول الموضوع</div>
+            <div class="script-text">
+                السلام عليكم يا جماعة، أهلاً بيكم في <span class="keyword">المحاضرة الثانية</span> في مادة إدارة مشاريع
+                البرمجيات.
+                <span class="pause">[وقفة قصيرة]</span>
+                المحاضرة اللي فاتت اتكلمنا عن إيه هو المشروع — خصائصه، عناصره، أنواع مشاريع البرمجيات، و أصحاب المصلحة.
+                النهاردة هنتكلم عن حاجة مهمة جداً: <span class="highlight">ليه أصلاً محتاجين إدارة مشاريع؟</span>
+                <span class="pause">[وقفة]</span>
+                يعني لو عندك فريق شاطر وبيشتغل — ليه محتاج PM؟ ليه المشاريع بتفشل؟ ليه بعض المشاريع بتنجح والبعض بيقع؟
+                ده اللي هنجاوب عليه النهاردة.
+                <span class="pause">[وقفة]</span>
+                وبعدين هنتكلم عن أهم الأدوات: الـ <span class="keyword">Project Charter</span>، الـ <span
+                    class="keyword">WBS</span>، الـ <span class="keyword">Gantt Chart</span>، والـ <span
+                    class="keyword">Budget</span>. يلا بينا!
+            </div>
+            <div class="action">اعرض السلايد الأول — Lecture 02: Why Project Management?</div>
+        </div>
+
+        <div class="section" id="why-pm">
+            <div class="section-title"><span class="section-number">01</span>ليه إدارة المشاريع مهمة؟</div>
+            <div class="script-text">
+                خلونا نبدأ بسؤال: <span class="highlight">ليه المشاريع محتاجة إدارة أصلاً؟</span>
+                <span class="pause">[وقفة]</span>
+                تخيل معايا — عندك فريق من 10 مبرمجين، كل واحد شاطر في اللي بيعمله. بس مفيش حد بينسق بينهم. واحد شغال على
+                الـ frontend، واحد شغال على الـ backend، وواحد تالت بيغير في الـ database. من غير تنسيق — كل حاجة هتضرب
+                في بعض!
+                <span class="pause">[وقفة]</span>
+                إدارة المشاريع بتضمن إن <span class="highlight">كل حد يعرف دوره، الجدول واضح، الميزانية تحت السيطرة،
+                    والعميل راضي</span>.
+                <span class="pause">[وقفة]</span>
+                من غير إدارة مشاريع — المشروع بيكون زي سفينة من غير قبطان. ممكن يتجه لأي مكان!
+            </div>
+            <div class="action">اعرض سلايد "Why Project Management?"</div>
+        </div>
+
+        <div class="section" id="definitions">
+            <div class="section-title"><span class="section-number">02</span>التعريفات الرسمية وغير الرسمية</div>
+            <div class="script-text">
+                طيب — يعني إيه <span class="keyword">Project Management</span> بالظبط؟
+                <span class="pause">[وقفة]</span>
+                <span class="keyword">التعريف الرسمي</span> حسب PMI: تطبيق المعرفة والمهارات والأدوات والتقنيات على
+                أنشطة المشروع عشان يحقق متطلباته.
+                <span class="pause">[وقفة]</span>
+                بس ده كلام أكاديمي. خلينا نبسطها: <span class="highlight">إدارة المشاريع = إنك تخلي الحاجة الصح تحصل في
+                    الوقت الصح بالتكلفة الصح</span>.
+                <span class="pause">[وقفة]</span>
+                <span class="keyword">التعريف غير الرسمي:</span> إدارة المشاريع هي فن تحقيق المستحيل — خلّصنا بدري،
+                بتكلفة أقل، وبجودة أعلى. طبعاً مش دايماً بيحصل، بس ده الهدف!
+                <span class="pause">[وقفة]</span>
+                بتعتمد على 3 أعمدة أساسية: <span class="keyword">مهارات</span> + <span class="keyword">أدوات</span> +
+                <span class="keyword">خبرة</span>. لو أي واحد فيهم ناقص — المشروع في خطر.
+            </div>
+            <div class="action">اعرض التعريف الرسمي من PMI ثم التعريف غير الرسمي</div>
+        </div>
+
+        <div class="section" id="fail-succeed">
+            <div class="section-title"><span class="section-number">03</span>أسباب الفشل والنجاح</div>
+            <div class="script-text">
+                دلوقتي نيجي لسؤال مهم جداً: <span class="highlight">ليه المشاريع بتفشل؟</span>
+                <span class="pause">[وقفة]</span>
+                فيه أسباب كتير، بس الأشهر:
+                <br><span class="keyword">1. النطاق مش واضح (Poor Scope):</span> العميل مش عارف عايز إيه بالظبط، والفريق
+                مش محدد الحدود. النتيجة؟ كل شوية حاجة جديدة بتتضاف — وده اسمه <span class="highlight">Scope
+                    Creep</span>.
+                <br><span class="keyword">2. توقعات غير واقعية:</span> المدير يقول "خلصوا في شهر" والمشروع محتاج 6!
+                <br><span class="keyword">3. مفيش دعم إداري:</span> لو الإدارة مش مقتنعة — الموارد مش هتيجي والمشروع
+                هيموت.
+                <br><span class="keyword">4. مفيش إدارة مشاريع:</span> مفيش خطة، مفيض متابعة، مفيش حاجة.
+                <br><span class="keyword">5. صراعات شخصية وسياسات:</span> ناس بتتخانق ومفيش حد يحل.
+                <span class="pause">[وقفة]</span>
+                طيب إيه اللي يخلي المشروع <span class="highlight">ينجح</span>؟
+                <span class="pause">[وقفة]</span>
+                <span class="keyword">1. دعم إداري قوي:</span> الإدارة واقفة وراك وبتوفرلك الموارد.
+                <br><span class="keyword">2. مشاركة العميل:</span> العميل موجود — مش غايب لحد ما المشروع يخلص وييجي يقول
+                "أنا مش عايز كده".
+                <br><span class="keyword">3. خطة واضحة ومتابعة:</span> تعرف إنت فين وعندك خطة مكتوبة.
+                <br><span class="keyword">4. مدير مشروع خبرة:</span> PM يعرف يدير الفريق ويتعامل مع المشاكل.
+                <span class="pause">[وقفة]</span>
+                <span class="highlight">خلاصة: الفشل مش بييجي فجأة — بيحصل بسبب تراكم مشاكل صغيرة محدش اعتبرها.</span>
+            </div>
+            <div class="action">اعرض سلايد أسباب الفشل ثم أسباب النجاح</div>
+            <div class="note">ده سؤال امتحان شبه مضمون — "ليه المشاريع بتفشل وليه بتنجح؟"</div>
+        </div>
+
+        <div class="section" id="phases">
+            <div class="section-title"><span class="section-number">04</span>مراحل إدارة المشروع الخمسة</div>
+            <div class="script-text">
+                أي مشروع في الدنيا بيمر بـ <span class="keyword">5 مراحل</span>:
+                <span class="pause">[وقفة]</span>
+                <span class="keyword">1. البدء (Initiating/Define):</span> بنحدد هل المشروع يستاهل ولا لأ. بنعمل الـ
+                Project Charter وبنحدد الأهداف الرئيسية.
+                <span class="pause">[وقفة]</span>
+                <span class="keyword">2. التخطيط (Planning):</span> خطة تفصيلية — مين يعمل إيه وامتى. الجدول الزمني
+                والميزانية وتحليل المخاطر.
+                <span class="pause">[وقفة]</span>
+                <span class="keyword">3. التنفيذ (Executing):</span> الشغل الفعلي — الكود بيتكتب، التصميم بيتعمل،
+                الاجتماعات بتحصل.
+                <span class="pause">[وقفة]</span>
+                <span class="keyword">4. المراقبة والتحكم (Monitoring & Controlling):</span> ودي <span
+                    class="highlight">مش مرحلة مستقلة — دي بتحصل طول الوقت</span>! بتتابع هل إحنا ماشيين على الخطة ولا
+                لأ. لو حصل انحراف — بتصلح.
+                <span class="pause">[وقفة]</span>
+                <span class="keyword">5. الإغلاق (Closing):</span> بنسلم المشروع، بنوثق الدروس المستفادة، وبنقفل كل حاجة
+                رسمياً.
+                <span class="pause">[وقفة]</span>
+                لاحظوا الرسم: المراحل بتتداخل مع بعض. ممكن تخطط وتنفذ في نفس الوقت. والمراقبة بتغلف كل حاجة.
+            </div>
+            <div class="action">اعرض رسم الـ Process Flow الدائري للمراحل الخمسة</div>
+            <div class="note">المراقبة بتحصل من أول يوم لآخر يوم — مش مرحلة منفصلة.</div>
+        </div>
+
+        <div class="section" id="core-tools">
+            <div class="section-title"><span class="section-number">05</span>الأدوات الأربعة الأساسية</div>
+            <div class="script-text">
+                طيب — أدوات إدارة المشاريع كتير. بس فيه <span class="keyword">4 أدوات أساسية Core</span> لازم تعرفهم
+                كويس:
+                <span class="pause">[وقفة]</span>
+                <span class="keyword">1. الـ Project Charter:</span> الوثيقة الأولى — بتشرح المشروع إيه وليه ومين وامتى.
+                <br><span class="keyword">2. الـ Work Breakdown Structure (WBS):</span> بتكسر المشروع لحاجات صغيرة ممكن
+                تتدار.
+                <br><span class="keyword">3. الـ Project Schedule:</span> الجدول الزمني — مين يعمل إيه وامتى.
+                <br><span class="keyword">4. الـ Project Budget:</span> الميزانية — هتكلف كام.
+                <span class="pause">[وقفة]</span>
+                الأربعة دول — <span class="highlight">لو فهمتهم وعرفت تعملهم صح — بقيت مدير مشروع محترم</span>. وده اللي
+                هنشرحه بالتفصيل في باقي المحاضرة.
+            </div>
+            <div class="action">اعرض سلايد الأدوات الأربعة الأساسية</div>
+        </div>
+
+        <div class="section" id="initiation">
+            <div class="section-title"><span class="section-number">06</span>مرحلة البدء — ليه مهمة جداً؟</div>
+            <div class="script-text">
+                خلونا نركز على أول مرحلة — <span class="keyword">الـ Initiation</span>.
+                <span class="pause">[وقفة]</span>
+                لو سألوني: إيه أهم مرحلة في المشروع؟ هقول: <span class="highlight">البداية</span>. ليه؟
+                <span class="pause">[وقفة]</span>
+                <span class="keyword">أولاً:</span> المشروع اللي بيبدأ صح — احتمال نجاحه أعلى بكتير من المشروع اللي
+                بيبدأ غلط.
+                <br><span class="keyword">ثانياً:</span> فيه أخطاء بتتعمل في البداية <span class="highlight">مينفعش
+                    تتصلح بعدين</span>. زي ما لو بتبني عمارة والأساسات غلط — مش هتقدر تصلحها لما توصل للدور العاشر!
+                <br><span class="keyword">ثالثاً:</span> التحضير الكويس مهم زي الهدف نفسه.
+                <span class="pause">[وقفة]</span>
+                يعني إيه <span class="keyword">Project Initiation</span>؟ هي المرحلة اللي بنقرر فيها: المشروع ده محتاجين
+                نعمله فعلاً؟ ولو أيوه — الهدف إيه والموارد إيه؟
+                <span class="pause">[وقفة]</span>
+                في المرحلة دي بنعمل حاجات مهمة:
+                <br>• بناخد <span class="keyword">قرارات كبيرة</span> بتحدد اتجاه المشروع
+                <br>• بنتفق على <span class="keyword">هدف واضح</span> الكل متفق عليه
+                <br>• بنعمل <span class="keyword">checks</span> عشان نتجنب سوء الفهم
+                <br>• بنحاول <span class="keyword">نكبر الفوايد ونقلل التكاليف</span>
+            </div>
+            <div class="action">اعرض سلايد "Project Initiation — Why It Matters" و "What is Project Initiation?"</div>
+            <div class="note">لو طالب سأل "مش ممكن نبدأ ننفذ على طول من غير initiation؟" — الإجابة: أيوه ممكن. بس في
+                الغالب المشروع هيفشل!</div>
+        </div>
+
+        <div class="section" id="charter">
+            <div class="section-title"><span class="section-number">07</span>الـ Project Charter</div>
+            <div class="script-text">
+                الآن أهم وثيقة في مرحلة البدء — <span class="keyword">الـ Project Charter</span>.
+                <span class="pause">[وقفة]</span>
+                الـ Charter هو <span class="highlight">أهم وأشمل وثيقة</span> في عملية بدء المشروع. بيجاوب على الـ <span
+                    class="keyword">5Ws</span>:
+                <span class="pause">[وقفة]</span>
+                <span class="keyword">What</span> — إيه اللي لازم يتعمل؟ الموارد إيه؟ القيود إيه؟
+                <br><span class="keyword">Why</span> — ليه بنعمل المشروع ده أصلاً؟
+                <br><span class="keyword">When</span> — لازم يتعمل امتى؟
+                <br><span class="keyword">Where</span> — فين هيتعمل؟
+                <br><span class="keyword">Who</span> — مين وراه؟ مين بيمول؟ مين بيشتغل؟
+                <span class="pause">[وقفة]</span>
+                الـ Charter بيوثق:
+                <br>• <span class="highlight">أسباب المشروع</span>
+                <br>• <span class="highlight">الأهداف والقيود</span>
+                <br>• <span class="highlight">أصحاب المصلحة الرئيسيين</span>
+                <br>• <span class="highlight">المخاطر المحددة</span>
+                <br>• <span class="highlight">فوائد المشروع</span>
+                <br>• <span class="highlight">نظرة عامة على الميزانية</span>
+                <span class="pause">[وقفة]</span>
+                فكروا في الـ Charter كخريطة: <span class="highlight">من غيره — هتتوه في الطريق!</span>
+            </div>
+            <div class="action">اعرض سلايد "Define Project Charter" مع الـ 5Ws</div>
+        </div>
+
+        <div class="section" id="charter-content">
+            <div class="section-title"><span class="section-number">08</span>محتويات الـ Charter بالتفصيل</div>
+            <div class="script-text">
+                طيب الـ Charter بيتكون من إيه بالتفصيل؟ خلونا ناخدهم واحدة واحدة:
+                <span class="pause">[وقفة]</span>
+                <span class="keyword">العنصر الأول — المتطلبات عالية المستوى:</span>
+                <br>بنوصف إيه اللي المنتج لازم يعمله — بس <span class="highlight">من غير تفاصيل كتير</span>.
+                <br>مثال صح ✅: "العميل يقدر يلاقي المنتج في 3 كليكات"
+                <br>مثال غلط ❌: "المنتجات تتعرض في grid 4 أعمدة بخلفية رمادي" — ده تفصيلة تصميم مش requirement!
+                <span class="pause">[وقفة]</span>
+                <span class="keyword">الافتراضات والقيود:</span>
+                <br><span class="highlight">الافتراض (Assumption)</span> = حاجة بنفترض إنها صح من غير إثبات. مثلاً: "كل
+                الزوار هيقدروا يوصلوا للموقع."
+                <br><span class="highlight">القيد (Constraint)</span> = حد أو تقييد لازم نمشي جواه. مثلاً: "الموقع لازم
+                يستخدم خدمة استضافة معينة."
+                <span class="pause">[وقفة]</span>
+                <span class="keyword">النطاق (Scope):</span>
+                <br>بنحدد <span class="highlight">إيه جوا المشروع وإيه برا</span>. ده مهم جداً عشان نمنع الـ scope
+                creep.
+                <br>مثال: "الموقع بيقدم معلومات صحية... بس مش بيوفر وصول مباشر لموقع الـ HR."
+                <span class="pause">[وقفة]</span>
+                <span class="keyword">المخاطر:</span>
+                <br>أي منطقة فيها <span class="highlight">عدم يقين</span> — سواء مخاطر داخلية أو خارجية.
+                <br>مثلاً: "العملاء الحاليين ممكن يواجهوا صعوبة في الانتقال للموقع الجديد."
+                <span class="pause">[وقفة]</span>
+                <span class="keyword">الجدول الزمني:</span>
+                <br>بنحدد <span class="highlight">نقاط رئيسية (Milestones)</span> مع مواعيد تقديرية.
+                <br>مثلاً: "وثيقة المتطلبات تكمل 31 يناير — الموقع يكون online مع التدريب 30 يونيو."
+                <span class="pause">[وقفة]</span>
+                <span class="keyword">الميزانية:</span>
+                <br>تقدير مبدئي اسمه <span class="keyword">ROM — Rough Order of Magnitude</span> — يعني تقريبي ±35%.
+                <br>بنقسمها لفئات: برمجيات، أجهزة، موارد بشرية...
+                <span class="pause">[وقفة]</span>
+                <span class="keyword">أصحاب المصلحة (Stakeholders):</span>
+                <br><span class="highlight">أي شخص أو مجموعة ممكن يتأثر بالمشروع</span> — لازم نحددهم من البداية.
+                <span class="pause">[وقفة]</span>
+                <span class="keyword">معايير القبول:</span>
+                <br>إيه اللي لو اتعمل — العميل يقول "تمام، مقبول"؟ لازم تكون محددة من الأول.
+                <span class="pause">[وقفة]</span>
+                <span class="keyword">صلاحيات مدير المشروع:</span>
+                <br>لازم يكون واضح: يقدر <span class="highlight">يعيّن ويفصل</span>؟ يقدر <span class="highlight">يصرف
+                    فلوس</span> لحد كام؟ يقدر ياخد <span class="highlight">قرارات تقنية</span>؟ ولو حصلت مشكلة أكبر منه
+                — مين بيروحله؟ ده الـ <span class="keyword">Escalation Path</span>.
+            </div>
+            <div class="action">اعرض سلايدات 11 لحد 15 — محتويات الـ Charter واحدة واحدة</div>
+            <div class="note">كل عنصر ناقص في الـ Charter = ثغرة ممكن تسبب مشكلة كبيرة بعدين.</div>
+        </div>
+
+        <div class="section" id="scope">
+            <div class="section-title"><span class="section-number">09</span>الـ Scope Statement</div>
+            <div class="script-text">
+                دلوقتي نتكلم عن وثيقة مهمة تانية — <span class="keyword">الـ Scope Statement</span>.
+                <span class="pause">[وقفة]</span>
+                الـ Scope Statement بيحدد <span class="highlight">كل عناصر نطاق المشروع</span> — الافتراضات، المتطلبات،
+                ومعايير القبول.
+                <br>بيكون المرجع الأساسي عشان نقيس نجاح المشروع.
+                <span class="pause">[وقفة]</span>
+                إيه الفرق بينه وبين الـ Charter؟ الـ Charter بيقول الفكرة العامة. الـ Scope Statement <span
+                    class="highlight">بيفصّل — إيه جوا وإيه برا المشروع بالظبط</span>.
+                <span class="pause">[وقفة]</span>
+                خلونا ناخد مثال — <span class="keyword">عربية كهربا Model T:</span>
+                <br>• <span class="keyword">وصف المنتج:</span> عربية كهربا اقتصادية 4 أبواب، مسافة عالية، متانة كويسة.
+                <br>• <span class="keyword">معايير القبول:</span> 300 كم بشحنة كاملة، تكلفة صيانة قليلة، ضمان سنتين، من
+                0 لـ110 كم/ساعة في 10 ثواني.
+                <br>• <span class="keyword">المسلمات:</span> عربية واحدة + ضمان بطارية + ايربية + كفر استبن + كفرات جلد.
+                <br>• <span class="keyword">الاستثناءات:</span> مفيش بطارية مجانية! مفيش كابل شحن مجاني! مفيش تأمين!
+                <br>• <span class="keyword">القيود:</span> كوفيد ممكن يأثر + لازم تنزل خريف 2021.
+                <span class="pause">[وقفة]</span>
+                لاحظوا إن <span class="highlight">الاستثناءات مكتوبة بوضوح</span> — ده بيمنع العميل ييجي بعدين يقول "أنا
+                كنت فاكر البطارية مجانية!" — لأ يا باشا، مكتوب في الـ Scope Statement!
+                <span class="pause">[وقفة]</span>
+                ونفس الفكرة في مثال <span class="keyword">Timesheet Tool</span> — نظام لتتبع الوقت. لاحظوا الفرق بين
+                <span class="highlight">In Scope</span> (اللي هنعمله) و <span class="highlight">Out of Scope</span>
+                (اللي مش هنعمله — زي الموبايل والتابلت).
+            </div>
+            <div class="action">اعرض سلايدات الـ Scope — مثال العربية الكهربا ومثال الـ Timesheet</div>
+            <div class="note">لو حد سألك في الامتحان "إيه هو الـ Scope Statement؟" — اشرح وادي مثال عملي.</div>
+        </div>
+
+        <div class="section" id="charter-examples">
+            <div class="section-title"><span class="section-number">10</span>أمثلة وقوالب للـ Charter</div>
+            <div class="script-text">
+                خلونا نشوف مثال حقيقي — <span class="keyword">مشروع SAP لشركة كيماويات:</span>
+                <span class="pause">[وقفة]</span>
+                <span class="keyword">المشروع:</span> شراء وتركيب SAP module لتتبع حجم المواد الكيماوية في كل المصانع.
+                <br><span class="keyword">ليه؟</span> لأن الطريقة اليدوية الحالية ممكن تطلع غرامة <span
+                    class="highlight">أكتر من مليون دولار!</span>
+                <br><span class="keyword">الميزانية:</span> مصاريف $12,000 + رأسمالي $55,000.
+                <br><span class="keyword">المواعيد:</span> استشارة أكتوبر — خطة نوفمبر — شراء البرنامج ديسمبر — تطبيق
+                فبراير.
+                <br><span class="keyword">المخاطر:</span> جاهزية البيانات (متوسط) — تأخير عن موعد 1 مارس (متوسط).
+                <span class="pause">[وقفة]</span>
+                لاحظوا إن الـ Charter فيه <span class="highlight">كل حاجة: المشكلة، التبرير، الميزانية، المواعيد،
+                    الموارد، والمخاطر</span>.
+                <span class="pause">[وقفة]</span>
+                وفيه <span class="keyword">قوالب (Templates)</span> جاهزة ممكن تستخدمها:
+                <br>• <span class="keyword">القالب العام:</span> بيغطي الهدف، الراعي، أصحاب المصلحة، الجدول، الموارد،
+                المسلمات، الافتراضات.
+                <br>• <span class="keyword">قالب DHS Oregon:</span> أبسط — عنوان المشروع، وصفه، milestones، ميزانية،
+                صلاحيات PM، وتوقيعات.
+                <span class="pause">[وقفة]</span>
+                النقطة المشتركة: <span class="highlight">كل template بيحتاج توقيعات</span> — لأن الـ Charter وثيقة رسمية
+                بتمثل اتفاق بين كل الأطراف.
+            </div>
+            <div class="action">اعرض سلايد مثال SAP ثم القوالب</div>
+        </div>
+
+        <div class="section" id="tips">
+            <div class="section-title"><span class="section-number">11</span>نصائح كتابة الـ Charter</div>
+            <div class="script-text">
+                قبل ما نسيب موضوع الـ Charter — <span class="keyword">شوية نصائح مهمة:</span>
+                <span class="pause">[وقفة]</span>
+                <span class="keyword">1. ركز على الأهم:</span> Why, Who, What, What Not — وشوية When. <span
+                    class="highlight">متدخلش في التفاصيل التقنية أوي</span>.
+                <span class="pause">[وقفة]</span>
+                <span class="keyword">2. متنساش المراحل اللي بعدين:</span> ناس كتير بتركز على الـ development وتنسى الـ
+                integration والـ testing والـ rollout. ده غلط كبير!
+                <span class="pause">[وقفة]</span>
+                <span class="keyword">3. فرّق بين أنواع المخاطر:</span>
+                <br>• <span class="highlight">مخاطر بزنس</span> = "السوق مش هيتقبل المنتج"
+                <br>• <span class="highlight">مخاطر مشروع</span> = "الفريق مش خبير" أو "الجدول مش واقعي"
+                <span class="pause">[وقفة]</span>
+                <span class="keyword">4. الشكليات مهمة:</span> Spell check! وحط اسمك في أول صفحة وفي header كل صفحة.
+                <span class="highlight">مفيش أسخف من Charter فيه أخطاء إملائية.</span>
+            </div>
+            <div class="action">اعرض سلايد النصائح</div>
+        </div>
+
+        <div class="section" id="planning">
+            <div class="section-title"><span class="section-number">12</span>مرحلة التخطيط</div>
+            <div class="script-text">
+                خلصنا البدء — دلوقتي ندخل في <span class="keyword">مرحلة التخطيط</span>.
+                <span class="pause">[وقفة]</span>
+                التخطيط هو اللي <span class="highlight">بيحول الفكرة من كلام على ورق لخطة حقيقية</span>.
+                <span class="pause">[وقفة]</span>
+                وده مش خطوة واحدة — ده <span class="keyword">16 نشاط!</span> من أهمهم:
+                <br>• تحديد النطاق وتعريفه
+                <br>• تعريف الأنشطة وتسلسلها
+                <br>• تقدير مدة كل نشاط
+                <br>• تحديد الموارد المطلوبة
+                <br>• تقدير التكاليف والميزانية
+                <br>• تخطيط الجودة والتواصل
+                <br>• تخطيط المخاطر والمشتريات
+                <span class="pause">[وقفة]</span>
+                بتبدأ بتحديد النطاق وبتعمل <span class="keyword">WBS</span>، بعدين بتحدد الأنشطة وترتيبها، بعدين بتقدر
+                المدة والموارد، وفي الآخر بتجمع ده كله في <span class="highlight">خطة واحدة متكاملة</span>.
+                <span class="pause">[وقفة]</span>
+                يعني باختصار: <span class="highlight">التخطيط = تحضير الإجابة عن "مين يعمل إيه وامتى وبكام"</span>.
+            </div>
+            <div class="action">اعرض سلايد الـ16 نشاط وتفاصيل التخطيط</div>
+        </div>
+
+        <div class="section" id="wbs">
+            <div class="section-title"><span class="section-number">13</span>الـ Work Breakdown Structure</div>
+            <div class="script-text">
+                من أهم أدوات التخطيط — <span class="keyword">الـ WBS</span>.
+                <span class="pause">[وقفة]</span>
+                الفكرة بسيطة: <span class="highlight">بتكسر المشروع الكبير لحاجات صغيرة ممكن تتدار</span>. زي ما لو عندك
+                بيتزا كبيرة — مش هتاكلها كلها مرة واحدة — بتقطعها شرائح!
+                <span class="pause">[وقفة]</span>
+                التعريف الرسمي من PMI: <span class="keyword">"تقسيم هرمي للعمل موجه نحو المخرجات"</span>.
+                <span class="pause">[وقفة]</span>
+                فيه <span class="keyword">نوعين</span>:
+                <br><span class="keyword">1. Deliverable-Based:</span> بتقسم على حسب المخرجات — وده الأكثر شيوعاً
+                والمفضل.
+                <br><span class="keyword">2. Phase-Based:</span> بتقسم على حسب مراحل المشروع.
+                <span class="pause">[وقفة]</span>
+                <span class="keyword">إزاي بتعمل WBS؟</span>
+                <br>1. حدد <span class="highlight">الفئات الكبيرة</span> (Major Deliverables)
+                <br>2. كسّر كل فئة لـ <span class="highlight">حاجات أصغر</span> (Sub-tasks)
+                <br>3. فضل كسّر لحد ما توصل لـ <span class="highlight">Work Packages</span> — أصغر وحدة ممكن تقدر وقتها
+                وتكلفتها
+                <span class="pause">[وقفة]</span>
+                شوفوا الرسم معايا — المستوى الأول هو المشروع ككل. المستوى التاني هو الـ Major Deliverables. المستوى
+                التالت هو الـ deliverables الأصغر. الأخير هو الـ Work Packages.
+                <span class="pause">[وقفة]</span>
+                وفيه مثال عملي — <span class="keyword">بناء بيت:</span>
+                <br>المرحلة الأولى: التصميم (تصاريح + رسومات)
+                <br>المرحلة الثانية: المشتريات (كهرباء + سباكة + تكييف)
+                <br>المرحلة الثالثة: البناء (داخلي + خارجي)
+                <br>المرحلة الرابعة: التفتيش
+                <br>المرحلة الخامسة: التسليم
+                <span class="pause">[وقفة]</span>
+                وبنعمل <span class="keyword">WBS Dictionary</span> — ده معجم بيشرح كل عنصر في الـ WBS: وصفه إيه، مين
+                المسؤول، الوقت المتوقع، والتكلفة.
+            </div>
+            <div class="action">اعرض رسم الـ WBS الهرمي ثم مثال بناء البيت ثم اشرح الـ WBS Dictionary</div>
+            <div class="note">سؤال امتحان كلاسيكي: "ما هو الـ WBS؟ اشرح مع رسم." — لازم ترسم الشجرة الهرمية!</div>
+        </div>
+
+        <div class="section" id="schedule">
+            <div class="section-title"><span class="section-number">14</span>أدوات الجدولة والـ Gantt Chart</div>
+            <div class="script-text">
+                بعد ما عملنا الـ WBS وحددنا المهام — محتاجين <span class="keyword">جدول زمني</span>.
+                <span class="pause">[وقفة]</span>
+                فيه أدوات كتير — أشهرها <span class="keyword">Microsoft Project</span> و <span
+                    class="keyword">Primavera</span>. بتساعدك تعمل:
+                <br>• <span class="highlight">Gantt Chart</span> — رسم بياني بيوري المهام كأعمدة أفقية على الخط الزمني
+                <br>• <span class="highlight">Critical Path</span> — المسار الحرج: لو اتأخرت أي مهمة فيه = المشروع كله
+                يتأخر
+                <br>• <span class="highlight">Dependencies</span> — العلاقات بين المهام
+                <span class="pause">[وقفة]</span>
+                شوفوا الرسم التاني — ده Gantt Chart لمشروع X فيه 10 مهام من A لـJ.
+                <span class="pause">[وقفة]</span>
+                لاحظوا:
+                <br>• كل مهمة ليها <span class="highlight">عمود بيوري المدة</span>
+                <br>• الأعمدة الملونة بتوري <span class="highlight">التقدم</span> — أزرق = خلصت، بنفسجي = في التقدم،
+                رمادي = لسه مبدأتش
+                <br>• الماسات الصفراء ◆ = <span class="keyword">Milestones</span> — نقاط مهمة
+                <br>• <span class="highlight">السهام</span> بتوري الـ dependencies — يعني المهمة مش بتبدأ غير لما اللي
+                قبلها تخلص
+                <span class="pause">[وقفة]</span>
+                مثلاً: مهمة A لازم تخلص عشان B تبدأ. ومهمة C لازم تخلص عشان D و E يبدأوا. ده بيساعدك تعرف <span
+                    class="highlight">لو مهمة اتأخرت — إيه اللي هيتأثر</span>.
+            </div>
+            <div class="action">اعرض رسم الـ MS Project Gantt ثم الـ Gantt Chart لـ Project X مع السهام</div>
+            <div class="note">ممكن الامتحان يديك Gantt Chart ويسألك تحدد الـ Critical Path — تدرب على ده!</div>
+        </div>
+
+        <div class="section" id="budget">
+            <div class="section-title"><span class="section-number">15</span>ميزانية المشروع</div>
+            <div class="script-text">
+                آخر أداة — <span class="keyword">الميزانية</span>.
+                <span class="pause">[وقفة]</span>
+                الميزانية مش بس "المشروع هيكلف كام" — بتتقسم لـ <span class="keyword">3 أنواع من التكاليف</span>:
+                <span class="pause">[وقفة]</span>
+                <span class="keyword">1. تكاليف مباشرة (Direct Costs):</span> مرتبطة بالمشروع مباشرة — <span
+                    class="highlight">مرتبات الفريق، الأجهزة، البرامج، التراخيص</span>.
+                <span class="pause">[وقفة]</span>
+                <span class="keyword">2. تكاليف غير مباشرة (Indirect Costs):</span> تكاليف عامة بتتشارك بين مشاريع —
+                <span class="highlight">إيجار المكتب، الكهرباء، المصاريف الإدارية</span>.
+                <span class="pause">[وقفة]</span>
+                <span class="keyword">3. تكاليف مستمرة (Ongoing Costs):</span> تكاليف بتفضل بعد ما المشروع يخلص — <span
+                    class="highlight">صيانة، دعم فني، هوستينج</span>.
+                <span class="pause">[وقفة]</span>
+                مهم تحسب <span class="highlight">التلاتة</span> عشان تعرف التكلفة الحقيقية. كتير بينسوا الـ ongoing
+                costs — وبعدين يتفاجئوا إن المشروع بيكلف أكتر مما كانوا فاكرين!
+            </div>
+            <div class="action">اعرض سلايد الـ Project Budget مع الأنواع التلاتة</div>
+        </div>
+
+        <div class="section" id="exam-qs">
+            <div class="section-title"><span class="section-number">16</span>أسئلة الامتحان — Sheet 1</div>
+            <div class="script-text">
+                قبل ما نختم — خلونا نراجع <span class="keyword">أسئلة الـ Sheet</span>:
+                <span class="pause">[وقفة]</span>
+                <span class="keyword">1.</span> عرّف: <span class="highlight">مشروع — إدارة المشاريع</span>.
+                <br><span class="keyword">2.</span> ليه المشاريع <span class="highlight">بتفشل</span>؟
+                <br><span class="keyword">3.</span> ليه المشاريع <span class="highlight">بتنجح</span>؟
+                <br><span class="keyword">4.</span> اذكر <span class="highlight">الأدوات الأساسية</span> لإدارة
+                المشاريع.
+                <br><span class="keyword">5.</span> اشرح الـ <span class="highlight">5Ws</span> المتعلقة بالـ Charter.
+                <br><span class="keyword">6.</span> إيه معنى <span class="highlight">Break Down</span> في إدارة
+                المشاريع؟ ادعم إجابتك بالرسم.
+                <br><span class="keyword">7.</span> إيه عناصر <span class="highlight">ميزانية المشروع</span>؟
+                <span class="pause">[وقفة]</span>
+                لو راجعتوا المحاضرة كويس — كل إجابة موجودة فيها! خصوصاً سؤال الـ WBS — <span class="highlight">لازم ترسم
+                    شجرة هرمية</span>.
+            </div>
+            <div class="action">اعرض سلايد الأسئلة — واسأل الطلاب يفكروا في الإجابات</div>
+            <div class="note">ركزوا على السؤال السادس: Break Down = WBS. لازم ترسم الشجرة مش بس تكتب كلام!</div>
+        </div>
+
+        <div class="section" id="closing">
+            <div class="section-title">الخاتمة</div>
+            <div class="script-text">
+                كده خلصنا المحاضرة الثانية — وكانت مليانة محتوى مهم!
+                <span class="pause">[وقفة]</span>
+                خلينا نلخص:
+                <br><br>
+                ✅ <span class="highlight">إدارة المشاريع مهمة</span> عشان من غيرها المشروع بيتوه.
+                <br>✅ <span class="highlight">أسباب الفشل</span>: نطاق مش واضح، توقعات غير واقعية، مفيش دعم إدارة.
+                <br>✅ <span class="highlight">أسباب النجاح</span>: دعم إداري + مشاركة العميل + خطة واضحة.
+                <br>✅ <span class="highlight">5 مراحل</span>: بدء ← تخطيط ← تنفيذ ← مراقبة ← إغلاق.
+                <br>✅ <span class="highlight">4 أدوات أساسية</span>: Charter + WBS + Schedule + Budget.
+                <br>✅ <span class="highlight">الـ Charter</span> بيجاوب على الـ 5Ws.
+                <br>✅ <span class="highlight">الـ Scope Statement</span> بيحدد إيه جوا وإيه برا.
+                <br>✅ <span class="highlight">الـ WBS</span> بيكسر المشروع لحاجات صغيرة.
+                <br>✅ <span class="highlight">الـ Gantt Chart</span> بيوري الجدول بصرياً.
+                <br>✅ <span class="highlight">الميزانية</span> = مباشرة + غير مباشرة + مستمرة.
+                <span class="pause">[وقفة]</span>
+                في الـ presentation فيه <span class="keyword">15 سؤال Q&A</span> — اختبروا نفسكم فيهم.
+                <span class="pause">[وقفة]</span>
+                شكراً لمتابعتكم. إن شاء الله نكمل في المحاضرة الجاية ونتكلم أكتر عن التخطيط والتنفيذ.
+                <br><br>
+                السلام عليكم ورحمة الله وبركاته 🤲
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
